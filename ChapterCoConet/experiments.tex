@@ -1,0 +1,441 @@
+\section{Experimental results}
+\label{sec:nn-exp_results}
+
+In this Section we present the evaluation of our methodology on the case studies
+detailed before, as well as further experiments involving the star elimination
+algorithm and the CEGAR algorithm presented in Sections~\ref{sec:optim} and
+\ref{sec:cegar}.
+
+\subsection{ACC}
+
+\begin{table}[t!]
+	\caption{\label{tab:acc_results} \nevertwo{} results for the ACC data set with
+		$TH=1.5$ and $D_0=5$, with $\varepsilon = 0$ (left) and $\varepsilon = 20$
+		(right). CPU time is in seconds rounded to the third decimal
+		place. The best setting for each network and property is highlighted in 
+		boldface.}
+	\setlength{\tabcolsep}{9pt}
+	\renewcommand{\arraystretch}{0.8}
+	\centering
+	%
+	\begin{tabular}{c c c rr rr}
+		\toprule
+		\multirow{2}{*}{\textbf{Network ID}} & \multirow{2}{*}{\textbf{Property}} & 
+		\multirow{2}{*}{\textbf{Setting}} & \multicolumn{2}{c}{$\varepsilon = 0$} &
+		\multicolumn{2}{c}{$\varepsilon = 20$} \\
+		\cmidrule{4-7}
+		 & & & Result & Time & Result & Time \\
+		\midrule
+		%
+		\multirow{12}{*}{\textit{Net0}} & \multirow{4}{*}{\textit{OutBounds}} 
+		   & Over-approx & True & 5.139 & True & 5.037 \\
+		 & & Mixed & True & \textbf{5.055} & True & 5.063 \\
+		 & & Mixed2 & True & 5.112 & True & \textbf{4.996} \\
+		 & & Complete & True & 6.273 & True & 6.203 \\
+		 \cmidrule{2-7}
+		 & \multirow{4}{*}{\textit{Near0}} 
+		   & Over-approx & False & 5.666 & False & 5.034 \\
+		 & & Mixed & False & 5.251 & False & 5.101 \\
+		 & & Mixed2 & False & \textbf{5.203} & False & \textbf{4.965} \\
+		 & & Complete & False & 6.319 & False & 5.345 \\
+		 \cmidrule{2-7}
+		 & \multirow{4}{*}{\textit{Far0}}
+		   & Over-approx & False & 5.078 & False & 5.008 \\
+		 & & Mixed & False & \textbf{4.986} & \textbf{True} & \textbf{5.016} \\
+		 & & Mixed2 & False & 5.139 & True & 5.068 \\
+		 & & Complete & False & 5.186 & True & 5.62 \\
+		\midrule
+		%
+		\multirow{12}{*}{\textit{Net1}} & \multirow{4}{*}{\textit{OutBounds}}
+		   & Over-approx & True & \textbf{5.931} & True & \textbf{5.948} \\
+		 & & Mixed & True & 6.662 & True & 6.934 \\
+		 & & Mixed2 & True & 7.309 & True & 7.232 \\
+		 & & Complete & True & 51.683 & True & 52.318 \\
+		 \cmidrule{2-7}
+		 & \multirow{4}{*}{\textit{Near0}}
+		   & Over-approx & False & \textbf{5.906} & False & \textbf{5.436} \\
+		 & & Mixed & False & 6.676 & False & 5.797 \\
+		 & & Mixed2 & False & 8.071 & False & 5.955 \\
+		 & & Complete & False & 50.469 & False & 7.667 \\
+		 \cmidrule{2-7}
+		   & \multirow{4}{*}{\textit{Far0}} 
+		 & Over-approx & False & \textbf{5.709} & False & \textbf{5.344} \\
+		 & & Mixed & False & 5.888 & False & 5.776 \\
+		 & & Mixed2 & False & 6.301 & False & 6.226 \\
+		 & & Complete & False & 13.041 & False & 8.212 \\
+		\midrule
+		%
+		\multirow{12}{*}{\textit{Net2}} & \multirow{4}{*}{\textit{OutBounds}}
+		   & Over-approx & True & \textbf{9.525} & True & \textbf{9.532} \\
+		 & & Mixed & True & 10.482 & True & 10.149 \\
+		 & & Mixed2 & True & 12.525 & True & 12.065 \\
+		 & & Complete & True & 26.958 & True & 26.794 \\
+		 \cmidrule{2-7}
+		 & \multirow{4}{*}{\textit{Near0}}
+		   & Over-approx & False & \textbf{9.515} & False & 9.379 \\
+		 & & Mixed & False & 10.292 & False & 9.872 \\
+		 & & Mixed2 & False & 13.636 & False & 11.653 \\
+		 & & Complete & False & 24.496 & \textbf{True} & \textbf{10.696} \\
+		 \cmidrule{2-7}
+		 & \multirow{4}{*}{\textit{Far0}}
+		 & Over-approx & False & \textbf{9.753} & False & \textbf{9.453} \\
+		 & & Mixed & False & 9.944 & False & 9.848 \\
+		 & & Mixed2 & False & 12.148 & False & 11.558 \\
+		 & & Complete & False & 13.27 & False & 10.854 \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+We run our tests on a workstation featuring two
+Intel Xeon Gold 6234 CPU, three NVIDIA Quadro RTX 6000/8000 GPUs (with
+CUDA enabled), and 125.6 GiB of RAM running Ubuntu 20.04.03 LTS. For
+the sake of brevity, we are only going to report here in 
+Table~\ref{tab:acc_results} a fraction of the experiments we ran for 
+the data set with $TH = 1.5$ and $D_0 = 5$, considering 
+$\varepsilon = 0$ and $\varepsilon = 20$. The results we show here are 
+consistent with the results obtained on other data sets that we do not 
+report. In particular, looking at Table~\ref{tab:acc_results} we can 
+observe that:
+%
+\begin{itemize}
+	\item All the properties can be checked on all the networks in
+		reasonable time by \nevertwo: less than one minute of CPU time is
+		required independently from the network architecture and the
+		specific setting considered.
+	\item The complete setting is the most expensive in computational
+		terms; given the considerations above this should come at no
+		surprise, but in one case, namely \textit{Net2} on property
+	\textit{Near0}, the complete setting is able to prevail over the 
+		others, i.e., it certifies that the property is true; indeed mixed and
+		over-approximated settings (shortened as over-approx in
+		Table~\ref{tab:acc_results}) take less time, but state that the
+		property is false because they do not manage to reach enough
+		precision to state the correct result.
+	\item The over-approximated setting is often faster than the other
+		ones: 6 out of 9 cases for $\varepsilon = 0$ and 7 out of 9
+		cases for $\varepsilon = 20$; however it must be noted that its
+		results are definitive only when the property is true: 3 out of 9
+		cases for both values of $\varepsilon$ and always for the (simplest)
+		property \textit{OutBounds}.
+	\item The mixed setting is at times faster than the
+		over-approximated one, but only in one case, namely property
+	\textit{Far0} on \textit{Net0} it is able to provide a definite
+		answer while outperforming both the complete and over-approximated
+		settings. 
+\end{itemize}
+%
+Overall we can conclude that while further research is needed to improve 
+on the capability of \nevertwo{} to provide definite answers with
+faster techniques involving over-approximation, still the tool is able
+to check a number of interesting properties in networks involving
+hundreds of neurons in a relatively small amount of CPU time. We view
+this as a positive result and an enabler for preliminary testing of
+\nevertwo{} at industrial settings featuring networks of comparable size
+to our ACC case study.
+
+\subsection{Drones}
+%
+\begin{table}[t]
+	\caption{\label{tab:exp-res}\nevertwo{} results for the drones case study.
+		Column \textbf{Network ID} refers to the same actor architectures as
+		detailed in Table~\ref{tab:ac-arch}. Column \textbf{Return} reports the 
+		best return obtained during the testing of the Actors in the evaluation
+		environment, while column \textbf{Epsilon} reports the $\varepsilon$ 
+		values tested in our experiments. Columns \textit{\textbf{Over-approx}}, 
+		\textit{\textbf{Mixed}} and \textit{\textbf{Complete}} refer to the 
+		selected verification algorithm, with the maximum \textit{Delta} 
+		($\delta$) obtained and the elapsed \textit{Time} in seconds, respectively. 
+		The cells reporting ``--'' correspond to experiments in which our algorithm 
+		was not able to complete the verification successfully in less than 
+		70 seconds.}
+	\setlength{\tabcolsep}{9pt}
+	\centering
+	%
+	\begin{tabular}{c c c rr rr rr}
+		\toprule
+		\multirow{2}{*}{\textbf{Network ID}} & 
+		\multirow{2}{*}{\textbf{Return}} & 
+		\multirow{2}{*}{\textbf{$\varepsilon$}} & 
+		%\multicolumn{6}{c}{\textbf{Algorithm}} \\
+		% & & & 
+		\multicolumn{2}{c}{\textbf{\textit{Over-approx}}} &
+		\multicolumn{2}{c}{\textbf{\textit{Mixed}}} &
+		\multicolumn{2}{c}{\textbf{\textit{Complete}}} \\
+		\cmidrule{4-9}
+		& & & $\delta$ & Time & $\delta$ & Time & $\delta$ & Time \\
+		%
+		\midrule
+		%
+		\multirow{2}{*}{\textit{AC1}} & \multirow{2}{*}{-27.15} &
+		0.10 & 4.18 & 0.48 & 3.71 & 0.51 & 3.23 & 0.61 \\
+		& & 0.01 & 0.34 & 0.47 & 0.33 & 0.49 & 0.33 & 0.47 \\
+		% 
+		\multirow{2}{*}{\textit{AC2}} & \multirow{2}{*}{-27.28} &
+		0.10 & 2.40 & 0.71 & 2.11 & 0.78 & 1.82 & 5.91 \\
+		& & 0.01 & 0.10 & 0.52 & 0.10 & 0.52 & 0.10 & 0.58 \\
+		%
+		\multirow{2}{*}{\textit{AC3}} & \multirow{2}{*}{-27.33} &
+		0.10 & 12.90 & 2.66 & 12.86 & 2.82 & -- & -- \\
+		& & 0.01 & 1.51 & 0.79 & 1.51 & 0.76 & 1.51 & 1.08 \\
+		%
+		\multirow{2}{*}{\textit{AC4}} & \multirow{2}{*}{-27.69} &
+		0.10 & 6.23 & 5.37 & 5.91 & 8.60 & -- & -- \\
+		& & 0.01 & 0.41 & 1.27 & 0.40 & 1.58 & 0.40 & 11.84 \\
+		%
+		\multirow{2}{*}{\textit{AC5}} & \multirow{2}{*}{-28.31} &
+		0.10 & 17.65 & 0.82 & 17.09 & 0.83 & 14.40 & 2.25 \\
+		& & 0.01 & 1.20 & 0.73 & 1.20 & 0.74 & 1.20 & 0.76 \\
+		%
+		\multirow{2}{*}{\textit{AC6}} & \multirow{2}{*}{-27.63} &
+		0.10 & 1.99 & 0.94 & 1.79 & 0.98 & 1.57 & 7.79 \\
+		& & 0.01 & 0.11 & 0.77 & 0.11 & 0.78 & 0.11 & 0.78 \\
+		%
+		\multirow{2}{*}{\textit{AC7}} & \multirow{2}{*}{-32.06} &
+		0.10 & 2.89 & 1.84 & 2.45 & 2.02 & 2.24 & 61.81 \\
+		& & 0.01 & 0.23 & 0.95 & 0.23 & 0.99 & 0.23 & 1.18 \\
+		%
+		\multirow{2}{*}{\textit{AC8}} & \multirow{2}{*}{-27.81} &
+		0.10 & 30.14 & 9.50 & 28.97 & 14.45 & -- & -- \\
+		& & 0.01 & 0.56 & 1.63 & 0.56 & 1.78 & 0.56 & 4.91 \\
+		\bottomrule
+		\bigskip
+	\end{tabular}
+\end{table}
+%
+From the results reported in Table~\ref{tab:exp-res} it would seem that, 
+at least for the task considered, an increased size for the actor network does 
+not necessarily correspond to an increase in performance. This would seem to 
+support our belief that, in this kind of control task, small networks yield 
+adequate performances, and therefore are still relevant in meaningful applications. 
+Furthermore, from the values of $\delta$ obtained by our reachability analysis, 
+it would seem that bigger networks do not present significantly increased 
+robustness to local perturbation and, at least in our experiments, they often 
+result to be less robust than smaller ones.
+Regarding the comparison between the different reachability algorithms we notice 
+that, as expected, the values of $\delta$ found by the complete algorithm are 
+stricter than --- or as strict as --- the ones found by the mixed algorithm, and 
+that the same behavior can be observed between the mixed and over-approximate 
+algorithms. As we would expect, the computational time needed by the different 
+algorithms increases with their complexity and the only exceptions appear to be
+when the coarser algorithms are already good enough to compute a very strict 
+$\delta$, which means that the number of unstable ReLU --- causing the loss of 
+precision and the splitting of the stars in the over-approximate and complete 
+algorithm respectively --- is extremely limited.
+
+\subsection{Star elimination}
+
+\begin{table}[t!]
+	\setlength{\tabcolsep}{13pt}
+	\centering
+	\caption{\label{tab:acas_optim} Experimental results for the star elimination 
+		algorithm on the ACAS Xu benchmark. The number of stars layer-by-layer for
+		each network is compared between the original algorithm and the 
+		elimination-based version. All times are expressed in seconds.}
+	\begin{tabular}{c c rr rr}
+		\toprule
+		\multirow{2}{*}{\textbf{Network ID}} & \multirow{2}{*}{\textbf{Layer}} & 
+		\multicolumn{2}{c}{\textbf{Original}} & \multicolumn{2}{c}{\textbf{Elimination}} \\
+		\cmidrule{3-6} 
+		 & & No. of stars & Time & No. of stars & Time \\
+		\midrule
+ 		\multirow{6}{*}{\textit{1\_1}}
+ 		 & 1 & 18 & 10.89 & 18 & 10.9 \\ 
+ 		 & 2 & 49 & 11.36 & 49 & 11.48 \\ 
+ 		 & 3 & 230 & 12.43 & 230 & 12.56 \\ 
+ 		 & 4 & 1466 & 24.42 & 1465 & 24.52 \\ 
+ 		 & 5 & 3894 & 67.02 & 3864 & 66.19 \\ 
+ 		 & 6 & 31706 & 305 & 31025 & 303.72 \\ 
+ 		  & & & & & \\
+ 		\multirow{6}{*}{\textit{1\_3}}
+ 		 & 1 & 2 & 10.8 & 2 & 10.72 \\ 
+ 		 & 2 & 30 & 11.27 & 30 & 11.04 \\ 
+ 		 & 3 & 146 & 12.21 & 146 & 12.48 \\ 
+ 		 & 4 & 287 & 13.75 & 287 & 13.87 \\ 
+ 		 & 5 & 1700 & 28.52 & 1686 & 28.58 \\ 
+ 		 & 6 & 4121 & 69.78 & 4066 & 70.36 \\ 
+ 		  & & & & & \\
+ 		\multirow{6}{*}{\textit{2\_3}}
+ 		 & 1 & 11 & 10.75 & 11 & 11.04 \\ 
+ 		 & 2 & 35 & 10.95 & 35 & 11.15 \\ 
+ 		 & 3 & 102 & 11.77 & 102 & 12 \\ 
+ 		 & 4 & 230 & 13.31 & 230 & 13.59 \\ 
+ 		 & 5 & 408 & 17.46 & 408 & 17.26 \\ 
+ 		 & 6 & 2128 & 30.58 & 2115 & 30.75 \\ 
+ 		\bottomrule
+	\end{tabular} 
+\end{table}
+
+Here we show some preliminary results on the star elimination algorithm detailed in
+Section~\ref{sec:optim}. For the comparison, we considered three networks from the 
+ACAS Xu evaluation~\cite{DBLP:conf/cav/KatzBDJK17} and the networks for drone control
+presented before. ACAS Xu is an airborne collision avoidance system based on DNNs 
+whose purpose is to issue advisory commands to an autonomous vehicle (ownship) about
+evasive maneuvers to be performed if another vehicle (intruder) comes too close. 
+In particular, we selected Property 3 and 4 since they could be easily expressed as
+a single verification query in our tool.
+In the words of~\cite{DBLP:conf/cav/KatzBDJK17}, these safety properties 
+``\textit{deal with situations where the intruder is directly ahead of the ownship 
+	and state that the NN will never issue a COC (clear of conflict) advisory}''.
+Considering the analysis in~\cite{DBLP:conf/cav/KatzBDJK17}, each property can be
+assessed on 42 different networks depending on the choice of two parameters, i.e.,
+the the previous advisory value and the time to loss of vertical separation.
+
+\begin{table}[t!]
+	\setlength{\tabcolsep}{9pt}
+	\centering
+	\caption{\label{tab:rcra_optim} Experimental results for the star elimination 
+		algorithm on the drone case study, both with $\varepsilon = 0.01$ and 
+		$\varepsilon = 0.1$. The number of stars layer-by-layer for each network is
+		compared between the original algorithm and the elimination-based version.
+		All times are expressed in seconds.}
+		\resizebox{\columnwidth}{!}{%
+		\begin{tabular}{c c rr rr rr rr}
+			\toprule
+			\multirow{3}{*}{\textbf{Network ID}} & \multirow{3}{*}{\textbf{Layer}} & 
+			\multicolumn{4}{c}{$\varepsilon = 0.01$} & \multicolumn{4}{c}{$\varepsilon = 0.1$} \\
+			\cmidrule{3-10}
+			&  & \multicolumn{2}{c}{Original} & \multicolumn{2}{c}{Elimination} &
+			\multicolumn{2}{c}{Original} & \multicolumn{2}{c}{Elimination} \\
+			&  & Stars & Time & No. of stars & Time & No. of stars & Time & No. of stars & Time \\
+			\midrule
+			\multirow{2}{*}{\textit{AC1}}
+			& 1 & 17 & 11.67 & 17 & 11.35 & 520 & 16.67 & 518 & 17.13 \\ 
+			& 2 & 25 & 11.34 & 25 & 11.33 & 2660 & 22.84 & 2579 & 25.01 \\ 
+			& & & & & & & & & \\
+			\multirow{2}{*}{\textit{AC2}}
+			& 1 & 3 & 11.13 & 1 & 11.23 & 3187 & 56.21 & 2712 & 72.09 \\ 
+			& 2 & 5 & 11.15 & 1 & 11.09 & 6397 & 119.24 & 5367 & 103.82 \\
+			& & & & & & & & & \\
+			\multirow{2}{*}{\textit{AC3}}
+			& 1 & 18 & 11.90 & 5 & 11.63 & - & - & 5008 & 228.73 \\ 
+			& 2 & 81 & 12.77 & 14 & 11.43 & - & - & - & - \\ 
+			& & & & & & & & & \\
+			\multirow{2}{*}{\textit{AC4}}
+			& 1 & 226 & 24.54 & 226 & 24.70 & - & - & - & - \\ 
+			& 2 & 490 & 39.52 & 487 & 43.48 & - & - & - & - \\
+			& & & & & & & & & \\
+			\multirow{3}{*}{\textit{AC5}}
+			& 1 & 3 & 11.03 & 3 & 11.06 & 1962 & 20.24 & 966 & 19.34 \\ 
+			& 2 & 5 & 11.08 & 5 & 11.10 & 4677 & 42.71 & 1993 & 25.29 \\ 
+			& 3 & 5 & 11.00 & 5 & 11.10 & 11318 & 49.97 & 4572 & 27.07 \\ 
+			& & & & & & & & & \\
+			\multirow{3}{*}{\textit{AC6}}
+			& 1 & 4 & 11.08 & 4 & 11.21 & 5992 & 105.60 & 3504 & 94.00 \\ 
+			& 2 & 4 & 11.06 & 4 & 11.15 & 11593 & 198.89 & 6287 & 128.23 \\ 
+			& 3 & 4 & 11.11 & 4 & 11.03 & - & - & 14298 & 171.42 \\ 
+			& & & & & & & & & \\
+			\multirow{3}{*}{\textit{AC7}}
+			& 1 & 16 & 11.32 & 16 & 11.38 & - & - & - & - \\ 
+			& 2 & 43 & 11.87 & 43 & 11.92 & - & - & - & - \\ 
+			& 3 & 88 & 12.14 & 87 & 12.03 & - & - & - & - \\ 
+			& & & & & & & & & \\
+			\multirow{3}{*}{\textit{AC8}}
+			& 1 & 12 & 12.30 & 10 & 12.94 & - & - & - & - \\ 
+			& 2 & 18 & 12.41 & 14 & 12.07 & - & - & - & - \\ 
+			& 3 & 45 & 11.89 & 30 & 11.62 & - & - & - & - \\ 
+			\bottomrule 
+	\end{tabular}}
+\end{table}
+
+Table~\ref{tab:acas_optim} shows the results of the elimination algorithm for three
+networks in the ACAS Xu set. We selected only three networks as they are representative
+enough for the analysis herewith presented. Column ``\textbf{Layer}'' refers to the
+layer of the network in which we analyize the abstract propagation: each network in the
+ACAS Xu pool is made of six layers and in each layer the number of stars increases.
+Comparing the original algorithm and the optimized one, we can see that in this case
+the number of stars that can be deleted is almost neglectable: in network \textit{1\_1}
+we remove less than 700 stars in the last layer, with more than 31k stars alone.
+On the other hand, the comparison of CPU time is encouraging: even with the overhead
+introduced by Algorithm~\ref{alg:prop_v2} we do not pay a significant toll. This
+allows us to determine that, at least, we can always try in principle to optimize the
+number of stars in the propagation.
+
+In Table~\ref{tab:rcra_optim} we show a more encouraging result. We applied the same
+elimination algorithm to the drones case study and in this case the experiments
+show that star elimination can actually improve the performance of the verification
+algorithm. Comparing the results with $\varepsilon = 0.01$ and $\varepsilon = 0.1$ we
+observe that in the former case we propagate a very small number of stars: this is
+reasonable since a tighter input bound is more likely to be more stable. This 
+stability makes the elimination-based version very similar to the original one 
+with notable exceptions, e.g., in network \textit{AC2} all the extra stars created 
+in the original algorithm can be deleted and only one star is significative. 
+The experiment with $\varepsilon = 0.1$ is more representative since the number of 
+stars grows higher. Here we obtain slightly better results than ACAS Xu for networks 
+\textit{AC1} and \textit{AC2}, but already in \textit{AC3} the optimized algorithm 
+manages to propagate the first layer within a timeout of 5 minutes where the original 
+algorithm fails. Then, on networks \textit{AC5} and \textit{AC6} it manages to cut 
+the number of stars in less than a half with a valuable speed-up in computational time, 
+too.
+
+Given the preliminary nature of these experiments, the discrepancy between the CPU
+times in Tables~\ref{tab:exp-res} and~\ref{tab:rcra_optim} is due to the fact that
+the latter experiments are run on a machine equipped with an Intel\textregistered  
+\hspace{1pt} Core\texttrademark \hspace{1pt} i7-6500U dual core CPU @ 2.50GHz, 
+featuring 8GB of RAM and running Ubuntu Linux 16.04 LTS 64 bit.
+
+\subsection{CEGAR}
+%
+\begin{table}[t]
+	\caption{\label{tab:ref_results} Experimental results for CEGAR on a subset of 
+		ACAS Xu networks. Columns \textbf{Property} and \textbf{Network ID} report 
+		the property and the network considered, respectively. The other columns 
+		report the verification time in seconds and result (\textit{Verified}) 
+		for \textbf{Mixed}, \textbf{CEGAR-PS} and \textbf{CEGAR-mR} analyses, 
+		respectively. Given the randomic nature of the counter-example generator,
+		we report the average time and the number of results over 10 repetitions 
+		of the experiment.}
+	\setlength{\tabcolsep}{9pt}
+	\centering
+	%
+	\resizebox{\columnwidth}{!}{%
+	\begin{tabular}{l l rr rr rr}
+		\toprule
+		\multirow{2}{*}{\textbf{Property}} & \multirow{2}{*}{\textbf{Network ID}} &
+		\multicolumn{2}{c}{\textbf{Mixed}} & 
+		\multicolumn{2}{c}{\textbf{CEGAR-PS}} &
+		\multicolumn{2}{c}{\textbf{CEGAR-mR}} \\ 
+		\cmidrule{3-8} 
+		 & & Time & Verified & Time & Verified & Time & Verified \\ 
+		\midrule
+		\multirow{5}{*}{\textit{\# 3}} 
+		& \textit{1\_1} & 13 & True & 10 & 3/10  & 9 & 9/10  \\ 
+		& \textit{1\_3} & 10 & True & 14 & 6/10 & 10 & 0/10  \\ 
+		& \textit{2\_3} & 7 & True & 10 & 9/10  & 7 & 6/10  \\ 
+		& \textit{4\_3} & 15 & True & 17 & 10/10 & 14 & 10/10 \\ 
+		& \textit{5\_1} & 6 & True & 11 & 10/10 & 9 & 10/10 \\
+		 & & & & & & & \\
+		\multirow{4}{*}{\textit{\# 4}}
+		& \textit{1\_1} & 11 & True & 10 & 0/10  & 9 & 0/10 \\ 
+		& \textit{1\_3} & 8 & True & 16 & 0/10  & 11 & 0/10  \\ 
+		& \textit{3\_2} & 12 & True & 12 & 10/10 & 12 & 10/10 \\ 
+		& \textit{4\_2} & 12 & True & 11 & 10/10 & 12 & 10/10 \\
+		\bottomrule
+	\end{tabular}}
+\end{table}
+%
+Here we provide the results of the empirical evaluation of the CEGAR method.
+All the	experiments ran on a laptop equipped with an Intel i7-8565 CPU 
+(8 core at 1.8GHz) and 16 GB of memory with Ubuntu 20 operating system.
+We test the CEGAR algorithm on the ACAS Xu benchmark: among the networks 
+available, we selected those for which our over-approximate
+analysis could not find a  definitive answer, ending with a total of 9 networks. 
+ 
+In Table~\ref{tab:ref_results} we show the performance of the two versions of the
+refinement algorithm explained in Section~\ref{sec:cegar}, and we compare them 
+with our mixed abstraction methodology. The PS refinement (\textit{CEGAR-PS}) 
+selects six neurons in the whole network to refine, while the mR refinement 
+(\textit{CEGAR-mR}) refines one single neuron for each layer.
+Note that, by design, the number of neurons refined is the same for every 
+methodology: six in the whole network. The difference between the three algorithms 
+is which neurons are selected and how. As can be seen, the performances of the 
+two refinement algorithms are comparable; however, they seem to be less effective 
+than our mixed methodology and CEGAR-PS seems to be slightly more accurate than 
+CEGAR-mR at the cost of a small increase in the time needed to solve the query.
+We believe that the difference in performance is mainly attributable to the fact 
+that, while the measurements of relevance we used are valid, they do not capture how 
+the coarseness of the abstraction changes dynamically when a particular neuron is 
+refined. On the contrary, the mixed methodology chooses in each layer the neuron to 
+refine based on the values of the areas of the triangles given the previous layer 
+output. As a consequence, the choice of which neurons to refine is guided by the 
+coarseness of the abstraction \emph{after} the refinement is already applied in the 
+previous layers.

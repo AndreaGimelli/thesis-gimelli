@@ -1,0 +1,84 @@
+\section{Context and motivation}
+\label{sec:context}
+
+\subsection{Neural networks verification}
+
+Adoption and successful application of deep neural networks (DNNs) in various 
+domains have made them one of the most popular machine-learned models to date 
+--- see, e.g.,~\cite{DBLP:conf/cvpr/TaigmanYRW14} on image 
+classification,~\cite{DBLP:journals/taslp/YuHMCS12} on speech recognition,
+and~\cite{DBLP:journals/nature/LeCunBH15} for the general principles and a 
+catalog of success stories. Despite the impressive progress that the learning 
+community has made with the adoption of DNNs, it is well known that their 
+application in safety- or security-sensitive contexts is not yet hassle-free. 
+From their well-known sensitivity to \textit{adversarial perturbations}
+\cite{DBLP:journals/corr/GoodfellowSS14,DBLP:journals/corr/SzegedyZSBEGF13}, 
+i.e., minimal changes to correctly classified input data that cause a network 
+to respond in unexpected and incorrect ways, to other less-investigated, but 
+possibly significant properties --- see, 
+e.g.,~\cite{DBLP:journals/corr/abs-1805-09938} for a catalog 
+--- the need for tools to analyze and possibly repair DNNs is strong.
+
+As witnessed by an extensive survey~\cite{huang2018safety}
+of more than 200 recent papers, the response from the scientific
+community has been equally strong. 
+As a result, many algorithms have been proposed for the verification 
+of neural networks and tools implementing them have been made
+available. Some examples of well-known and fairly mature verification
+tools are Marabou~\cite{DBLP:conf/cav/KatzHIJLLSTWZDK19}, a
+satisfiability modulo theories (SMT)-based tool that answers queries
+regarding the properties of a DNN by transforming the queries into 
+constraint satisfiability problems; ERAN~\cite{DBLP:conf/iclr/SinghGPV19}, 
+a robustness analyzer based on abstract interpretation and 
+MIPVerify~\cite{DBLP:conf/iclr/TjengXT19},
+another robustness analyzer based on mixed integer programming
+(MIP). Other widely-known verification tools are
+Neurify~\cite{DBLP:conf/nips/WangPWYJ18}, a robustness analyzer based
+on symbolic interval analysis and linear relaxation,
+NNV~\cite{DBLP:journals/corr/abs-2004-05519}, a tool implementing
+different methods for reachability analysis,
+Sherlock~\cite{DBLP:conf/hybrid/DuttaCJST19}, an output range analysis
+tool and NSVerify~\cite{DBLP:conf/kr/AkitundeLMP18}, also for
+reachability analysis. A number of verification methodologies ---
+without a corresponding tool --- is also available
+like~\cite{DBLP:journals/corr/abs-1807-03571}, a game-based 
+methodology for evaluating pointwise robustness of neural networks in
+safety-critical applications. Most of the above-mentioned tools and
+methodologies work only for feedforward fully-connected neural
+networks with ReLU activation functions, with some of them
+featuring verification algorithms for convolutional neural networks 
+with different kinds of activation function. To the best of our
+knowledge, current state-of-the-art tools are restricted to
+verification/analysis tasks, in some cases they are limited to
+specific network architectures and they might prove difficult to use
+for practitioners and, in general, those who are not familiar with
+the complete background.
+
+Our tool \nevertwo{} finds itself at the intersection of the
+issues explained above, and aims to bridge the gap between
+learning and verification of DNNs. \nevertwo{} borrows its design
+philosophy from \never{}~\cite{pulina2011n}, the first tool for 
+automated learning, analysis and repair of neural networks. 
+\never{} was designed to deal with multilayer perceptrons 
+(MLPs) and its core  was an abstraction-refinement mechanism 
+described in~\cite{DBLP:conf/cav/PulinaT10,DBLP:journals/aicom/PulinaT12}.  
+As a system, one peculiar aspect of \never{} was that it included
+learning capabilities through the \shark~\cite{igel08} library.
+Concerning the verification part, \never{} could utilize any
+solver integrating Boolean reasoning and linear arithmetic constraint
+solving --- \hysat~\cite{franzle2007efficient} at the time.
+A further peculiarity of the approach was that \never{}
+could leverage abstract counterexamples to (try to) repair the
+MLP, i.e., retrain it to eliminate the causes of misbehaviour.
+\nevertwo{} relies on the \pynever{} API~\cite{guidotti2021pynever}
+and a first description of the system is available 
+in~\cite{guidotti2020never}, where the verification capabilities
+were provided by external tools like Marabou, ERAN and MIPVerify.
+This Thesis describes the new abstraction-refinement procedure
+implemented by \nevertwo{} and formalizes all the theorems involved.
+The version of \nevertwo{} corresponding to this work is available 
+online~\cite{never2online} under the Commons Clause (GNU GPL v3.0) 
+license.
+
+\clearpage
+

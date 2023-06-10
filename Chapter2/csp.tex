@@ -1,0 +1,109 @@
+\section{Constraint Satisfaction Problems}
+
+A Constraint Satisfaction Problem (CSP) requires a value, selected 
+from a given finite domain, to be assigned to each variable in the 
+problem, so that all constraints relating the variables are
+satisfied~\cite{brailsford1999constraint}. In more detail, given a 
+set of variables together with their domains, i.e., a set of possible 
+values that can be assigned to each variable, and a description of 
+the problem in the form of mathematical constraints, a CSP is the 
+problem of finding values of the variables that satisfy every 
+constraint. It is defined as a set of $n$ \textit{variables} 
+$X = \{x_1, \ldots, x_n\}$, a set of current \textit{domains}
+$\mathcal{D} = \{D(x_1), \ldots, D(x_n)\}$ where $D(x_i)$ is the
+finite set of possible \textit{values} for variable $x_i$, and a 
+set $\mathcal{C}$ of \textit{constraints} between variables.
+A constraint $C$ on the set of variables $X(C) = (x_{i_1}, \ldots, 
+x_{i_r})$ is a subset of the Cartesian product $D_0(x_{i_1}) \times 
+\ldots \times D_0(x_{i_r})$ that specifies the \textit{allowed}
+combinations of values for the variables $x_{i_1} \times \ldots
+\times x_{i_r}$.
+ 
+In this Thesis we consider two main approaches to solve CSPs, 
+namely Constraint Programming (CP) and Satisfiability
+Modulo Theory (SMT). CP is a powerful paradigm for solving CSPs
+that draws on a wide range of techniques from artificial 
+intelligence, operations research, algorithms, graph theory and 
+others~\cite{rossi2006handbook}. In general, CP provides high level
+languages that allow one to describe (model) a problem in a 
+declarative way by means of constraints, that is, properties of the
+solutions to be found. Product configuration has been established 
+as a successful application area of CP~\cite{mcdonald2002case,
+	jensen2004clab, benavides2005using, falkner2011modeling,
+	hervieu2016practical}. A CP solver  checks whether a certain
+assignment of decision variables respects all the constraints, 
+and returns such assignment in that case. Most CP solvers deal 
+naturally with finite domains and have good propagators to handle
+injectivity constraints. SMT handles the original problem by 
+encoding it to the problem of deciding the satisfiability of a 
+first-order formula with respect to some decidable theory
+$\mathcal{T}$. In particular, SMT generalizes the Boolean 
+satisfiability problem (SAT) by adding background theories such 
+as the theory of real numbers, the theory of integers, and the 
+theories of data structures (\textit{e.g.}, lists, arrays and 
+bit vectors) --- see, e.g.,~\cite{DBLP:series/faia/BarrettSST09}
+for details. There exists a constraint modeling language for 
+designing constraint satisfaction and optimization problems in 
+a high-level, solver independent way called 
+MiniZinc~\cite{marriott2014minizinc}. SMT solvers comply instead 
+to a dedicated standard language called SMT-LIB~\cite{smtlib}.
+
+Here we provide some more detail about the SMT approach which we use
+as a basis to introduce our modeling of design and configuration for
+RHEs. The corresponding CP formulation can be obtained with a simple
+syntax-driven translation. To decide the satisfiability of an input
+formula $\varphi$ in conjunctive normal form, SMT solvers typically
+first build a \emph{Boolean  abstraction} $\textit{abs}(\varphi)$ of
+$\varphi$ by replacing each constraint by a fresh Boolean variable
+(proposition), e.g., 
+\begin{eqnarray*}
+	\arraycolsep=2pt
+	\begin{array}{ccccccccccc}
+		\varphi &: &\underbrace{x \geq y} &\wedge &(&\underbrace{y > 0}& \vee &\underbrace{x >0}&)& \wedge &\underbrace{y \leq 0} \\
+		\textit{abs}(\varphi)&:&A& \wedge& (&B& \vee &C&)& \wedge  &\neg B
+	\end{array}
+	\label{eq:abs}
+\end{eqnarray*}
+where $x$ and $y$ are real-valued variables, and $A$, $B$ and $C$ are
+propositions. A propositional logic solver searches for a satisfying
+assignment $S$ for $\textit{abs}(\varphi)$, e.g., $S(A)=1$, $S(B)=0$, 
+$S(C)=1$ for the above example.  If no such assignment exists then the
+input formula $\varphi$ is unsatisfiable. Otherwise, the consistency
+of the assignment in the underlying theory is checked by a
+\emph{theory solver}. In our example, we check whether the set $\{ x
+\geq y,\ y \leq 0,\ x > 0\}$ of linear inequalities is feasible, which
+is the case. If the constraints are consistent then a satisfying
+solution (\textit{model}) is found for $\varphi$. Otherwise, the
+theory solver returns a theory lemma $\varphi_E$ giving an
+\textit{explanation} for the conflict, e.g., the negated conjunction
+some inconsistent input constraints. 
+The explanation is used to refine the Boolean abstraction
+$\textit{abs}(\varphi)$ to $\textit{abs}(\varphi)\wedge
+\textit{abs}(\varphi_E)$. These steps are iteratively executed until
+either a theory-consistent Boolean assignment is found, or no more
+Boolean satisfying assignments exist.
+
+Adding theories of cost to SMT yields Optimization Modulo Theories
+(OMT), an extension that finds models
+to optimize given objectives through a combination of SMT and optimization 
+procedures~\cite{sebastiani2012optimization}. For example,
+\begin{equation*}
+	\left\{
+	\begin{array}{l}
+		\varphi : x \geq y \wedge (y > 0 \vee x > 0) \wedge y \leq 0 \\
+		\min_{x,y} ( x + y )
+	\end{array}
+	\right.
+\end{equation*}
+requires all the constraints in $\varphi$ to be satisfied
+and the additional cost $x + y$ to be minimized.
+Notice that OMT extends classical formulations  
+in mathematical programming, e.g., linear programming or mixed integer
+linear programming, since it allows Boolean structure to be taken into
+account  together with the optimization target. OMT solvers have been
+developed for several first-order theories like, e.g., those of
+linear arithmetic over the rationals $(LRA)$ or the integers
+$(LIA)$ or their combination $(LIRA)$. In this work we mainly
+consider \textit{quantifier free} theories in a mixed 
+integer/rational domain --- known as $QF\_LIRA$ in the
+literature~\cite{barrett2018satisfiability}.

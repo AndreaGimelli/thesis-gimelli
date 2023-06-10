@@ -1,0 +1,151 @@
+\section{Neural Networks}
+\label{sec:nns}
+
+\paragraph{Basic notation and definitions.} 
+We denote $n$-dimensional \emph{vectors} of real numbers 
+$x \in \mathbb{R}^n$ --- also \emph{points} or \emph{samples} 
+--- with lowercase letters like $x, y, z$. We write
+$x = (x_1, x_2, \ldots, x_n)$ to denote a vector with
+its \emph{components} along the $n$ coordinates. We denote $x \cdot y$
+the \emph{scalar product} of two vectors $x, y \in \mathbb{R}^n$
+defined as $x \cdot y = \sum_{i=1}^n x_i y_i$. The \emph{norm} $\lVert
+x \rVert$ of a vector is defined as $\lVert x \rVert = \sqrt{x \cdot x}$.
+We denote sets of vectors $X \subseteq \mathbb{R}^n$ with uppercase
+letters like $X, Y, Z$.  A set of vectors $X$ is  
+\emph{bounded} if there exists $r \in \mathbb{R}, r > 0$ such that 
+$\forall x, y \in X$ we have $d(x, y) < r$ where $d$ is the 
+\emph{Euclidean norm} $d(x, y) = \lVert x - y \rVert$. 
+A set $X$ is \emph{open} if for every point $x \in X$ there 
+exists a positive real number $\epsilon_x$ such that a point
+$y \in \mathbb{R}^n$ belongs to $X$ as long as $d(x,y)
+< \epsilon_x$. The complement of an open set is a \emph{closed} set ---
+intuitively, one that includes its boundary, whereas open sets do not;
+closed and bounded sets are \emph{compact}. A set $X$ is \emph{convex}
+if for any two points $x,y \in X$ we have that also $z \in X~\forall 
+z = (1 - \lambda)x + \lambda y$ with $\lambda \in
+[0,1]$, i.e., all the points falling on the
+line passing through $x$ and $y$ are also in $X$. Notice that the
+intersection of any family, either finite or infinite, of convex sets
+is convex, whereas the union, in general, is not. Given any
+non-empty set $X$, the smallest convex set $\mathcal{C}(X)$
+containing $X$ is the \emph{convex hull of} $X$ and it is
+defined as the intersection of all convex sets containing
+$X$. A \emph{hyperplane} $H \subseteq \mathbb{R}^n$ can be
+defined as the set of points
+\begin{equation*}
+	H = \{x \in \mathbb{R}^n \mid a_1x_1 + a_2x_2 + \ldots + a_n x_n =
+	b\}
+\end{equation*}
+where $a \in \mathbb{R}^n$, $b \in \mathbb{R}$ and at least one
+component of $a$ is non-zero. Let $f(x) = a_1x_1 + a_2x_2 + \ldots +
+a_n x_n - b$ be the affine form defining $H$. The \emph{closed half-spaces
+	associated with} $H$ are defined as
+\begin{equation*}
+	H_{+}(f) = \{x \in X \mid f(x) \geq 0 \} \qquad  H_{-}(f) = \{x \in
+	X \mid f(x) \leq 0 \}
+\end{equation*}
+Notice that both $H_{+}(f)$ and $H_{-}(f)$ are convex. A
+\emph{polyhedron} in $P \subseteq \mathbb{R}^n$ is a set of points 
+defined as $P= \bigcap_{i=1}^p C_i$ where $p \in \mathbb{N}$ is a
+finite number of closed half-spaces $C_i$. A bounded polyhedron is a
+\emph{polytope}: from the definition, it follows that polytopes are 
+convex and compact in $\mathbb{R}^n$. 
+
+
+\paragraph{Neural networks.} Given a finite number $p$ of functions 
+$f_1: \mathbb{R}^n  \to \mathbb{R}^{n_1}, \ldots, f_p:
+\mathbb{R}^{n_{p-1}} \to \mathbb{R}^{m}$ --- also called \emph{layers}
+--- we define a \emph{feed forward neural network}~\cite{abdi1999neural}
+as a function $\nu : \mathbb{R}^n \to \mathbb{R}^m$ obtained through
+the compositions of the layers, i.e.,  $\nu(x) = f_p(f_{p-1}( \ldots
+f_1(x) \ldots ))$. The layer $f_1$ is called \emph{input layer}, the
+layer $f_p$ is called \emph{output layer}, and  the remaining layers
+are called \emph{hidden}. For $x \in \mathbb{R}^n$, we consider only
+two types of layers:
+\begin{itemize}
+	\item $f(x) = Ax + b$ with $A \in \mathbb{R}^{m \times n }$ and $b
+	\in \mathbb{R}^m$ is an \emph{affine layer} implementing the
+	linear mapping $f : \mathbb{R}^n \to 
+	\mathbb{R}^m$;
+	\item $f(x) = (\sigma_1(x_1), \ldots, \sigma_n(x_n))$ is a
+	\emph{functional layer} $f: \mathbb{R}^n \to \mathbb{R}^n$
+	consisting of $n$ \emph{activation 
+		functions} --- also called \emph{neurons}; usually
+	$\sigma_i = \sigma$ 
+	for all $i \in [1,n]$, i.e., the function $\sigma$ is applied
+	componentwise to the vector $x$. 
+\end{itemize}
+We consider two kinds of activation functions $\sigma: \mathbb{R} \to
+\mathbb{R}$ that find widespread adoption: the \emph{ReLU} function
+defined as $\sigma(r) = max(0,r)$, and the \emph{logistic} function
+defined as $\sigma(r) = \frac{1}{1 + e^{-r}}$.
+Although we do not consider them here, affine mappings
+can also represent convolutional layers with one or more filters~\cite{DBLP:conf/sp/GehrMDTCV18}.
+For a neural network $\nu : \mathbb{R}^n \to
+\mathbb{R}^m$, the task of \emph{classification} is about assigning to
+every input vector $x \in \mathbb{R}^n$ one out of $m$ labels: an
+input $x$ is assigned to a class $k$ when $\nu(x)_k > \nu(x)_j$ for
+all $j \in [1,m]$ and $j \neq k$; the task of \emph{regression} is
+about approximating a functional mapping from $\mathbb{R}^n$ to
+$\mathbb{R}^m$. 
+In this regard, neural networks consisting of affine layers
+coupled with either ReLUs or logistic layers offer universal
+approximation capabilities~\cite{hornik1989multilayer}.
+
+\paragraph{Verification task.} Given a neural network $\nu :
+\mathbb{R}^n \to \mathbb{R}^m$ we wish to verify algorithmically that
+it complies to stated \emph{post-conditions} on the output as long as
+it satisfies \emph{pre-conditions} on the input. Without loss of
+generality\footnote{Input domains must be bounded to enable
+	implementation of neural networks on digital hardware; therefore,
+	also data from physical processes, which are potentially ubounded,
+	are normalized within small ranges in practical applications.},
+we assume that the input domain of $\nu$ is a bounded set $I 
+\subset \mathbb{R}^n$. Therefore, the corresponding output domain is 
+also a bounded set $O \subset \mathbb{R}^m$ because $(i)$ affine
+transformations of bounded sets are still bounded sets, $(ii)$ ReLU is a
+piecewise affine transformation of its input, $(iii)$ the output
+of logistic functions is always bounded in the set $[0,1]$, and the
+composition of bounded functions is still bounded. We
+require that the logic formulas defining pre- and post-conditions are
+interpretable as finite unions of bounded sets in the input 
+and output domains. Formally, given $p$ bounded sets $X_1, \ldots,
+X_p$ in $I$ such that $\Pi = \bigcup_{i=1}^p X_i$ and $s$ bounded
+sets $Y_1, \ldots, Y_s$ in $O$ such that $\Sigma =
+\bigcup_{i=1}^s Y_i$, we wish to prove that  
+\begin{equation}
+	\label{eq:verif}
+	\forall x \in \Pi. \nu(x) \in \Sigma.
+\end{equation}
+While this query cannot express some problems regarding
+neural networks, e.g., invertibility or
+equivalence~\cite{DBLP:journals/corr/abs-1805-09938}, it captures the
+general problem of testing robustness against \emph{adversarial
+	perturbations}~\cite{DBLP:journals/corr/GoodfellowSS14}. For example,
+given a network $\nu : I \to O$ with $I \subset \mathbb{R}^n$ and
+$O \subset \mathbb{R}^m$ performing a 
+classification task, we have that separate regions of the input are 
+assigned to one out of $m$ labels by $\nu$. Let us assume
+that region $X_j \in I$ is classified in the $j$-th class
+by $\nu$. We define an \emph{adversarial region} as a
+set $\hat{X}_j$ such that for all $\hat{x} \in \hat{X}$ there exists at
+least one $x \in X$ such that $d(x,\hat{x}) \leq \delta$ for some
+positive constant $\delta$. The 
+network $\nu$ is \emph{robust} with respect to $\hat{X}_j \subseteq I$ if,
+for all $\hat{x} \in \hat{X}_j$, it is still the case that $\nu(x)_j > \nu(x)_i$
+for all $i \in [1,m]$ with $i \neq j$. This can be stated in the
+notation of condition (\ref{eq:verif}) by letting $\Pi = \{ \hat{X}_j 
+\}$ and $\Sigma = \{ Y_j \}$ with $Y_j = \{ y \in O \mid y_j \geq y_i
++ \epsilon, \forall i \in [1,n] \wedge i \neq j, \epsilon >
+0\}$. Analogously, in 
+a regression task we may ask that points that are sufficently close to
+any input vector in a set $X \subseteq I$ are also sufficiently close
+to the corresponding output vectors. To do this, given the positive
+constants $\delta$ and $\epsilon$, we let $\hat{X} = \{ \hat{x} \in I
+\mid \exists x. (x \in X \wedge d(\hat{x},x) \leq  \delta) \}$ and $\hat{Y}
+= \{\hat{y} \in O \mid \exists x. (x \in \hat{X} \wedge d(\hat{y},\nu(x)) \leq
+\epsilon)\}$ to obtain  
+$\Pi = \{\hat{X}\}$ and $\Sigma = \{\hat{Y}\}$. Notice that, given our
+definition, we consider adversarial regions and output images 
+that may not be convex.
+%

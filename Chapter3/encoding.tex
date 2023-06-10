@@ -1,0 +1,370 @@
+In this chapter we present the encoding of the elevator constraints,
+and how different choices can impact the performance of the design
+task. First, we present the baseline heuristic method and some preliminary
+approaches dealing with Genetic Algorithms (GAs). Then, we elaborate on 
+lessons learned in four main aspects of the encoding, both from a general
+point of view by discussing the employ of different kinds of constraints, 
+and from a specific point of view by discussing how arithmetic and 
+optimization techniques can handle the problem --- leading to the CSP-based
+variations of \liftcreate.
+
+In the following chapters, we use a number of variants of \liftcreate{}
+while referring to the algorithm considered:
+\begin{itemize}
+	\item \liftcreatehr{} is the current heuristic-based engine
+	\item \liftcreatebf{} is a brute-force version used as a baseline
+	\item \liftcreatega{} is the Genetic Algorithm-based experiment
+	\item \liftcreaters{} is a random-sampling version used as a 
+		baseline w.r.t. \liftcreatega
+	\item \liftcreatesmt{} is the SMT-based experiment
+	\item \liftcreatecp{} is the CP-based experiment
+\end{itemize}
+
+\section{Encoding strategies}
+\label{sec:solutions}
+
+Due to the specific features of \liftcreate{} versions, there are some
+differences in how configurations are generated and results are
+presented, differences that we describe in the following and that we
+tried to harmonize as much as possible in order to make our experimental
+comparison meaningful. \liftcreatehr{} produces at most one solution --- 
+supposedly the ``best'' one according to the heuristics --- for each 
+\emph{prototype}, i.e., a pair comprised of a door and a car frame which 
+together fit the shaft. Therefore, for each given setup, \liftcreatehr{} 
+produces as many solutions as there are prototypes for which a
+solution exists, where a solution features a specific placement 
+of car frame and doors. The three versions of \liftcreate{} based on 
+search in the space of configurations, namely \liftcreatebf{},
+\liftcreaters{} and \liftcreatega{}, feature a common data flow
+implementing the following phases:  
+\begin{itemize}
+	\item \emph{Prototype generation}: amounts to list all prototypes,
+	pruning up-front those which cannot fit the given shaft.
+	\item \emph{Expansion}: given a prototype, potential
+	configurations are explored by attempting to place the car frame 
+	and the doors inside the shaft within the allowable ranges:
+	the results of this phase are  \emph{early designs}.
+	\item \emph{Design validation}: given an early design, a number of 
+	checks is performed in order to validate the corresponding 
+	configuration and declare it feasible or not.
+\end{itemize}
+Specifically, the validation phase must guarantee that every constraint 
+of Section~\ref{sec:model_constraints} is satisfied. The difference
+among \liftcreatebf{}, \liftcreaters{} and \liftcreatega{} lies in the
+expansion phase: exhaustive search for \liftcreatebf{}, random
+sampling for \liftcreaters{} and genetic algorithms for
+\liftcreatega{}. Since these versions may produce many feasible
+configurations for each prototype, whereas \liftcreatehr{} outputs
+only one, we \emph{cluster} configurations after the validation
+phase. In more details, the set of valid placements for each given
+prototype is clustered around a representative, in order to make the
+comparison with \liftcreatehr{} possible. Finally, both in \liftcreatecp{}
+and \liftcreatesmt{} the prototype expansion phase is replaced by the 
+CP/SMT encoding of the constraints introduced in 
+Section~\ref{sec:model_constraints}, where the choice of components is 
+restricted to those that can fit the shaft. The subsequent phases of
+expansion and validation are merged in the search for a solution by 
+the solvers. If a cost function to drive the search towards ``optimal''
+designs is supplied, then \liftcreatecp{} and \liftcreatesmt{} output 
+exactly one configuration for each given setup.
+
+\subsection{Custom heuristics: \liftcreatehr{}}
+\label{sec:baseline}
+
+\begin{algorithm}[t]
+	\caption{Heuristic algorithm for \liftcreatehr{}}
+	\label{alg:hr}
+	\small
+	\begin{algorithmic}[1]
+		\Function{compute\_designs}
+		{$w_{\mbox{\emph{shaft}}}$, $d_{\mbox{\emph{shaft}}}$, \emph{D} = \emph{List}$<$\emph{Door}$>$, 
+			\emph{F} = \emph{List}$<$\emph{CarFrame}$>$}
+		\State \emph{output} = $[\:]$ \Comment{Design list,
+			initially empty}
+		\State $S_{\mbox{\emph{prev}}} = 0$ \Comment{Car surface initialization}
+		\State \textsc{order\_by\_dcr}(\emph{F})
+		\State \textsc{order\_by\_opening}(\emph{D})
+		\For{$i = 1:F.length$}
+		\State $S_{\mbox{\emph{cur}}}$ =
+		\textsc{compute\_car\_surface}(\emph{F[i]}, $w_{\mbox{\emph{shaft}}}$, $d_{\mbox{\emph{shaft}}}$)
+		\Comment{Compute surface given the Car Frame}
+		\If{$S_{\mbox{\emph{cur}}} > S_{\mbox{\emph{prev}}}$} 
+		\Comment{Search only if the surface increases}
+		\State $S_{\mbox{\emph{prev}}} = S_{\mbox{\emph{cur}}}$
+		\State \emph{D} = \textsc{filter\_doors}
+		($w_{\mbox{\emph{shaft}}}$, \emph{D})
+		\Comment{Discard doors that do not fit
+			the shaft}
+		\State \emph{prototype} = $\emptyset$ \Comment{Empty prototype}
+		\For{$j = 1 : D.length$}
+		\State \emph{ld} = 
+		\textsc{match\_landing\_door}(\emph{D[j]})
+		\Comment{Find a matching landing door for $D[j]$}
+		\State \emph{prototype} = (\emph{F[i], D[j], ld})
+		\If{\textsc{is\_feasible}(\emph{prototype})}
+		\Comment{Check whether the tuple is feasible}
+		\State \textsc{break}
+		\EndIf
+		\EndFor
+		\If{\emph{prototype} $\neq$ $\emptyset$}
+		\State \emph{design} = \textsc{add\_rails}(\emph{prototype})
+		\Comment{Add car frame rails to the prototype}
+		\State \textsc{optimize\_components}(\emph{design})
+		\Comment{Align components}
+		\If{\textsc{is\_valid}(\emph{design})}
+		\Comment{Validate design after optimization}
+		\State \textsc{append}(\emph{output}, \emph{design})
+		\EndIf
+		\EndIf
+		\EndIf
+		\EndFor
+		\State \Return \emph{output}
+		\EndFunction
+	\end{algorithmic}
+\end{algorithm}
+
+The special-purpose heuristic engine of \liftcreatehr{} is meant to
+replicate the design flow that a professional would carry out by hand.
+Algorithm~\ref{alg:hr} is a pseudo-code representation of the function
+\textsc{compute\_designs} which is at the core of
+\liftcreatehr{}. \textsc{compute\_designs} takes as input the shaft 
+dimensions $w_{\mbox{\emph{shaft}}}$ and $d_{\mbox{\emph{shaft}}}$,
+the list of all available car
+doors $D$ and the list of all available car frames $F$. The car door
+list is sorted in \emph{decreasing order} according to door size 
+(\textsc{order\_by\_opening}) and the car frame list is sorted in
+\emph{increasing order} according to the distance between car rails
+(\textsc{order\_by\_dcr}). 
+The outermost \textbf{for} loop scans the available car frames,
+computing for each one the car surface $S_{\mbox{\emph{cur}}}$
+(\textsc{compute\_car\_surface}). Here, a heuristic choice is 
+performed: if the car surface allowed by the current car frame
+$S_{\mbox{\emph{cur}}}$ is not greater than the one allowed by the 
+previous one $S_{\mbox{\emph{prev}}}$, the algorithm skips to the next 
+choice of car frame. If $S_{\mbox{\emph{cur}}}$ is greater than 
+$S_{\mbox{\emph{prev}}}$, the search continues by
+filtering the list of car doors (\textsc{filter\_doors}) to discard
+those larger than the shaft, while the doors left are scanned in the
+innermost \textbf{for} loop --- according to the order of $D$, the
+largest opening is considered first to maximize accessibility. For
+each door, a matching landing door is selected and 
+a \emph{design prototype} is created as the tuple ($F[i], D[j], 
+ld$). The predicate \textsc{is\_feasible} checks whether the prototype
+is feasible, i.e., the three components can be fitted in the shaft
+while respecting all the hard constraints. If so, the innermost loop
+comes to an end: implicitly, this is also a heuristic choice since the
+procedure does not check other doors that could provide alternative
+design prototypes. Given a prototype, the design is finalized by
+adding the car frame rails and optimizing the placement with the
+function \textsc{optimize\_components}. The predicate
+\textsc{is\_valid} checks whether the design is valid and should
+be retained for further processing.
+Summing up, the procedure produces \textit{at most} one design per
+prototype associated with a specific car frame. It is important
+to notice that some combinations of car frame and doors that may
+result in feasible designs are never explored. While this helps in
+keeping the search space at bay, \liftcreatehr{} may return no
+designs also in scenarios where feasible ones exist.
+
+\subsection{Genetic algorithms: \liftcreatega{}}
+\label{sec:ga_enc}
+
+In \liftcreatega{} the genotype is composed by 4 chromosomes, each one   
+consisting of a single gene. As in~\cite{carlson1996genetic}, 
+genes are represented by integer numbers as follows:
+\begin{itemize}
+	\item \emph{Gene 1}: Value of the car door $x$ base point --- $x_{cd}$ 
+	in Table~\ref{tab:variables}.
+	\item \emph{Gene 2}: Value of the car frame $y$ base point --- $y_{cf}$ 
+	in Table~\ref{tab:variables}.
+	\item \emph{Gene 3}: Choice of the car frame; to encode the choice
+	among available car frames we assigned to each one a unique integer
+	identifier.
+	\item \emph{Gene 4}: Choice of the car door; also in this case 
+	we encoded each door with a unique integer code.
+\end{itemize}
+Since the available car frame and door identifiers, i.e., the domains of 
+the genes 3 and 4, are restricted to those that could fit a given
+shaft, each individual represents a single early design. We do not encode
+the variables $x_{cf}$ and $y_{cd}$ because, as pointed out in 
+Section~\ref{sec:model_constraints}, the coordinates are 
+fixed in the design.
+
+The fitness function to score individuals is computed by associating
+costs corresponding to violations of the feasibility constraints, 
+i.e., we turn hard constraints into soft ones to discourage designs 
+that violate them. However, we cannot completely exclude unfeasible designs
+and this is why \liftcreatega{} still retains a validation step at the
+end to make sure that all generated designs are valid. The cost
+function built in \liftcreatega{} includes also terms encoding the
+objective presented in Section~\ref{sec:objective} for the choice and 
+placement of the car frame and the doors.
+We penalize projects in which the car frame is misaligned with respect 
+to the car axis --- such as in (\ref{eq:costoh}). If the choice of the car 
+frame is such that overhangs are negative --- i.e., if the car frame $dcr$ 
+is greater than the resulting car depth $d_{car}$ --- the resulting value 
+is multiplied by $10^3$.
+Concerning doors, the cost detailed in (\ref{eq:costdoor}) is applied depending
+on the door type in order to discourage misaligned placements while for the
+selection we apply a slight variation to the hard minimization of (\ref{eq:choice})
+by using a parabolic function that grows up quickly for values less than 
+550mm or greater than 800mm. The function we consider is 
+$f(x) = 0.01 \cdot x^2 - 13.5 \cdot x + 4561.25$ computed with  $x = opening$.
+This is because doors whose opening is less than $550$mm and doors with opening 
+greater than $800$mm are discouraged: the former are used only in very special
+situations and the latter are usually very expensive. Whether the selected door 
+is out of range, we apply a fixed weight which is either $10^5$, if the actual 
+door width is less than $550$mm, or $300$ if greater than $800$mm.
+We use a parabolic function because, as we mentioned before, GAs provide
+unconstrained optimization over the solution space, and a
+continuous objective is better for the fitness computation.
+The GA implementation is provided by the \textit{Jenetics}~\cite{jenetics} 
+Java library, which allowed us to seamlessly plug the GA engine to our codebase 
+by specifying the composition of the genotype. 
+
+\section{Constraint satisfaction: \liftcreatecp{}/\textsc{SMT}}
+\label{sec:selection}
+
+\liftcreatecp{} and \liftcreatesmt{} implement each with their own specific
+formalism the encoding detailed in Chapter~\ref{ch:elevator_model}.
+Nevertheless, while experimenting in early stages of this encoding and
+guided by the experience obtained with search-based techniques we 
+identified the following encoding alternatives that can impact the performance
+of a constraint solver.
+
+\subsection{Component selection}
+The car frame, the cylinder and the doors are selected from a database 
+of components. In order to automate the design of an elevator, we must 
+consider that choosing different components yields different 
+parameter values for each one. The relationship between the selection of 
+a component and the assignment of the corresponding parameter 
+values can be encoded via Boolean implications of the form
+\begin{equation}
+	\label{eq:impl}
+	Id_x = i \Rightarrow x.p = v
+\end{equation}
+where $Id_x$ encodes the identifier of choice for component $x$ (a
+decision variable), $i$ is a specific identifier value, $x.p$ is some 
+parameter of the component $x$ and $v$ is the value of $x.p$ given
+that the component $x$ with identifier $i$ was chosen --- see, 
+e.g.,~\cite{bacchus2007gac}.
+To encode constraints of the form $(\ref{eq:impl})$ a combination
+of Boolean reasoning with integer arithmetic is sufficient.
+However, considering the way data sets are usually encoded in MiniZinc 
+with arrays~\cite{marriott2014minizinc}, we consider an alternative
+encoding where we associate an array to each component parameter.
+For example, if a component $x$ has two parameters $p_1$ and $p_2$,
+we build two arrays $P_1$ and $P_2$ that will store the values of
+$p_1$ and $p_2$ for each instance of the component. The index of the
+arrays becomes a decision variable chosen by the solver
+to enforce the correct values of the parameters.  
+
+\subsection{Look-up tables}
+Some parameters, e.g., the maximum number of passengers that the car
+may accommodate, are a function of others, e.g., the car
+surface. However, instead of expressing such constraints directly --- 
+which might involve the use of non-linear or transcendental functions 
+--- the correspondence between free parameters and derived ones is 
+encoded with \emph{look-up tables}. Table~\ref{tab:passengers} 
+exemplifies such a table assuming that the car surface $A$ is contained 
+within three ranges.
+
+\begin{table}[t]
+	\setlength{\tabcolsep}{20pt}
+	\caption{\label{tab:passengers} Look-up table to encode the
+		number of passengers $P$ with starting value $P_0$ as a 
+		function of the car surface $A$.}
+	\centering
+	\begin{tabular}{c c}
+		\toprule
+		\textbf{Car surface ($A$)} & \textbf{No. of passengers ($P$)} \\ 
+		\midrule 
+		$a1 < A \le a2$ & $P_{0}$ \\ 
+		$a2 < A \le a3$ & $P_{0} + 1$ \\ 
+		$A > a3$ & $P_{0} + 2$ \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+The car payload is computed in a similar way, but,
+since the surface ranges are different, we need another set of 
+constraints structured in the same way.
+These requirements can be easily modeled with implications in the same
+way as component selection: the surface $A$ is a decision variable
+that implies the number of passengers or the payload. However,
+both SMT-LIB and MiniZinc allow users to define custom 
+\textit{functions}. In practice, functions are series of 
+\textit{if-then-else} statements about, e.g., the car surface, where 
+each function returns, e.g., the corresponding number of passengers 
+or the payload.
+
+\subsection{Integers vs. Reals}
+Most parameters involved in the design process for elevators are 
+expressed in millimeters which suggests integer-based encodings.
+However, some parameters, like the forces exerted on the car rails,
+involve arithmetic over reals. This makes the corresponding
+constraint satisfaction problems members of the mixed-integer
+arithmetic family. In such encodings, the main disadvantage is that a 
+large number of integer quantities may increase considerably the
+solution time. We try to improve on this by relaxing some of the
+integer quantities to reals.
+In particular, we consider component parameters since 
+parameters are not \textit{decided} but their values are only assigned
+based on the choice of a component. This means that the domain of the
+parameters is a finite set and we can relax the arithmetic encoding 
+without producing invalid results. In this representation the only 
+operation that could add decimal digits is division, but since in our
+encoding there are only a few such operations, boundary checking can 
+be implemented easily. These considerations do not hold for some 
+decision variables including, but not limited to, the index used to 
+select components. Also, several CP solvers we experimented with are 
+not affected by this choice due to the fact that they do not support
+floating-point arithmetic.
+
+\subsection{Single and Multi-objective optimization}
+
+Here we describe alternative constructions of the cost function,
+using the contributions that are detailed in Section~\ref{sec:objective}.
+In previous works of ours~\cite{AiLift2} we consider the weighted sum 
+of the costs $c_{cf}$, $c_{door}$ and $c_{size}$ to obtain the overall
+cost function, but the contribution $c_{cr}$ may conflict with the
+previous ones because the farthest is the door from the car frame, the
+greater is the force exerted on the car rails~\cite{AiLift3, AiLift4}. 
+Nevertheless, since the car rails can be chosen once the other components
+are fitted, this objective can be considered with a lower priority. 
+If we follow a single-objective approach, we can weight the cost $c_{cr}$
+significantly less than the other three. The overall cost function
+$\mathcal{C}$ becomes
+\begin{equation}
+	\label{eq:costfunc_single}
+	\mathcal{C} = \alpha_1 c_{cf} + \alpha_2 c_{door} +  \alpha_3 c_{size}
+	+ \alpha_4 c_{cr} 
+\end{equation}
+with $\alpha_4 \ll \alpha_i$ for $i \neq 4$.
+
+Alternatively, we can exploit priorities among different cost
+functions by resorting to multi-objective optimization using, e.g.,
+the lexicographic method whereby preferences are imposed by ordering 
+the objective functions according to their significance ---
+see~\cite{CHANG20151105} for details.
+In this case, we consider two different cost functions:
+\begin{equation}
+	\label{eq:costfunc_multi}
+	\begin{array}{rcl}
+		\mathcal{C}_1 & = & \alpha_1 c_{cf} + \alpha_2 c_{door} +
+		\alpha_3 c_{size}\\
+		\mathcal{C}_2 & = &c_{cr}
+	\end{array}
+\end{equation}
+where the objective function $\mathcal{C}_1$ is minimized first.
+
+\liftcreatecp{} and \liftcreatesmt{} take into account the constraints 
+and the cost function providing an encoding to a formula in the 
+MiniZinc~\cite{nethercote2007minizinc} and SMT-LIB~\cite{smtlib} 
+languages, respectively, to be solved by a number of state-of-the-art 
+solvers. 
+%Considering the optimization, the cost function defined in 
+%(\ref{eq:costfunc_single}) is applied with 
+%$\alpha_1 = \alpha_2 = \alpha_3  = 1$ and $\alpha_4 = 0.1$ 
+%i.e., a setup where every configuration objective in $\mathcal{C}_1$ 
+%has the same priority.

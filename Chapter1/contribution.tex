@@ -1,0 +1,41 @@
+\section{Contribution}
+\label{sec:contribution}
+
+The contribution of this Thesis is twofold. First, the results of the
+experiments on different ways of encoding design problems and how to
+employ constraint satisfaction techniques in verification of NNs contribute
+to deepen the knowledge in how different ways of encoding the constraints
+impact on the results. Second, for both case studies we developed special
+purpose tools that provide access to all the methodologies taken in exam.
+In particular, we contribute with the following results:
+
+\paragraph{Declarative encodings for elevator systems.}
+Starting from the work presented in~\cite{AiLift2} we investigated how to
+benefit from declarative encodings in the elevator domain, and how to
+transfer such knowledge to generic configuration systems. In~\cite{AiLift3}
+and~\cite{AiLift4} we experimented with several declarative encodings based
+on Genetic Algorithms (GAs), Satisfiability Modulo Theories (SMT) and 
+Constraint Programming (CP) showing the strength and weaknesses of these
+approaches against the different aspects of the design task.
+
+\paragraph{Neural networks verification in safety-critical domains.}
+We use SMT as a pivot to deal with the verification of machine learning 
+models with neural networks. We created a standard for the definition
+of benchmarks which uses SMT as the language for the definition of the
+verification properties~\cite{vnnlib} and we contribute with two new case
+studies, i.e., Adaptive Cruise Control (ACC)~\cite{DBLP:conf/ecms/DemarchiGPT22}
+and drone hovering. We also experiment with optimization algorithms for
+our verification procedure~\cite{DBLP:conf/cpsschool/DemarchiG22}.
+
+\paragraph{State of the art tool development.}
+Alongside the encodings and the experiments herewith reported, we also
+developed new tools for providing fast and easy access to the algorithms.
+For the design of elevator systems we perfectioned the tool \liftcreate,
+which provides an interface towards the different encodings. Using this
+tool, the experiments shared the same overhead and provided reliable and
+replicable results.
+
+In the verification topic, we created a software portfolio named
+\textit{NeVerTools}\footnote{https://github.com/NeVerTools} which groups
+the former contributions in the domain, packed in the \pynever{} Python API
+and two Graphical User Interfaces (GUIs), namely \coconet{} and \nevertwo.

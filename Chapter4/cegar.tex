@@ -1,0 +1,146 @@
+\section{Counter-example Guided Abstraction Refinement}
+\label{sec:cegar}
+
+Our algorithm can be used to compute the complete or over-approximate 
+reachable set of the neural network of interest. Once the reachable 
+set has been computed, the property of interest can be verified by computing
+the intersection between the negation of such property and the reachable 
+set (which we call \textit{reachable counter set}). If such intersection is 
+the empty set, then the network is compliant with the property of interest; 
+otherwise, if the reachable set is complete, we have shown that the network 
+is unsafe. However, if the reachable set is over-approximated, the concrete 
+network may satisfy the property, and the over-approximation may be too coarse.
+In both cases in which the reachable counter set is not the empty set, we are 
+interested in extracting concrete input points corresponding to the output 
+contained in the reachable counter set.
+In particular, when we have a complete counter reachable set we can leverage 
+the following theorem, adapted from~\cite{tran2020verification}:
+
+\begin{theorem}
+	\label{th:counter-input}
+	Let $\nu$ be a feed-forward neural network, $\Theta = (c, V, R)$ be a star 
+	input set, $\nu(\Theta) = \bigcup_{i=1}^k \Theta_i$, $\Theta_i = 
+	(c_i, V_i, R_i)$ be the reachable set of the neural network and \emph{S} be a 
+	safety specification. Denote $\overline{\Theta}_i = \Theta_i \cap \neg 
+	\mathbf{S} = (c_i, V_i, \overline{P}_i)$, $i = 1, ..., k$. The neural network 
+	is safe if and only if $\overline{P}_i = 0$ for all i. If the neural network 
+	violates its safety property then the complete counter input set containing all 
+	possible inputs in the input set that lead the neural network to unsafe states 
+	is $\mathbf{C} = \bigcup_{i=1}^k (c, V, \overline{P}_i), \overline{P}_i \neq 0$.
+\end{theorem}
+
+For the proof of Theorem \ref{th:counter-input} we refer 
+to~\cite{tran2020verification}.
+Using Theorem~\ref{th:counter-input} we can easily compute the complete counter 
+input set, so the problem of extracting concrete input points becomes the problem 
+of extracting points from a star-set which in itself can be considered as 
+extracting points from a single star. To do this, we consider the problem of 
+extracting points from the predicate of the star, which, under our pre-conditions, 
+is always a polytope. We will then apply to the points of the predicate ($\alpha$) 
+the affine transformation $x = c + V \alpha$ to obtain a corresponding point of 
+the star of interest. To extract the point from the polytope defined by the 
+predicate, we leverage the hit and run sampler~\cite{DBLP:conf/wsc/Smith96}.
+It should be noted that while the hit and run algorithm produces an approximation 
+of a uniform distribution for the $\alpha$ of the predicate, the application of 
+the affine transformation needed for the transformation to the point of the star 
+skews such distribution. A possible solution to this issue is to transform the 
+predicate to its V-representation, apply the affine transformation directly to the 
+polytope, return to the H-representation and apply the hit and run sampler. 
+However, for our aims, the skew of the distribution is not that relevant. 
+Therefore, at least at this time, we do not need to transform between the two 
+representations, which is computationally expensive.
+%
+The problem is different when we are working with the over-approximate reachable 
+counter set: in this case, we do not have a way to compute the counter input set 
+since the addition of the new variables needed for the over-approximation to the 
+predicate of the star invalidates Theorem~\ref{th:counter-input}.
+Therefore an alternative solution is needed to compute inputs that allegedly are 
+not compliant with the property of interest. We define the \textit{abstract counter
+	output set} (ACOS) as the intersection between the abstract reachable set and the
+negation of the property $S$. Our algorithm extracts a point from the ACOS using hit 
+and run sampling and then searches for the corresponding input point. Formally the 
+search problem of the corresponding input point can be defined as:
+\begin{definition}
+	Given a reference output point $\hat{y}$, a starting input point $x$ and a feed 
+	forward neural network $\nu$ we can define the search problem for the point 
+	$\hat{x}$ which satisfies $\nu(\hat{x}) = \hat{y}$ as the following minimization 
+	problem:
+	\begin{equation*}
+		\hat{x} = \min_{x} ||\hat{y} - \nu(x)||_2
+	\end{equation*}
+\end{definition}
+However, the non-convexity and non-linearity of the function make the minimization 
+problem not easily solvable: the non-convexity and the presence of 
+local minima make it extremely difficult to apply gradient descent. 
+Consequently, we developed a simple search-by-sampling algorithm which, given a 
+starting point in the input space, generates a ``cloud" of points using a normal 
+distribution with the starting point as center and a given variance. Such points 
+are then compared, and the one whose corresponding output is nearest to the desired 
+one is selected as the center for another step of the algorithm. The search terminates 
+when the euclidean distance between the output found and the one we are searching for 
+is less than a given threshold or when a given number of steps is exceeded.
+If the algorithm finds an input point in the concrete input set and whose 
+corresponding output is in the ACOS, we have found a concrete counter-example, and 
+the network is proven unsafe. Otherwise, the point found is a point whose corresponding
+output is reasonably close to the ACOS and can be leveraged for our refinement.
+%
+Once an adequate sample is found, we can use it to guide our refinement. 
+The idea behind the refinement algorithm is to rank the approximation error
+for each neuron by computing the triangle areas of the approximate method 
+--- see, Section~\ref{sec:relu_abst} --- and enhance it with a measure of the 
+relevance of the neurons with respect to the sample found. 
+To compute the relevance, we leveraged the layer-wise relevance propagation 
+algorithm~\cite{DBLP:journals/corr/SamekMBLM16} which, while traditionally used 
+by the explainability community for classification models, can provide an adequate
+relevance measure even for regression tasks. It should be noted that our 
+implementation of the algorithm supports, at present, only fully-connected layers 
+and ReLU activation functions. For more details on layer-wise relevance propagation 
+we refer to~\cite{DBLP:series/lncs/MontavonBLSM19}. 
+%
+%
+%
+\begin{algorithm}[t]
+	\caption{CEGAR Algorithm.}
+	\label{alg:ref-abst}
+	\begin{algorithmic}[1]
+		\Function{cegar\_verification}{\emph{input\_set}, \emph{unsafe\_zone}, \emph{network}}
+		\State \emph{ref\_levels} = $[0, ..., 0]$
+		\State $ACOS$, $areas$, $safe$ = \textsc{starset\_ver}(\emph{input\_set}, \emph{unsafe\_zone}, \emph{network}, \emph{ref\_levels})
+		\If {\textsc{is\_empty}(\emph{ACOS})}
+		\State \Return $ACOS$, $areas$, $True$
+		\EndIf
+		\Statex
+		\State $output\_counter$ = \textsc{get\_sample}(\emph{ACOS})
+		\State $input\_counter$ = \textsc{input\_search}(\emph{network}, \emph{output\_counter})
+		\If {$input\_counter \in input\_set$}
+		\State \Return $ACOS$, $areas$, $False$
+		\EndIf
+		\Statex
+		\State $neuron\_relevances$ = \textsc{compute\_rel}(\emph{input\_counter}, \emph{network})
+		\State $ref\_levels$ = \textsc{compute\_ref\_levels}(\emph{neuron\_relevances}, \emph{areas})
+		\State \Return \textsc{starset\_ver}(\emph{input\_set}, \emph{unsafe\_zone}, \emph{network}, \emph{ref\_levels})
+		\EndFunction
+	\end{algorithmic}
+\end{algorithm}
+%
+%
+
+The refinement procedure is detailed in Algorithm~\ref{alg:ref-abst}~\cite{DBLP:conf/cpsschool/DemarchiG22}.
+As the first thing, it needs to apply our verification methodology in its
+over-approximate form (line 3) to compute the over-approximate
+reachable counter set and the triangle areas. If the network is proven to be safe 
+(line 4) then the verification algorithm terminates (line 5), otherwise we can 
+search the counter-example as shown before (line 6 and 7). 
+If we found a concrete counter-example then the network is proven to be 
+unsafe and the procedure terminates (line 8 and 9), otherwise we use the spurious
+counter-example to find the relevances of the neurons of the network (line 10).
+At this point, the relevances and the triangle areas can be used to evaluate the
+significance of each ReLU neuron of the network. Once a measure of the significance 
+is computed for each neuron of each ReLU layer, we can choose a given number of 
+neurons to refine for each layer (line 11), and we can change the refinement levels
+of Algorithm~\ref{alg:relu-abst} as needed. Then our verification methodology 
+is applied again using the new refinement levels (line 12). Concerning the measure
+of significance, we investigate on \emph{Product significance} (PS) which computes, 
+for each neuron, the value of the multiplication between its relevance and the area
+of the triangle abstraction, and \emph{mixed-R} (mR), which uses the relevances as 
+coefficients for the ranking used in the standard mixed methodology.

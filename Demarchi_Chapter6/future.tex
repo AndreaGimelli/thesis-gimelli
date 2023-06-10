@@ -1,0 +1,47 @@
+\section{Future work}
+\label{sec:future}
+%
+Here we outline the research directions that could follow the
+work of this Thesis. The promising results obtained experimenting
+with \liftcreate{} and declarative encodings have proven valuable
+enough to consider a commercial distribution of the tool for
+technical designers. 
+
+Our experimental analysis allows us to also
+make considerations in a broader sense, reasoning about design
+of technical systems \textit{in general}. Considering the current
+research and industry scenario, where implementation of algorithms, 
+tools, solvers and computational capability are a widespread
+available resource, possible and viable extension to this research 
+can be the study of techniques to optimize the problem definition 
+and encoding. Professional engineers strive for a computational 
+approach to design but, except for some very advanced solutions, 
+tools are somehow related to technical legacies or to partial, 
+non-integrated solution.
+
+For what concerns the topic of neural networks verification, 
+there are several things that could improve the functionalities
+and capabilities of the application. While \pynever{} is structured 
+to support the conversion and training of sequential network 
+architectures, the verification methodology only supports fully 
+connected layers with ReLU and Logistic activation functions: 
+for this reason our principal interest is to provide abstract 
+transformers for other layers in order to be able to work with 
+more complex architectures.
+To this end, we are interested in constraint propagation as a
+mean to provide a faster approximate algorithm. Preliminary
+tests using plain constraint propagation on fully connected
+architectures showed that it is possible to propagate bounds
+with any activation function in a fraction of the time we use
+in our abstraction, altough with a very coarse approximation. 
+Employing further constraints, specific for each layer, could
+help use improve the results.
+
+Finally, the problem of scalability remains the principal issue
+in every computer-intensive application and we can only try to
+optimize the search space or to employ dedicated LP solvers for
+the greater bottlenecks --- which are the bounds computation in
+all algorithms. We are also working on improving the CEGAR
+algorithm for refining approximate analysis and we are deploying
+new RL-based case studies that could help us to benchmark our
+future implementations.

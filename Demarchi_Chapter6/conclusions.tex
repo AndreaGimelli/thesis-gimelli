@@ -1,0 +1,83 @@
+\section{Conclusions}
+\label{sec:concl}
+%
+The work presented in this Thesis has advanced the state of the art with the
+following contributions:
+%
+\begin{itemize}
+	\item We experimented with declarative encodings for the automated design
+		of a complex system, and generalized some best practices that can
+		apply to different case studies.
+	\item We expanded and structured the reachability analysis for DNNs employing
+		the notion of generalized Star set.
+	\item We developed some variations of the verification algorithms pushing
+		towards the optimization of some existing bottlenecks in the procedures.
+	\item We developed state of the art tools for both case studies, i.e., a
+		web-based application for the design of elevator systems and two GUIs
+		for the construction, conversion, learning and verification of DNNs.
+\end{itemize}
+%
+In~\cite{AiLift2} we started by encoding the elevator design problem first described
+in~\cite{AiLift} using the Satisfiability Modulo Theories paradigm, and we observed that
+with the employ of specific constraints it was possible to reach and also outperform the
+baseline algorithm. Encouraged by this result, we considered using pure Constraint 
+Programming solvers in~\cite{AiLift3} in order to understand the impact of the encoding
+choiches that we observed with SMT. While a full encoding is still best handled by an
+SMT solver when encountering computations involving real parameters, CP solvers provided
+a significant speed-up when considering integer encodings only. Finally, in~\cite{AiLift4}
+we resumed all our work and included another comparison using Genetic Algorithms.
+
+We applied the work of~\cite{DBLP:conf/ecai/GuidottiLPT20} and~\cite{guidotti2021pynever} 
+to new case studies, namely Adaptive Cruise Control in~\cite{DBLP:conf/ecms/DemarchiGPT22} 
+and Reinforcement Learning-based drone control. Here we perfectioned our tool \nevertwo{} 
+in order to build the networks, train them and define the properties to verify. The 
+drone setup is the first step for a RL-based verification framework for robotics case 
+studies that we are building. We also investigated an optimization for parts of our 
+verification methodology in order to cope with the pervasive and well-known scalability 
+issues: in~\cite{DBLP:conf/cpsschool/DemarchiG22} we investigated a counter-example guided
+abstract refinement which was introduced in~\cite{DBLP:phd/basesearch/Guidotti22} and we 
+experimented with a way for deleting degenerate stars in the complete verification algorithm.
+
+Finally, we published state of the art tools in both domains. \liftcreate{} is a research
+prototype available at \url{liftcreate.ailift.it}, still focused on the heuristic engine 
+but designed in order to be able to switch between new engines on the fly.
+\coconet{} and \nevertwo{} are the two interfaces in the NeVerTools portfolio, which is 
+part of a larger open-source ecosystem which is still in progress, called
+\textit{NeuralVerification}\footnote{www.neuralverification.org}: here we collect 
+all the resources about our research and development including the VNN-LIB 
+standard~\cite{vnnlib} that we use in the verification community.
+
+In conclusion, the work presented in this Thesis can be evaluated on the initial research
+questions:
+\begin{itemize}
+	\item $(i)$ The choice of specific encodings, i.e., arithmetic theories, logic
+	encapsulation, optimization, is a key point in the design encoding. In fact, the
+	experimental evaluation proves how impactful they can be in order to obtain a
+	result faster than other methodologies.
+	
+	\item $(ii)$ The choice of solvers and tools is complementary to the choice of the
+	encoding: there is no silver bullet when it comes to choose a tool for solving a 
+	design problem. Depending on the problem shape and how it is encoded, different
+	solvers yield different results.
+	
+	\item $(iii)$ The integration of new encodings in an existing and complex application
+	was a challenging task that impacted the original architecture as well. In fact, in
+	order to factorize common elements in the design flow and to build design processes
+	that could be seamlessly integrated in the base application, it was necessary to rewrite
+	or refactor several tasks that degraded the baseline performances, too.
+	
+	\item $(iv)$ Abstraction-based methods for the verification of neural networks have
+	proven very efficient in the compact representation of sets for evaluating the 
+	reachability of a network. On the other hand, exact analysis suffers from the curse
+	of dimensionality when it is necessary to branch into several alternatives in order
+	to explore exhaustively the solutions space. Corroborated by different case studies,
+	this Thesis proposes an improvement of exact reachability analysis by discarding
+	duplicate solutions during branching.
+	
+	\item $(v)$ The most important contribution that is presented in this Thesis is the
+	\textit{NeVerTools} suite with the tools \coconet{} and \nevertwo. In fact, \nevertwo{}
+	is the only tool in the verification community to provide a single environment where it
+	is possible to build, edit, learn and verify a network. Leveraging the VNN competition,
+	the employ of \coconet{} and \nevertwo{} by practitioners interested in providing
+	guarantees on their systems should benefit from contributions by the whole community.
+\end{itemize}

@@ -1,0 +1,63 @@
+\section{Genetic algorithms}
+\label{sec:gas}
+
+Genetic Algorithms (GAs) are optimization procedures based on ideas 
+borrowed from natural selection and evolution. Detailed descriptions
+of GAs are to be found, e.g., in~\cite{davis1991handbook}. An
+application of GAs to a relatively simple automated configuration
+problem together with a comparison with other declarative techniques
+can be traced back to~\cite{falkner2011modeling}, and
+other earlier references leveraging GAs for automated product
+configuration can be found in~\cite{zhang2014product}. A recent
+survey~\cite{DBLP:journals/nca/SlowikK20} cites many different
+applications of GAs and other evolutionary algorithms to engineering
+problems, including automated configuration and optimization scenarios
+such as, e.g., optimization of solar array layouts~\cite{lv2017solar}, load 
+balancing in cargo ships~\cite{ramos2018new}, and building
+energy-efficient houses~\cite{ascione2016simulation}.  
+For the purpose of this paper, it is sufficient to recall that GAs
+consider a \emph{population} as a finite set $P$ of potential
+solutions to the target optimization problem. Each individual $p \in
+P$ is characterized by a \emph{genotype} comprised of
+\emph{chromosomes}. As in nature, chromosomes define the individual
+and are the basis for the obtaining different individuals by
+``mating'' procedures. The \emph{fitness function} is a mapping $f : P \to
+\mathbb{R}$ which  ranks the individuals according to a \emph{fitness
+  score}: the higher the chance of being a good solution, the higher the
+fitness  score. Notice that GAs provide \emph{unconstrained
+  optimization} over the space of potential solutions. 
+In order to take into account constraints, as our elevator design problem 
+requires, the fitness function should contain one or more \emph{loss 
+	factors} --- see, e.g.,~\cite{homaifar1994constrained, 
+	yeniay2005penalty, gungor2022meta} --- which 
+penalize the individual design when it violates specific constraints: 
+in this way, hard constraints are turned into preferences about 
+solutions. By shaping the loss factors adequately we are able to control 
+how much getting closer to violating a constraint can be discouraged.  
+GAs are initialized with a randomly chosen population $P$ and then
+they seek to improve the initial choice by repeating the
+following steps: 
+\begin{enumerate}
+	\item the fitness $f(p)$ of each individual $p \in P$ is computed; 
+	\item a set $M \subset P$ is extracted from $P$ such that individuals
+	in $M$ have the highest fitness among those in $P$;
+	\item the individuals in $M$ are subject to ``mating'' procedures
+	such as \emph{crossover}, or other evolutionary phenomena such as
+	\emph{mutation}: informally, crossover occurs when the
+        genotypes of two individuals are split and recombined to form
+        new ones bearing some chromosomes, i.e., common traits, from
+        both their parents. 
+	\item The result of the previous step is a population $P'$ which might
+	contain individuals fitter than those of the
+	previous population $P$; in  particular, the crossover operation
+	attempts to combine the genes of fit individuals to produce fitter
+	children, and mutation attempts to maintain diversity
+	in a population of designs. 
+	\item Population $P'$ becomes the new population $P$ and the search
+	restarts from step (1) unless some \emph{termination condition}
+	occurs, e.g., the fitness of the fittest individuals did not
+	change in the last $k$ steps, or a fixed number of $h$ generations has
+	been produced, where $k$ and $h$ are user-controlled hyper-parameters. 
+\end{enumerate}
+%In our case, each element of the population is a RHE design, and the
+%genotype is meant to describe its  main elements.
