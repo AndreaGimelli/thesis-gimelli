@@ -1,0 +1,148 @@
+\section{Bound Propagation Pseudocode}
+In this chapter, the pseudocode of the bound propagation implemented in PyNever is presented and explained. The original code was written by Elena and subsequently modified and tested within PyNever.
+
+\subsection{Pseudocode explanation}
+Below the explanation of pseudocode~\ref{alg:bp-pseudocode}
+\begin{itemize}
+	\item The function \textit{ComputeBounds} method calculates symbolic and numeric bounds for all layers of a \textit{SequentialNetwork} using symbolic linear propagation.
+	\item line 3-5:  Create a \textbf{HyperRectBounds} object from the property using \textbf{PropertyFormatConverter}. The property originally is written in SMT format and then, 
+	it is parsed by a PyNeVer built parser and "wrapped" in a \textit{NeVerProperty}. 
+	Then \textbf{PropertyFormatConverter} returns an \textbf{HyperRectBounds} from the \textbf{NeverProperty} to work with the bound propagation algorithm.
+	\item line 7-9: The \textit{input\_bounds} represents the formulas of the lower and upper bounds of the input layer. The \textit{lower} and \textit{upper} objects are initialized with eye matrices and zero-vectors. The dimension of the eye matrices and of the zero-vectors is equal to the number of neurons of the input bounds.
+	% \item Create \texttt{lower} and \texttt{upper} objects of type \texttt{LinearFunctions} to represent the lower and upper bounds using an identity matrix and a zero vector.
+	% \item Create an \texttt{input_bounds} object of type \texttt{SymbolicLinearBounds} using \texttt{lower} and \texttt{upper}.
+	\item line 11-13: Initialize empty dictionaries \textit{numeric\_preactivation\_bounds}, \textit{numeric\_postactivation\_bounds}, and \textit{symbolic\_bounds} to store numeric and symbolic bounds.
+	\item line 14-24: The FOR loop cicles over the layers of \textit{network} given as argument. 
+	The layers are of class \textbf{AbsFullyConnectedNode} or \textbf{AbsReLUNode}, otherwise an exception is raised.
+	At each cycle of the loop, the symbolic bounds are calculated and, subsequently concretized.\\
+	The calculation of the symbolic bounds is performed by:\\
+	\begin{itemize}
+		\item if the i-th layer is a \textbf{AbsReLUNode} then is called the \textit{compute\_relu\_output\_bounds} that performs the symbolic linear relaxation in~\ref{subsec:symbolic-linear-relaxation}
+		\item if the i-th layer is a \textbf{AbsFullyConnectedNode} then is called the \textit{symbolic\_dense\_output\_bounds} explained in~\ref{subsec:fc-symbolic-interval-propagation}. The AbsFullyConnectedNode contains the weight and bias matrices.
+	\end{itemize}
+	\item The symbolic bounds calculated at cycle i will be used to calculate the ones at cycle i+1. 
+	All the symbolic and numeric bounds of all layer are saved in dictionaries but only the numeric one is returned.
+\end{itemize}
+
+\begin{algorithm}[t!]
+  \caption{Bound Propagation Algorithm}
+  \label{alg:bp-pseudocode}
+  \small
+\begin{algorithmic}[1]
+	\Function{ComputeBounds}{\emph{network}, \emph{property}}
+    		\State \Comment{the PropertyFormatConverter takes in input a PyNeVer property and return and return an HyperRectangleBounds}
+   		 \State $property\_converter = {PropertyFormatConverter}(\text{property})$
+    
+    		\State $input\_hyper\_rect = property\_converter.get\_vectors()$
+    
+    		\State $layers = \text{get\_abstract\_network}(\text{network})$
+    
+   		\State $input\_size = input\_hyper\_rect.get\_size()$
+    
+    		\State $lower = \text{LinearFunctions}(\text{np.identity(input\_size)}, \text{np.zeros(input\_size)})$
+    
+    		\State $upper = \text{LinearFunctions}(\text{np.identity(input\_size)}, \text{np.zeros(input\_size)})$
+    
+    		\State $input\_bounds = \text{SymbolicLinearBounds}(lower, upper)$
+    
+    		\State $numeric\_preactivation\_bounds = \text{dict}()$
+    
+   		\State $numeric\_postactivation\_bounds = \text{OrderedDict}()$
+    
+    		\State $symbolic\_bounds = \text{dict}()$
+    
+    		\State $current\_input\_bounds = input\_bounds$
+    
+    		\For{$i$ \textbf{in} $0$ \textbf{to} $\text{len}(layers) - 1$}
+    
+       			\If{$layers[i]$ \text{ is instance of } $\text{ReLU}$}
+            			\State $symbolic\_activation\_output\_bounds = \text{compute\_relu\_output\_bounds}(symbolic\_dense\_output\_bounds, input\_hyper\_rect)$
+            
+            			\State $postactivation\_bounds = \text{HyperRectangleBounds}(\text{np.maximum}(preactivation\_bounds.\text{get\_lower}(), 0), 							\text{np.maximum}(preactivation\_bounds.\text{get\_upper}(), 0))$
+            
+       			\ElsIf{$layers[i]$ \text{ is instance of } $\text{FullyConnected}$}
+            			\State $symbolic\_dense\_output\_bounds = \text{compute\_dense\_output\_bounds}(layers[i], current\_input\_bounds)$
+            
+            			\State $preactivation\_bounds = symbolic\_dense\_output\_bounds.\text{to\_hyper\_rectangle\_bounds}(input\_hyper\_rect)$
+            
+            			\State $symbolic\_activation\_output\_bounds = symbolic\_dense\_output\_bounds$
+            
+            			\State $postactivation\_bounds = \text{HyperRectangleBounds}(preactivation\_bounds.\text{get\_lower}(), preactivation\_bounds.\text{get\_upper}())$
+            
+        				\Else
+            				\State \textbf{raise} \text{Exception}            
+        			\EndIf
+        
+        			\State $symbolic\_bounds[layers[i].\text{identifier}] = (symbolic\_dense\_output\_bounds, symbolic\_activation\_output\_bounds)$
+        
+        			\State $numeric\_preactivation\_bounds[layers[i].\text{identifier}] = preactivation\_bounds$
+        
+        			\State $numeric\_postactivation\_bounds[layers[i].\text{identifier}] = postactivation\_bounds$
+        
+        			\State $current\_input\_bounds = symbolic\_activation\_output\_bounds$
+        
+    		\EndFor
+    
+    		\State \textbf{return} $numeric\_postactivation\_bounds$
+    
+	\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\label{alg:hyper-rect-bound}
+	\begin{algorithmic}[1]
+		\State \textbf{Class:} $HyperRectangleBounds$
+		\State \quad \textbf{public} $lower: list$
+		\State \quad \textbf{public} $upper: list$
+	\end{algorithmic}
+\end{algorithm}
+
+
+\begin{algorithm}
+	\label{alg:linear-functions}
+	\begin{algorithmic}[1]
+		\State \textbf{Class:} $LinearFunctions$
+		\State \quad \textbf{public} $size$
+		\State \quad \textbf{public} $matrix$
+		\State \quad \textbf{public} $offset$
+	\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+	\label{alg:symbolic-linear-bounds}
+	\begin{algorithmic}[1]
+		\Require $lower$ is the lower bound of a layer
+		\Require $upper$ is the upper bound of a layer
+		\Statex
+		\State \textbf{Class:} $SymbolicLinearBounds$
+		\State \quad \textbf{public} $lower: LinearFunctions$
+		\State \quad \textbf{public} $upper: LinearFunctions$
+	\end{algorithmic}
+\end{algorithm}
+% \begin{itemize}
+% 	\item The \texttt{compute_bounds} method calculates symbolic and numeric bounds for all nodes using symbolic linear propagation.
+% 	\item Create a \texttt{HyperRectBounds} object from the property using \texttt{PropertyFormatConverter}.
+% 	\item Obtain the input bounds as \texttt{input_hyper_rect} using \texttt{get_vectors()} from \texttt{property_converter}.
+% 	\item Get the layers of the network using \texttt{get_abstract_network(self.abst_net)}.
+% 	\item Calculate the input size as \texttt{input_size} using \texttt{get_size()} from \texttt{input_hyper_rect}.
+% 	\item Create \texttt{lower} and \texttt{upper} objects of type \texttt{LinearFunctions} to represent the lower and upper bounds using an identity matrix and a zero vector.
+% 	\item Create an \texttt{input_bounds} object of type \texttt{SymbolicLinearBounds} using \texttt{lower} and \texttt{upper}.
+% 	\item Initialize empty dictionaries \texttt{numeric_preactivation_bounds}, \texttt{numeric_postactivation_bounds}, and \texttt{symbolic_bounds} to store numeric and symbolic bounds.
+% 	\item Set \texttt{current_input_bounds} to \texttt{input_bounds}.\\
+% 		For each layer in the layers:
+% 		\begin{itemize}
+% 			\item If the current layer is an \texttt{AbsReLUNode}, call \texttt{compute_relu_output_bounds} to calculate the symbolic activation output bounds. Calculate the post-activation bounds as \texttt{HyperRectangleBounds} by taking the maximum between the lower bound of pre-activation and zero.
+% 			\item If the current layer is an \texttt{AbsFullyConnectedNode}, call \texttt{compute_dense_output_bounds} to calculate the symbolic dense output bounds. Calculate the pre-activation bounds as \texttt{HyperRectangleBounds} using the symbolic dense output bounds and the input bounds.
+% 			\item Otherwise, raise an exception indicating that bounds computation is only supported for ReLU and Linear activation functions.
+% 		\end{itemize}
+	
+% 	Store the symbolic and numeric bounds in the \texttt{symbolic_bounds}, \texttt{numeric_preactivation_bounds}, and \texttt{numeric_postactivation_bounds} dictionaries.
+% 	Set \texttt{current_input_bounds} to the symbolic activation output bounds.
+% 	Assign the value of \texttt{numeric_postactivation_bounds} to the \texttt{numeric_bounds} attribute of the current object.
+% 	Finally, return the \texttt{symbolic_bounds}, \texttt{numeric_preactivation_bounds}, and \texttt{numeric_postactivation_bounds} dictionaries.
+	
+% 	In summary, the method computes symbolic and numeric bounds for all nodes in the network, keeping track of intermediate bounds using appropriate variables and dictionaries.
+% \end{itemize}
+
+

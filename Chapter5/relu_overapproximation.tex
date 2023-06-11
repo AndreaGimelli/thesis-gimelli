@@ -100,6 +100,7 @@ To incorporate ReLU layers into the bound propagation process, we need to accoun
 \end{enumerate}
 
 \subsection{Detailed Study of Symbolic Linear Relaxation of ReLU}
+\label{subsec:symbolic-linear-relaxation}
 The key insight of symbolic linear relaxation is to find the tightest linear bounds for the ReLU function, minimizing the overestimation error when approximating network outputs. However, it is important to note that the approximation errors may vary for overestimated nodes in different layers, depending on the symbolic intervals assigned as inputs.
 
 For layers preceding the $n_0$-th layer, which is the first layer with overestimated nodes, all nodes have the same symbolic lower and upper bounds as you can notice in the first ReLU layer of the example.

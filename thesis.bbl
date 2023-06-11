@@ -1,0 +1,147 @@
+\begin{thebibliography}{}
+
+\bibitem[Abdi et~al., 1999]{abdi1999neural}
+Abdi, H., Valentin, D., and Edelman, B. (1999).
+\newblock {\em Neural networks}.
+\newblock Number 124. Sage.
+
+\bibitem[Akintunde et~al., 2018]{DBLP:conf/kr/AkitundeLMP18}
+Akintunde, M., Lomuscio, A., Maganti, L., and Pirovano, E. (2018).
+\newblock Reachability analysis for neural agent-environment systems.
+\newblock In {\em Principles of Knowledge Representation and Reasoning: Proceedings of the Sixteenth International Conference, {KR} 2018, Tempe, Arizona, 30 October - 2 November 2018}, pages 184--193. {AAAI} Press.
+
+\bibitem[Bak and Duggirala, 2017]{bak2017simulation}
+Bak, S. and Duggirala, P.~S. (2017).
+\newblock Simulation-equivalent reachability of large linear systems with inputs.
+\newblock In {\em International Conference on Computer Aided Verification}, pages 401--420. Springer.
+
+\bibitem[Dutta et~al., 2019]{DBLP:conf/hybrid/DuttaCJST19}
+Dutta, S., Chen, X., Jha, S., Sankaranarayanan, S., and Tiwari, A. (2019).
+\newblock Sherlock - {A} tool for verification of neural network feedback systems: demo abstract.
+\newblock In {\em Proceedings of the 22nd {ACM} International Conference on Hybrid Systems: Computation and Control, {HSCC} 2019, Montreal, QC, Canada, April 16-18, 2019}, pages 262--263.
+
+\bibitem[Franzle et~al., 2007]{franzle2007efficient}
+Franzle, M., Herde, C., Teige, T., Ratschan, S., and Schubert, T. (2007).
+\newblock {Efficient solving of large non-linear arithmetic constraint systems with complex boolean structure}.
+\newblock {\em Journal on Satisfiability, Boolean Modeling and Computation}, 1:209--236.
+
+\bibitem[Gehr et~al., 2018]{DBLP:conf/sp/GehrMDTCV18}
+Gehr, T., Mirman, M., Drachsler{-}Cohen, D., Tsankov, P., Chaudhuri, S., and Vechev, M.~T. (2018).
+\newblock {AI2:} safety and robustness certification of neural networks with abstract interpretation.
+\newblock In {\em 2018 {IEEE} Symposium on Security and Privacy, {SP} 2018, Proceedings, 21-23 May 2018, San Francisco, California, {USA}}, pages 3--18.
+
+\bibitem[Goodfellow et~al., 2015]{DBLP:journals/corr/GoodfellowSS14}
+Goodfellow, I.~J., Shlens, J., and Szegedy, C. (2015).
+\newblock Explaining and harnessing adversarial examples.
+\newblock In {\em 3rd International Conference on Learning Representations, {ICLR} 2015, San Diego, CA, USA, May 7-9, 2015, Conference Track Proceedings}.
+
+\bibitem[Guidotti et~al., 2020]{guidotti2020never}
+Guidotti, D., Pulina, L., and Tacchella, A. (2020).
+\newblock Never 2.0: Learning, verification and repair of deep neural networks.
+\newblock {\em arXiv preprint arXiv:2011.09933}.
+
+\bibitem[Guidotti et~al., 2021]{guidotti2021pynever}
+Guidotti, D., Pulina, L., and Tacchella, A. (2021).
+\newblock {pyNeVer}: A framework for learning and verification of neural networks.
+\newblock In {\em International Symposium on Automated Technology for Verification and Analysis}, pages 357--363. Springer.
+
+\bibitem[Guidotti et~al., 2022]{never2online}
+Guidotti, D., Tacchella, A., Pulina, L., and Demarchi, S. (2022).
+\newblock {NeVer} 2.0, https://github.com/nevertools/never2.
+
+\bibitem[Hornik et~al., 1989]{hornik1989multilayer}
+Hornik, K., Stinchcombe, M., and White, H. (1989).
+\newblock {Multilayer feedforward networks are universal approximators.}
+\newblock {\em Neural networks}, 2(5):359--366.
+
+\bibitem[Huang et~al., 2018]{huang2018safety}
+Huang, X., Kroening, D., Kwiatkowska, M., Ruan, W., Sun, Y., Thamo, E., Wu, M., and Yi, X. (2018).
+\newblock Safety and trustworthiness of deep neural networks: A survey.
+\newblock {\em arXiv preprint arXiv:1812.08342}.
+
+\bibitem[Igel et~al., 2008]{igel08}
+Igel, C., Glasmachers, T., and Heidrich-Meisner, V. (2008).
+\newblock Shark.
+\newblock {\em Journal of Machine Learning Research}, 9:993--996.
+
+\bibitem[Katz et~al., 2019]{DBLP:conf/cav/KatzHIJLLSTWZDK19}
+Katz, G., Huang, D.~A., Ibeling, D., Julian, K., Lazarus, C., Lim, R., Shah, P., Thakoor, S., Wu, H., Zeljic, A., Dill, D.~L., Kochenderfer, M.~J., and Barrett, C.~W. (2019).
+\newblock The marabou framework for verification and analysis of deep neural networks.
+\newblock In {\em Computer Aided Verification - 31st International Conference, {CAV} 2019, New York City, NY, USA, July 15-18, 2019, Proceedings, Part {I}}, pages 443--452.
+
+\bibitem[LeCun et~al., 2015]{DBLP:journals/nature/LeCunBH15}
+LeCun, Y., Bengio, Y., and Hinton, G.~E. (2015).
+\newblock Deep learning.
+\newblock {\em Nature}, 521(7553):436--444.
+
+\bibitem[Leofante et~al., 2018]{DBLP:journals/corr/abs-1805-09938}
+Leofante, F., Narodytska, N., Pulina, L., and Tacchella, A. (2018).
+\newblock Automated verification of neural networks: Advances, challenges and perspectives.
+\newblock {\em CoRR}, abs/1805.09938.
+
+\bibitem[Pulina and Tacchella, 2010]{DBLP:conf/cav/PulinaT10}
+Pulina, L. and Tacchella, A. (2010).
+\newblock An abstraction-refinement approach to verification of artificial neural networks.
+\newblock In {\em Computer Aided Verification, 22nd International Conference, {CAV} 2010, Edinburgh, UK, July 15-19, 2010. Proceedings}, pages 243--257.
+
+\bibitem[Pulina and Tacchella, 2011]{pulina2011n}
+Pulina, L. and Tacchella, A. (2011).
+\newblock Never: a tool for artificial neural networks verification.
+\newblock {\em Annals of Mathematics and Artificial Intelligence}, 62(3-4):403--425.
+
+\bibitem[Pulina and Tacchella, 2012]{DBLP:journals/aicom/PulinaT12}
+Pulina, L. and Tacchella, A. (2012).
+\newblock Challenging {SMT} solvers to verify neural networks.
+\newblock {\em {AI} Commun.}, 25(2):117--135.
+
+\bibitem[Singh et~al., 2019]{DBLP:conf/iclr/SinghGPV19}
+Singh, G., Gehr, T., P{\"{u}}schel, M., and Vechev, M.~T. (2019).
+\newblock Boosting robustness certification of neural networks.
+\newblock In {\em 7th International Conference on Learning Representations, {ICLR} 2019, New Orleans, LA, USA, May 6-9, 2019}.
+
+\bibitem[Szegedy et~al., 2014]{DBLP:journals/corr/SzegedyZSBEGF13}
+Szegedy, C., Zaremba, W., Sutskever, I., Bruna, J., Erhan, D., Goodfellow, I.~J., and Fergus, R. (2014).
+\newblock Intriguing properties of neural networks.
+\newblock In {\em 2nd International Conference on Learning Representations, {ICLR} 2014, Banff, AB, Canada, April 14-16, 2014, Conference Track Proceedings}.
+
+\bibitem[Taigman et~al., 2014]{DBLP:conf/cvpr/TaigmanYRW14}
+Taigman, Y., Yang, M., Ranzato, M., and Wolf, L. (2014).
+\newblock Deepface: Closing the gap to human-level performance in face verification.
+\newblock In {\em 2014 {IEEE} Conference on Computer Vision and Pattern Recognition, {CVPR} 2014, Columbus, OH, USA, June 23-28, 2014}, pages 1701--1708.
+
+\bibitem[Tjeng et~al., 2019]{DBLP:conf/iclr/TjengXT19}
+Tjeng, V., Xiao, K.~Y., and Tedrake, R. (2019).
+\newblock Evaluating robustness of neural networks with mixed integer programming.
+\newblock In {\em 7th International Conference on Learning Representations, {ICLR} 2019, New Orleans, LA, USA, May 6-9, 2019}.
+
+\bibitem[Tran et~al., 2019]{tran2019star}
+Tran, H.-D., Lopez, D.~M., Musau, P., Yang, X., Nguyen, L.~V., Xiang, W., and Johnson, T.~T. (2019).
+\newblock Star-based reachability analysis of deep neural networks.
+\newblock In {\em International Symposium on Formal Methods}, pages 670--686. Springer.
+
+\bibitem[Tran et~al., 2020]{DBLP:journals/corr/abs-2004-05519}
+Tran, H.-D., Yang, X., Lopez, D.~M., Musau, P., Nguyen, L.~V., Xiang, W., Bak, S., and Johnson, T.~T. (2020).
+\newblock {NNV:} the neural network verification tool for deep neural networks and learning-enabled cyber-physical systems.
+\newblock {\em CoRR}, abs/2004.05519.
+
+\bibitem[Wang et~al., 2018]{DBLP:conf/nips/WangPWYJ18}
+Wang, S., Pei, K., Whitehouse, J., Yang, J., and Jana, S. (2018).
+\newblock Efficient formal safety analysis of neural networks.
+\newblock In {\em Advances in Neural Information Processing Systems 31: Annual Conference on Neural Information Processing Systems 2018, NeurIPS 2018, 3-8 December 2018, Montr{\'{e}}al, Canada}, pages 6369--6379.
+
+\bibitem[Wu et~al., 2018]{DBLP:journals/corr/abs-1807-03571}
+Wu, M., Wicker, M., Ruan, W., Huang, X., and Kwiatkowska, M. (2018).
+\newblock A game-based approximate verification of deep neural networks with provable guarantees.
+\newblock {\em CoRR}, abs/1807.03571.
+
+\bibitem[Yu et~al., 2012]{DBLP:journals/taslp/YuHMCS12}
+Yu, D., Hinton, G.~E., Morgan, N., Chien, J., and Sagayama, S. (2012).
+\newblock Introduction to the special section on deep learning for speech and language processing.
+\newblock {\em {IEEE} Trans. Audio, Speech {\&} Language Processing}, 20(1):4--6.
+
+\bibitem[Zheng, 2019]{zheng2019computing}
+Zheng, Y. (2019).
+\newblock Computing bounding polytopes of a compact set and related problems in n-dimensional space.
+\newblock {\em Computer-Aided Design}, 109:22--32.
+
+\end{thebibliography}
