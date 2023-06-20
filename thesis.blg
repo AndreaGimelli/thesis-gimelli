@@ -11,6 +11,7 @@ A level-1 auxiliary file: Chapter5/relu_overapproximation.aux
 A level-1 auxiliary file: Chapter6/bound_propagation_pynever_application.aux
 A level-1 auxiliary file: Chapter6/future.aux
 A level-1 auxiliary file: Chapter7/bound_propagation_pseudocode.aux
+A level-1 auxiliary file: Chapter7/bound_propagation_test_results.aux
 The style file: apalike.bst
 Database file #1: References/references.bib
 Warning--entry type for "never2online" isn't style-file defined
@@ -18,7 +19,7 @@ Warning--entry type for "never2online" isn't style-file defined
 Warning--there's a number but no series in abdi1999neural
 You've used 29 entries,
             1935 wiz_defined-function locations,
-            656 strings with 11292 characters,
+            657 strings with 11335 characters,
 and the built_in function-call counts, 13990 in all, are:
 = -- 1355
 > -- 721

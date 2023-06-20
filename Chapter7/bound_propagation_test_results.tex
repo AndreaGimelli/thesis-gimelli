@@ -1,31 +1,15 @@
-\section{Test}
+\section{Testing and validation of bound propagation}
 
 In this section, the results of tests on the runtime and memory usage of the new PyNeVer algorithm are presented compared to the previous version. Additionally, the results are also compared to the winners of the 2022 VNNComp (Verification of Neural Networks Competition).
 A separate section is dedicated to validation tests to verify the correct functioning of the bound propagation. These tests will be performed on various networks and different properties to ensure the robustness and accuracy of the algorithm.
 All these tests are conducted on different networks and various properties to cover a wide range of scenarios and validate the effectiveness of the bound propagation algorithm.
 By including a section on validation tests, it ensures that the bound propagation algorithm implemented in PyNeVer produces accurate and reliable results. The tests may include specific test cases with known expected results as well as general test cases to verify and validate desired properties.
 Overall, the inclusion of tests on diverse networks and properties, along with comparisons to the results of the VNNComp and validation tests, provides a comprehensive evaluation of the performance, accuracy, and reliability of the bound propagation algorithm implemented in PyNeVer.
+
 \subsection{Test platform}
 The tests were run on a machine with 2 Intel Xeon Gold 6432 CPUs and 128 GB of DDR4 RAM.. The networks used for the tests include 8 AC networks, 10 ACAS networks, Cartpole, dubinsrejoin, and lunarlander. Each network is associated with various specific properties to be tested.
 To ensure the integrity of the tests, they were launched from a bash script as independent processes. This approach was adopted to prevent any contamination or interference between the tests.
 By conducting the tests on a robust hardware configuration and running them as separate processes, the results obtained are reliable and provide an accurate assessment of the performance and accuracy of the PyNeVer algorithm for different networks and associated properties.
-\subsection{Validation test}
-In this subsection, we present the tests conducted to verify the correct functioning of bound propagation.
-In order to ensure the accuracy of the results, a second implementation of bound propagation was developed, which utilizes the linearization of the Rectified Linear Unit (ReLU) as depicted in subsection~\ref{subsec:symbolic-linear-relaxation}. 
-This step was taken to validate the consistency of the results with the actual more complex and less intuitive linearization used in practice.
-Subsequently, both implementations of bound propagation were applied to different neural networks, and a set of representative properties was selected for testing purposes. 
-By subjecting these networks to the two bound propagation methods, we aimed to compare their results and evaluate their effectiveness in determining the lower and upper bounds of the network's output.
-Moreover, to ensure the proper integration of the implemented algorithms with PyNeVer, an additional algorithm was developed. 
-This algorithm was responsible for collecting the stars generated during the "complete" verification process and extracting the corresponding lower and upper bounds for each node in every layer of the neural network.
-By conducting these tests and implementing the necessary procedures for interfacing with PyNeVer, we were able to validate the correct functioning of the bound propagation methods and obtain the desired bounds for further analysis and verification.\\
-
-Thanks to the precise nature of PyNeVer's "complete" verification, we can accurately identify and quantify both stable and unstable nodes. In contrast, the bound propagation method only provides information about the stable nodes, leaving the true nature of classified unstable nodes uncertain. 
-As bound propagation is an over-approximation technique, some nodes classified as unstable by bound propagation may actually be stable in reality.
-In the graphs presented, we not only showcase the stable nodes but also highlight the number of nodes that are not captured due to the inherent over-approximation of bound propagation. These are nodes 
-that are stable but wrongly classified as unstable by the bound propagation method. By quantifying this discrepancy, we gain insights into the potential room for improvement in bound propagation.
-This analysis allows us to understand the limitations and possible inaccuracies associated with bound propagation, guiding us in exploring ways to enhance its performance. 
-By comparing the results from bound propagation with the ground truth provided by PyNeVer's "complete" verification, we can measure the extent to which bound propagation aligns with the actual stability of nodes. 
-This quantitative assessment provides valuable information about the reliability and potential areas for refinement in the bound propagation method.
 
 \subsection{Brief introduction to the neural networks used for testing}
 Before showing test results, below a brief introduction to the neural networks used in the tests.
@@ -81,7 +65,31 @@ Before showing test results, below a brief introduction to the neural networks u
     
 \end{itemize}
 
-\subsection{Validation results}
+\subsection{Validation test and results}
+In this subsection, we present the tests conducted to verify the correct functioning of bound propagation.
+In order to ensure the accuracy of the results, a second implementation of bound propagation was developed, which utilizes the linearization of the Rectified Linear Unit (ReLU) as depicted in subsection~\ref{subsec:symbolic-linear-relaxation}. 
+This step was taken to validate the consistency of the results with the actual more complex and less intuitive linearization used in practice.
+Subsequently, both implementations of bound propagation were applied to different neural networks, and a set of representative properties was selected for testing purposes. 
+By subjecting these networks to the two bound propagation methods, we aimed to compare their results and evaluate their effectiveness in determining the lower and upper bounds of the network's output.
+Moreover, to ensure the proper integration of the implemented algorithms with PyNeVer, an additional algorithm was developed. 
+This algorithm was responsible for collecting the stars generated during the "complete" verification process and extracting the corresponding lower and upper bounds for each node in every layer of the neural network.
+By conducting these tests and implementing the necessary procedures for interfacing with PyNeVer, we were able to validate the correct functioning of the bound propagation methods and obtain the desired bounds for further analysis and verification.\\
+
+Thanks to the precise nature of PyNeVer's "complete" verification, we can accurately identify and quantify both stable and unstable nodes. In contrast, the bound propagation method only provides information about the stable nodes, leaving the true nature of classified unstable nodes uncertain. 
+As bound propagation is an over-approximation technique, some nodes classified as unstable by bound propagation may actually be stable in reality.
+In the graphs presented, we not only showcase the stable nodes but also highlight the number of nodes that are not captured due to the inherent over-approximation of bound propagation. These are nodes 
+that are stable but wrongly classified as unstable by the bound propagation method. By quantifying this discrepancy, we gain insights into the potential room for improvement in bound propagation.
+This analysis allows us to understand the limitations and possible inaccuracies associated with bound propagation, guiding us in exploring ways to enhance its performance. 
+By comparing the results from bound propagation with the ground truth provided by PyNeVer's "complete" verification, we can measure the extent to which bound propagation aligns with the actual stability of nodes. 
+This quantitative assessment provides valuable information about the reliability and potential areas for refinement in the bound propagation method.
+The tests were conducted on a subset of networks or properties, specifically for ACAS, CARTPOLE, and ACC networks, which are relatively small. An attempt was made to perform a complete verification on the DUBINSREJOIN network, but due to its layer of 256 neurons, it required excessive time to complete the verification process.
+
+% In this subsection, the method for checking the correctness and coherence of bound propagation results is described. The objective was to ensure that the utilized bound propagation method was effectively overestimating the true bounds. However, calculating the real bounds accurately was challenging due to the non-linearity of the ReLU activation function. 
+% Fortunately, a complete verification method with exponential complexity was employed by collecting all the generated states during the algorithm, enabling the calculation of the real bounds.
+% The tests were conducted on a subset of networks or properties, specifically for ACAS, CARTPOLE, and ACC networks, which are relatively small. An attempt was made to perform a complete verification on the DUBINSREJOIN network, but due to its layer of 256 neurons, it required excessive time to complete the verification process.
+% To ensure the accuracy of the bounds, another version of bound propagation was implemented. This version utilized a different ReLU over-approximation technique. The purpose of this implementation was to verify that both bound propagation methods never underestimated the real bounds.
+% Additionally, this approach allowed for counting the actual number of unstable nodes and comparing them with the number of unstable nodes classified by the two bound propagation methods used. 
+% This comparison highlighted the differences in performance resulting from the choice of ReLU linearization technique
 \begin{itemize}
     \item \textbf{ACAS Results:}\\
     In Table~\ref{table:ACAS-ANALISY}, nine different properties have been verified using PyNeVer and two different bound propagation BP1 and BP2 have been performed. The "NO BP" column displays the number of unstable nodes obtained. 
@@ -89,14 +97,91 @@ Before showing test results, below a brief introduction to the neural networks u
     The "UNCATCHED NODES" refers to nodes that are classified as "unstable" due to the overapproximation introduced by ReLU linearization, but are actually stable. On average, we found 41.3 real unstable nodes. 
     However, "BP type 1" and "BP type 2" classify, on average, 84.6 and 101 nodes as "unstable," respectively. 5The results also show how the ReLU linearization used has on average better performance than the naive one used only for testing purposes.
     It is normal for Bound Propagation to introduce some errors. However, in the case of the ACAS network, we observed a higher number of "UNCATCHED NODES" compared to other networks analyzed. This is primarily due to the depth of the ACAS network. Deeper networks have more ReLU layers, which contribute to overapproximation and cause Bound Propagation to diverge faster.
+   
+    \begin{table}[H]
+        \centering
+        \resizebox{\columnwidth}{!}{%
+        \begin{tabular}{@{}llllll@{}}
+            \toprule
+            \multicolumn{6}{c}{ACAS property: SMT3}  \\
+            \cmidrule(r){1-6} 
+            \multirow{2}{*}{NETWORK ID} &  \multicolumn{3}{c}{PYNEVER} &  \multicolumn{2}{c}{}\\ 
+            \cmidrule(r){2-4}
+                   & NO BP                                        & BP type 1                                     & BP type 2                                     & UNCATCHED NODES BP type 1               & UNCATCHED NODES BP type 2               \\\cmidrule(r){1-6}
+        1\_1       & {\color[HTML]{D9E1F2} 58\textbackslash{}300} & {\color[HTML]{D9E1F2} 132\textbackslash{}300} & {\color[HTML]{D9E1F2} 148\textbackslash{}300} & {\color[HTML]{D9E1F2} 74}         & {\color[HTML]{D9E1F2} 90}         \\
+        1\_3       & {\color[HTML]{D9E1F2} 43\textbackslash{}300} & {\color[HTML]{D9E1F2} 134\textbackslash{}300} & {\color[HTML]{D9E1F2} 152\textbackslash{}300} & {\color[HTML]{D9E1F2} 91}         & {\color[HTML]{D9E1F2} 109}        \\
+        1\_4       & {\color[HTML]{D9E1F2} 28\textbackslash{}300} & {\color[HTML]{D9E1F2} 120\textbackslash{}300} & {\color[HTML]{D9E1F2} 137\textbackslash{}300} & {\color[HTML]{D9E1F2} 92}         & {\color[HTML]{D9E1F2} 109}        \\
+        1\_5       & {\color[HTML]{D9E1F2} 27\textbackslash{}300} & {\color[HTML]{D9E1F2} 118\textbackslash{}300} & {\color[HTML]{D9E1F2} 145\textbackslash{}300} & {\color[HTML]{D9E1F2} 91}         & {\color[HTML]{D9E1F2} 118}        \\
+        2\_3       & {\color[HTML]{D9E1F2} 42\textbackslash{}300} & {\color[HTML]{D9E1F2} 107\textbackslash{}300} & {\color[HTML]{D9E1F2} 108\textbackslash{}300} & {\color[HTML]{D9E1F2} 65}         & {\color[HTML]{D9E1F2} 66}         \\
+        3\_2       & {\color[HTML]{D9E1F2} 39\textbackslash{}300} & {\color[HTML]{D9E1F2} 154\textbackslash{}300} & {\color[HTML]{D9E1F2} 177\textbackslash{}300} & {\color[HTML]{D9E1F2} 115}        & {\color[HTML]{D9E1F2} 138}        \\
+        4\_2       & {\color[HTML]{D9E1F2} 49\textbackslash{}300} & {\color[HTML]{D9E1F2} 124\textbackslash{}300} & {\color[HTML]{D9E1F2} 138\textbackslash{}300} & {\color[HTML]{D9E1F2} 75}         & {\color[HTML]{D9E1F2} 89}         \\
+        4\_3       & {\color[HTML]{D9E1F2} 42\textbackslash{}300} & {\color[HTML]{D9E1F2} 128\textbackslash{}300} & {\color[HTML]{D9E1F2} 138\textbackslash{}300} & {\color[HTML]{D9E1F2} 86}         & {\color[HTML]{D9E1F2} 96}         \\
+        5\_1       & {\color[HTML]{D9E1F2} 44\textbackslash{}300} & {\color[HTML]{D9E1F2} 117\textbackslash{}300} & {\color[HTML]{D9E1F2} 138\textbackslash{}300} & {\color[HTML]{D9E1F2} 73}         & {\color[HTML]{D9E1F2} 94}         \\\cmidrule(r){1-6}
+        average:   &  {\color[HTML]{FF0000}41.3\textbackslash{}300} &  {\color[HTML]{FF0000}126\textbackslash{}300} & {\color[HTML]{FF0000}142.3\textbackslash{}300}  & {\color[HTML]{FF0000} leaks: 762 average: 84.6} & {\color[HTML]{FF0000} leaks: 909 average: 101} \\\cmidrule(r){1-6}
+        \end{tabular}%
+        }
+        \label{table:ACAS-ANALISY}
+    \end{table}
+
+    
     \item \textbf{ACC Results:} \\
-    In Table~\ref{table:ACC-ANALISY}, four different ACC networks have been verified with a randomly generated property. As mentioned earlier, two backpropagation (BP) algorithms, BP 1 and BP 2, were applied to these networks.
+    In Table~\ref{table:AC-ANALISY}, four different ACC networks have been verified with a randomly generated property. As mentioned earlier, two backpropagation (BP) algorithms, BP 1 and BP 2, were applied to these networks.
     Since we are comparing networks with different depths, calculating the average number of unstable nodes becomes meaningless. Therefore, it has not been included in the table.
     It's important to note that these networks have a lesser depth compared to ACAS networks. Consequently, the number of uncaptured nodes is relatively smaller. Interestingly, in this scenario, BP 2 performs better than BP 1.
     Overall, the table presents the results of the verification process for the ACC networks and their performance under the given property. The comparison between the two BP algorithms provides insights into their effectiveness in dealing with the specific networks and property involved.
+
+    \begin{table}[H]
+        \centering
+        \resizebox{\columnwidth}{!}{%
+        \begin{tabular}{@{}lllllll@{}}
+            \toprule
+            \multicolumn{6}{c}{ACC}  \\
+            \cmidrule(r){1-6} 
+            \multirow{2}{*}{NETWORK ID} &  \multicolumn{3}{c}{PYNEVER} &  \multicolumn{2}{c}{}\\ 
+            \cmidrule(r){2-4}
+                 & NO BP               & BP type 1                 & BP type 2 & UNCATCHED NODES BP type 1            & UNCATCHED NODES BP type 2            \\\cmidrule(r){1-6}
+        1        & {\color[HTML]{ACB9CA} 23/48} & {\color[HTML]{ACB9CA} 25/48} & {\color[HTML]{ACB9CA} 23/48}        & {\color[HTML]{ACB9CA} 3}                              & {\color[HTML]{ACB9CA} 1}                              \\
+        2        & {\color[HTML]{ACB9CA} 11/96} & {\color[HTML]{ACB9CA} 11/96} & {\color[HTML]{ACB9CA} 11/96}        & {\color[HTML]{ACB9CA} 0}                              & {\color[HTML]{ACB9CA} 0}                              \\
+        5        & {\color[HTML]{ACB9CA} 16/56} & {\color[HTML]{ACB9CA} 18/56} & {\color[HTML]{ACB9CA} 18/56}        & {\color[HTML]{ACB9CA} 2}                              & {\color[HTML]{ACB9CA} 2}                              \\
+        6        & {\color[HTML]{ACB9CA} 18/112}& {\color[HTML]{ACB9CA} 19/112}& {\color[HTML]{ACB9CA} 19/112}       & {\color[HTML]{ACB9CA} 1}                              & {\color[HTML]{ACB9CA} 1}                              \\\cmidrule(r){1-6}
+                 &                              &                              &              & {\color[HTML]{FF0000} leak: 6} & {\color[HTML]{FF0000} leak: 4} \\\cmidrule(r){1-6}
+    
+        \end{tabular}%
+        }
+        \caption{This is the caption for the first table.}
+        \label{table:AC-ANALISY}
+    \end{table}
+
     \item \textbf{CARTPOLE Results:}\\
-    In Table~\ref{table:CARTPOLE-ANALISY}, ten different CARTPOLE properties have been verified. DUe to the fact that CARTPOLE network is very small and shallow, the number of UNCATCHED NODES is 0.  
-\end{itemize}
+    In Table~\ref{table:CARTPOLE-ANALISY}, ten different CARTPOLE properties have been verified. Due to the fact that CARTPOLE network is very small and shallow, the number of UNCATCHED NODES is 0.  
+
+    \begin{table}[H]
+        \centering
+        \resizebox{\columnwidth}{!}{%
+        \begin{tabular}{@{}llllll@{}}
+            \toprule
+            \multicolumn{6}{c}{CARTPOLE}  \\
+            \cmidrule(r){1-6} 
+            \multirow{2}{*}{PROPERTY ID} &  \multicolumn{3}{c}{PYNEVER} &  \multicolumn{2}{c}{}\\ 
+            \cmidrule(r){2-4}
+                    & NO BP & BP type 1 & BP type 2 & UNCATCHED NODES BP type 1            & UNCATCHED NODES BP type 2              \\\cmidrule(r){1-6}
+        1           & 5             & 5            & 5            & 0                              & 0                              \\
+        2           & 16            & 16           & 16           & 0                              & 0                              \\
+        3           & 5             & 5            & 5            & 0                              & 0                              \\
+        4           & 15            & 15           & 15           & 0                              & 0                              \\
+        5           & 19            & 19           & 19           & 0                              & 0                              \\
+        9           & 0             & 0            & 0            & 0                              & 0                              \\
+        14          & 3             & 3            & 3            & 0                              & 0                              \\
+        27          & 2             & 2            & 2            & 0                              & 0                              \\
+        39          & 2             & 2            & 2            & 0                              & 0                              \\
+        45          & 1             & 1            & 1            & 0                              & 0                              \\\cmidrule(r){1-6}
+                    &               &              &              & {\color[HTML]{FF0000} leak: 0} & {\color[HTML]{FF0000} leak: 0} \\\cmidrule(r){1-6}
+        \end{tabular}%
+        }
+        \label{table:CARTPOLE-ANALISY}
+        \end{table}
+
+    \end{itemize}
 
 
 
@@ -251,88 +336,21 @@ Before showing test results, below a brief introduction to the neural networks u
 % \usepackage{graphicx}
 % \usepackage[table,xcdraw]{xcolor}
 % If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
-\begin{table}[]
-    \centering
-    \resizebox{\columnwidth}{!}{%
-    \begin{tabular}{@{}lllllll@{}}
-        \toprule
-        \multicolumn{6}{c}{ACC}  \\
-        \cmidrule(r){1-6} 
-        \multirow{2}{*}{NETWORK ID} &  \multicolumn{3}{c}{PYNEVER} &  \multicolumn{2}{c}{}\\ 
-        \cmidrule(r){2-4}
-             & NO BP               & BP type 1                 & BP type 2 & UNCATCHED NODES BP type 1            & UNCATCHED NODES BP type 2            \\\cmidrule(r){1-6}
-    1        & {\color[HTML]{ACB9CA} 23/48} & {\color[HTML]{ACB9CA} 25/48} & {\color[HTML]{ACB9CA} 23/48}        & {\color[HTML]{ACB9CA} 3}                              & {\color[HTML]{ACB9CA} 1}                              \\
-    2        & {\color[HTML]{ACB9CA} 11/96} & {\color[HTML]{ACB9CA} 11/96} & {\color[HTML]{ACB9CA} 11/96}        & {\color[HTML]{ACB9CA} 0}                              & {\color[HTML]{ACB9CA} 0}                              \\
-    5        & {\color[HTML]{ACB9CA} 16/56} & {\color[HTML]{ACB9CA} 18/56} & {\color[HTML]{ACB9CA} 18/56}        & {\color[HTML]{ACB9CA} 2}                              & {\color[HTML]{ACB9CA} 2}                              \\
-    6        & {\color[HTML]{ACB9CA} 18/112}& {\color[HTML]{ACB9CA} 19/112}& {\color[HTML]{ACB9CA} 19/112}       & {\color[HTML]{ACB9CA} 1}                              & {\color[HTML]{ACB9CA} 1}                              \\\cmidrule(r){1-6}
-             &                              &                              &              & {\color[HTML]{FF0000} leak: 6} & {\color[HTML]{FF0000} leak: 4} \\\cmidrule(r){1-6}
 
-    \end{tabular}%
-    }
-    \caption{This is the caption for the first table.}
-    \label{table:ACC-ANALISY}
-\end{table}
 
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
 % \usepackage{graphicx}
 % \usepackage[table,xcdraw]{xcolor}
 % If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
-\begin{table}[]
-    \centering
-    \resizebox{\columnwidth}{!}{%
-    \begin{tabular}{@{}llllll@{}}
-        \toprule
-        \multicolumn{6}{c}{ACAS property: SMT3}  \\
-        \cmidrule(r){1-6} 
-        \multirow{2}{*}{NETWORK ID} &  \multicolumn{3}{c}{PYNEVER} &  \multicolumn{2}{c}{}\\ 
-        \cmidrule(r){2-4}
-               & NO BP                                        & BP type 1                                     & BP type 2                                     & UNCATCHED NODES BP type 1               & UNCATCHED NODES BP type 2               \\\cmidrule(r){1-6}
-    1\_1       & {\color[HTML]{D9E1F2} 58\textbackslash{}300} & {\color[HTML]{D9E1F2} 132\textbackslash{}300} & {\color[HTML]{D9E1F2} 148\textbackslash{}300} & {\color[HTML]{D9E1F2} 74}         & {\color[HTML]{D9E1F2} 90}         \\
-    1\_3       & {\color[HTML]{D9E1F2} 43\textbackslash{}300} & {\color[HTML]{D9E1F2} 134\textbackslash{}300} & {\color[HTML]{D9E1F2} 152\textbackslash{}300} & {\color[HTML]{D9E1F2} 91}         & {\color[HTML]{D9E1F2} 109}        \\
-    1\_4       & {\color[HTML]{D9E1F2} 28\textbackslash{}300} & {\color[HTML]{D9E1F2} 120\textbackslash{}300} & {\color[HTML]{D9E1F2} 137\textbackslash{}300} & {\color[HTML]{D9E1F2} 92}         & {\color[HTML]{D9E1F2} 109}        \\
-    1\_5       & {\color[HTML]{D9E1F2} 27\textbackslash{}300} & {\color[HTML]{D9E1F2} 118\textbackslash{}300} & {\color[HTML]{D9E1F2} 145\textbackslash{}300} & {\color[HTML]{D9E1F2} 91}         & {\color[HTML]{D9E1F2} 118}        \\
-    2\_3       & {\color[HTML]{D9E1F2} 42\textbackslash{}300} & {\color[HTML]{D9E1F2} 107\textbackslash{}300} & {\color[HTML]{D9E1F2} 108\textbackslash{}300} & {\color[HTML]{D9E1F2} 65}         & {\color[HTML]{D9E1F2} 66}         \\
-    3\_2       & {\color[HTML]{D9E1F2} 39\textbackslash{}300} & {\color[HTML]{D9E1F2} 154\textbackslash{}300} & {\color[HTML]{D9E1F2} 177\textbackslash{}300} & {\color[HTML]{D9E1F2} 115}        & {\color[HTML]{D9E1F2} 138}        \\
-    4\_2       & {\color[HTML]{D9E1F2} 49\textbackslash{}300} & {\color[HTML]{D9E1F2} 124\textbackslash{}300} & {\color[HTML]{D9E1F2} 138\textbackslash{}300} & {\color[HTML]{D9E1F2} 75}         & {\color[HTML]{D9E1F2} 89}         \\
-    4\_3       & {\color[HTML]{D9E1F2} 42\textbackslash{}300} & {\color[HTML]{D9E1F2} 128\textbackslash{}300} & {\color[HTML]{D9E1F2} 138\textbackslash{}300} & {\color[HTML]{D9E1F2} 86}         & {\color[HTML]{D9E1F2} 96}         \\
-    5\_1       & {\color[HTML]{D9E1F2} 44\textbackslash{}300} & {\color[HTML]{D9E1F2} 117\textbackslash{}300} & {\color[HTML]{D9E1F2} 138\textbackslash{}300} & {\color[HTML]{D9E1F2} 73}         & {\color[HTML]{D9E1F2} 94}         \\\cmidrule(r){1-6}
-    average:   &  {\color[HTML]{FF0000}41.3\textbackslash{}300} &  {\color[HTML]{FF0000}126\textbackslash{}300} & {\color[HTML]{FF0000}142.3\textbackslash{}300}  & {\color[HTML]{FF0000} leaks: 762 average: 84.6} & {\color[HTML]{FF0000} leaks: 909 average: 101} \\\cmidrule(r){1-6}
-    \end{tabular}%
-    }
-    \label{table:ACAS-ANALISY}
-    \end{table}
+
 
     % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
 % \usepackage{graphicx}
 % \usepackage[table,xcdraw]{xcolor}
 % If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
-\begin{table}[]
-    \centering
-    \resizebox{\columnwidth}{!}{%
-    \begin{tabular}{@{}llllll@{}}
-        \toprule
-        \multicolumn{6}{c}{CARTPOLE}  \\
-        \cmidrule(r){1-6} 
-        \multirow{2}{*}{PROPERTY ID} &  \multicolumn{3}{c}{PYNEVER} &  \multicolumn{2}{c}{}\\ 
-        \cmidrule(r){2-4}
-                & NO BP & BP type 1 & BP type 2 & UNCATCHED NODES BP type 1            & UNCATCHED NODES BP type 2              \\\cmidrule(r){1-6}
-    1           & 5             & 5            & 5            & 0                              & 0                              \\
-    2           & 16            & 16           & 16           & 0                              & 0                              \\
-    3           & 5             & 5            & 5            & 0                              & 0                              \\
-    4           & 15            & 15           & 15           & 0                              & 0                              \\
-    5           & 19            & 19           & 19           & 0                              & 0                              \\
-    9           & 0             & 0            & 0            & 0                              & 0                              \\
-    14          & 3             & 3            & 3            & 0                              & 0                              \\
-    27          & 2             & 2            & 2            & 0                              & 0                              \\
-    39          & 2             & 2            & 2            & 0                              & 0                              \\
-    45          & 1             & 1            & 1            & 0                              & 0                              \\\cmidrule(r){1-6}
-                &               &              &              & {\color[HTML]{FF0000} leak: 0} & {\color[HTML]{FF0000} leak: 0} \\\cmidrule(r){1-6}
-    \end{tabular}%
-    }
-    \label{table:CARTPOLE-ANALISY}
-    \end{table}
+
 
 
 % Please add the following required packages to your document preamble:

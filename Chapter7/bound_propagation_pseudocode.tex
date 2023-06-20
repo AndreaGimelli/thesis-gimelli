@@ -24,6 +24,7 @@ Below the explanation of pseudocode~\ref{alg:bp-pseudocode}
 	All the symbolic and numeric bounds of all layer are saved in dictionaries but only the numeric one is returned.
 \end{itemize}
 
+
 \begin{algorithm}[t!]
   \caption{Bound Propagation Algorithm}
   \label{alg:bp-pseudocode}
@@ -89,37 +90,37 @@ Below the explanation of pseudocode~\ref{alg:bp-pseudocode}
 \end{algorithmic}
 \end{algorithm}
 
-\begin{algorithm}
-\label{alg:hyper-rect-bound}
-	\begin{algorithmic}[1]
-		\State \textbf{Class:} $HyperRectangleBounds$
-		\State \quad \textbf{public} $lower: list$
-		\State \quad \textbf{public} $upper: list$
-	\end{algorithmic}
-\end{algorithm}
+% \begin{algorithm}
+% \label{alg:hyper-rect-bound}
+% 	\begin{algorithmic}[1]
+% 		\State \textbf{Class:} $HyperRectangleBounds$
+% 		\State \quad \textbf{public} $lower: list$
+% 		\State \quad \textbf{public} $upper: list$
+% 	\end{algorithmic}
+% \end{algorithm}
 
 
-\begin{algorithm}
-	\label{alg:linear-functions}
-	\begin{algorithmic}[1]
-		\State \textbf{Class:} $LinearFunctions$
-		\State \quad \textbf{public} $size$
-		\State \quad \textbf{public} $matrix$
-		\State \quad \textbf{public} $offset$
-	\end{algorithmic}
-\end{algorithm}
+% \begin{algorithm}
+% 	\label{alg:linear-functions}
+% 	\begin{algorithmic}[1]
+% 		\State \textbf{Class:} $LinearFunctions$
+% 		\State \quad \textbf{public} $size$
+% 		\State \quad \textbf{public} $matrix$
+% 		\State \quad \textbf{public} $offset$
+% 	\end{algorithmic}
+% \end{algorithm}
 
-\begin{algorithm}
-	\label{alg:symbolic-linear-bounds}
-	\begin{algorithmic}[1]
-		\Require $lower$ is the lower bound of a layer
-		\Require $upper$ is the upper bound of a layer
-		\Statex
-		\State \textbf{Class:} $SymbolicLinearBounds$
-		\State \quad \textbf{public} $lower: LinearFunctions$
-		\State \quad \textbf{public} $upper: LinearFunctions$
-	\end{algorithmic}
-\end{algorithm}
+% \begin{algorithm}
+% 	\label{alg:symbolic-linear-bounds}
+% 	\begin{algorithmic}[1]
+% 		\Require $lower$ is the lower bound of a layer
+% 		\Require $upper$ is the upper bound of a layer
+% 		\Statex
+% 		\State \textbf{Class:} $SymbolicLinearBounds$
+% 		\State \quad \textbf{public} $lower: LinearFunctions$
+% 		\State \quad \textbf{public} $upper: LinearFunctions$
+% 	\end{algorithmic}
+% \end{algorithm}
 % \begin{itemize}
 % 	\item The \texttt{compute_bounds} method calculates symbolic and numeric bounds for all nodes using symbolic linear propagation.
 % 	\item Create a \texttt{HyperRectBounds} object from the property using \texttt{PropertyFormatConverter}.

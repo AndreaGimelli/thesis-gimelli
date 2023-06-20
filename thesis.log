@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.6.2)  11 JUN 2023 10:27
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.6.2)  20 JUN 2023 16:53
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -516,19 +516,28 @@ File: pppdftex.def 2022/12/19 v0.5x Pdfpages driver for pdfTeX (AM)
 \AM@lof@heading=\toks33
 \c@AM@survey=\count326
 \AM@templatesizebox=\box56
+) (/usr/local/texlive/2023/texmf-dist/tex/latex/tools/array.sty
+Package: array 2022/09/04 v2.5g Tabular extension package (FMi)
+\col@sep=\dimen174
+\ar@mcellbox=\box57
+\extrarowheight=\dimen175
+\NC@list=\toks34
+\extratabsurround=\skip71
+\backup@length=\skip72
+\ar@cellbox=\box58
 ) (/usr/local/texlive/2023/texmf-dist/tex/latex/wrapfig/wrapfig.sty
-\wrapoverhang=\dimen174
-\WF@size=\dimen175
+\wrapoverhang=\dimen176
+\WF@size=\dimen177
 \c@WF@wrappedlines=\count327
-\WF@box=\box57
-\WF@everypar=\toks34
+\WF@box=\box59
+\WF@everypar=\toks35
 Package: wrapfig 2003/01/31  v 3.6
 ) (/usr/local/texlive/2023/texmf-dist/tex/latex/pgf/frontendlayer/tikz.sty (/usr/local/texlive/2023/texmf-dist/tex/latex/pgf/basiclayer/pgf.sty (/usr/local/texlive/2023/texmf-dist/tex/latex/pgf/utilities/pgfrcs.sty (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/utilities/pgfutil-common.tex
-\pgfutil@everybye=\toks35
-\pgfutil@tempdima=\dimen176
-\pgfutil@tempdimb=\dimen177
+\pgfutil@everybye=\toks36
+\pgfutil@tempdima=\dimen178
+\pgfutil@tempdimb=\dimen179
 ) (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/utilities/pgfutil-latex.def
-\pgfutil@abb=\box58
+\pgfutil@abb=\box60
 ) (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/utilities/pgfrcs.code.tex (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/pgf.revision.tex)
 Package: pgfrcs 2023-01-15 v3.1.10 (3.1.10)
 ))
@@ -536,30 +545,30 @@ Package: pgf 2023-01-15 v3.1.10 (3.1.10)
  (/usr/local/texlive/2023/texmf-dist/tex/latex/pgf/basiclayer/pgfcore.sty (/usr/local/texlive/2023/texmf-dist/tex/latex/pgf/systemlayer/pgfsys.sty (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/systemlayer/pgfsys.code.tex
 Package: pgfsys 2023-01-15 v3.1.10 (3.1.10)
  (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex
-\pgfkeys@pathtoks=\toks36
-\pgfkeys@temptoks=\toks37
+\pgfkeys@pathtoks=\toks37
+\pgfkeys@temptoks=\toks38
  (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/utilities/pgfkeyslibraryfiltered.code.tex
-\pgfkeys@tmptoks=\toks38
+\pgfkeys@tmptoks=\toks39
 ))
-\pgf@x=\dimen178
-\pgf@y=\dimen179
-\pgf@xa=\dimen180
-\pgf@ya=\dimen181
-\pgf@xb=\dimen182
-\pgf@yb=\dimen183
-\pgf@xc=\dimen184
-\pgf@yc=\dimen185
-\pgf@xd=\dimen186
-\pgf@yd=\dimen187
+\pgf@x=\dimen180
+\pgf@y=\dimen181
+\pgf@xa=\dimen182
+\pgf@ya=\dimen183
+\pgf@xb=\dimen184
+\pgf@yb=\dimen185
+\pgf@xc=\dimen186
+\pgf@yc=\dimen187
+\pgf@xd=\dimen188
+\pgf@yd=\dimen189
 \w@pgf@writea=\write5
 \r@pgf@reada=\read2
 \c@pgf@counta=\count328
 \c@pgf@countb=\count329
 \c@pgf@countc=\count330
 \c@pgf@countd=\count331
-\t@pgf@toka=\toks39
-\t@pgf@tokb=\toks40
-\t@pgf@tokc=\toks41
+\t@pgf@toka=\toks40
+\t@pgf@tokb=\toks41
+\t@pgf@tokc=\toks42
 \pgf@sys@id@count=\count332
  (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/systemlayer/pgf.cfg
 File: pgf.cfg 2023-01-15 v3.1.10 (3.1.10)
@@ -595,52 +604,52 @@ Package xcolor Info: Model `wave' substituted by `hsb' on input line 1376.
 ) (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/basiclayer/pgfcore.code.tex
 Package: pgfcore 2023-01-15 v3.1.10 (3.1.10)
  (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/math/pgfmathutil.code.tex) (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/math/pgfmathparser.code.tex
-\pgfmath@dimen=\dimen188
+\pgfmath@dimen=\dimen190
 \pgfmath@count=\count335
-\pgfmath@box=\box59
-\pgfmath@toks=\toks42
-\pgfmath@stack@operand=\toks43
-\pgfmath@stack@operation=\toks44
+\pgfmath@box=\box61
+\pgfmath@toks=\toks43
+\pgfmath@stack@operand=\toks44
+\pgfmath@stack@operation=\toks45
 ) (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.code.tex) (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.basic.code.tex) (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.trigonometric.code.tex) (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.random.code.tex) (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.comparison.code.tex) (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.base.code.tex) (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.round.code.tex) (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.misc.code.tex) (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.integerarithmetics.code.tex) (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/math/pgfmathcalc.code.tex) (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/math/pgfmathfloat.code.tex
 \c@pgfmathroundto@lastzeros=\count336
 )) (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/math/pgfint.code.tex) (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepoints.code.tex
 File: pgfcorepoints.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgf@picminx=\dimen189
-\pgf@picmaxx=\dimen190
-\pgf@picminy=\dimen191
-\pgf@picmaxy=\dimen192
-\pgf@pathminx=\dimen193
-\pgf@pathmaxx=\dimen194
-\pgf@pathminy=\dimen195
-\pgf@pathmaxy=\dimen196
-\pgf@xx=\dimen197
-\pgf@xy=\dimen198
-\pgf@yx=\dimen199
-\pgf@yy=\dimen256
-\pgf@zx=\dimen257
-\pgf@zy=\dimen258
+\pgf@picminx=\dimen191
+\pgf@picmaxx=\dimen192
+\pgf@picminy=\dimen193
+\pgf@picmaxy=\dimen194
+\pgf@pathminx=\dimen195
+\pgf@pathmaxx=\dimen196
+\pgf@pathminy=\dimen197
+\pgf@pathmaxy=\dimen198
+\pgf@xx=\dimen199
+\pgf@xy=\dimen256
+\pgf@yx=\dimen257
+\pgf@yy=\dimen258
+\pgf@zx=\dimen259
+\pgf@zy=\dimen260
 ) (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathconstruct.code.tex
 File: pgfcorepathconstruct.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgf@path@lastx=\dimen259
-\pgf@path@lasty=\dimen260
+\pgf@path@lastx=\dimen261
+\pgf@path@lasty=\dimen262
 ) (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathusage.code.tex
 File: pgfcorepathusage.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgf@shorten@end@additional=\dimen261
-\pgf@shorten@start@additional=\dimen262
+\pgf@shorten@end@additional=\dimen263
+\pgf@shorten@start@additional=\dimen264
 ) (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/basiclayer/pgfcorescopes.code.tex
 File: pgfcorescopes.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgfpic=\box60
-\pgf@hbox=\box61
-\pgf@layerbox@main=\box62
+\pgfpic=\box62
+\pgf@hbox=\box63
+\pgf@layerbox@main=\box64
 \pgf@picture@serial@count=\count337
 ) (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/basiclayer/pgfcoregraphicstate.code.tex
 File: pgfcoregraphicstate.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgflinewidth=\dimen263
+\pgflinewidth=\dimen265
 ) (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransformations.code.tex
 File: pgfcoretransformations.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgf@pt@x=\dimen264
-\pgf@pt@y=\dimen265
-\pgf@pt@temp=\dimen266
+\pgf@pt@x=\dimen266
+\pgf@pt@y=\dimen267
+\pgf@pt@temp=\dimen268
 ) (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/basiclayer/pgfcorequick.code.tex
 File: pgfcorequick.code.tex 2023-01-15 v3.1.10 (3.1.10)
 ) (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreobjects.code.tex
@@ -649,17 +658,17 @@ File: pgfcoreobjects.code.tex 2023-01-15 v3.1.10 (3.1.10)
 File: pgfcorepathprocessing.code.tex 2023-01-15 v3.1.10 (3.1.10)
 ) (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/basiclayer/pgfcorearrows.code.tex
 File: pgfcorearrows.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgfarrowsep=\dimen267
+\pgfarrowsep=\dimen269
 ) (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreshade.code.tex
 File: pgfcoreshade.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgf@max=\dimen268
+\pgf@max=\dimen270
 \pgf@sys@shading@range@num=\count338
 \pgf@shadingcount=\count339
 ) (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreimage.code.tex
 File: pgfcoreimage.code.tex 2023-01-15 v3.1.10 (3.1.10)
 ) (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreexternal.code.tex
 File: pgfcoreexternal.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgfexternal@startupbox=\box63
+\pgfexternal@startupbox=\box65
 ) (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/basiclayer/pgfcorelayers.code.tex
 File: pgfcorelayers.code.tex 2023-01-15 v3.1.10 (3.1.10)
 ) (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransparency.code.tex
@@ -670,40 +679,40 @@ File: pgfcorepatterns.code.tex 2023-01-15 v3.1.10 (3.1.10)
 File: pgfcorerdf.code.tex 2023-01-15 v3.1.10 (3.1.10)
 ))) (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/modules/pgfmoduleshapes.code.tex
 File: pgfmoduleshapes.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgfnodeparttextbox=\box64
+\pgfnodeparttextbox=\box66
 ) (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/modules/pgfmoduleplot.code.tex
 File: pgfmoduleplot.code.tex 2023-01-15 v3.1.10 (3.1.10)
 ) (/usr/local/texlive/2023/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-65.sty
 Package: pgfcomp-version-0-65 2023-01-15 v3.1.10 (3.1.10)
-\pgf@nodesepstart=\dimen269
-\pgf@nodesepend=\dimen270
+\pgf@nodesepstart=\dimen271
+\pgf@nodesepend=\dimen272
 ) (/usr/local/texlive/2023/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-18.sty
 Package: pgfcomp-version-1-18 2023-01-15 v3.1.10 (3.1.10)
 )) (/usr/local/texlive/2023/texmf-dist/tex/latex/pgf/utilities/pgffor.sty (/usr/local/texlive/2023/texmf-dist/tex/latex/pgf/utilities/pgfkeys.sty (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex)) (/usr/local/texlive/2023/texmf-dist/tex/latex/pgf/math/pgfmath.sty (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex)) (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/utilities/pgffor.code.tex
 Package: pgffor 2023-01-15 v3.1.10 (3.1.10)
-\pgffor@iter=\dimen271
-\pgffor@skip=\dimen272
-\pgffor@stack=\toks45
-\pgffor@toks=\toks46
+\pgffor@iter=\dimen273
+\pgffor@skip=\dimen274
+\pgffor@stack=\toks46
+\pgffor@toks=\toks47
 )) (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/frontendlayer/tikz/tikz.code.tex
 Package: tikz 2023-01-15 v3.1.10 (3.1.10)
  (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/libraries/pgflibraryplothandlers.code.tex
 File: pgflibraryplothandlers.code.tex 2023-01-15 v3.1.10 (3.1.10)
 \pgf@plot@mark@count=\count340
-\pgfplotmarksize=\dimen273
+\pgfplotmarksize=\dimen275
 )
-\tikz@lastx=\dimen274
-\tikz@lasty=\dimen275
-\tikz@lastxsaved=\dimen276
-\tikz@lastysaved=\dimen277
-\tikz@lastmovetox=\dimen278
-\tikz@lastmovetoy=\dimen279
-\tikzleveldistance=\dimen280
-\tikzsiblingdistance=\dimen281
-\tikz@figbox=\box65
-\tikz@figbox@bg=\box66
-\tikz@tempbox=\box67
-\tikz@tempbox@bg=\box68
+\tikz@lastx=\dimen276
+\tikz@lasty=\dimen277
+\tikz@lastxsaved=\dimen278
+\tikz@lastysaved=\dimen279
+\tikz@lastmovetox=\dimen280
+\tikz@lastmovetoy=\dimen281
+\tikzleveldistance=\dimen282
+\tikzsiblingdistance=\dimen283
+\tikz@figbox=\box67
+\tikz@figbox@bg=\box68
+\tikz@tempbox=\box69
+\tikz@tempbox@bg=\box70
 \tikztreelevel=\count341
 \tikznumberofchildren=\count342
 \tikznumberofcurrentchild=\count343
@@ -735,16 +744,16 @@ ulem-option 'normalem,normalbf', passed to package ulem
 truncate-option 'breakall,fit', passed to package truncate
 changes-option 'final'
 (/usr/local/texlive/2023/texmf-dist/tex/generic/ulem/ulem.sty
-\UL@box=\box69
-\UL@hyphenbox=\box70
-\UL@skip=\skip71
-\UL@hook=\toks47
-\UL@height=\dimen282
+\UL@box=\box71
+\UL@hyphenbox=\box72
+\UL@skip=\skip73
+\UL@hook=\toks48
+\UL@height=\dimen284
 \UL@pe=\count351
-\UL@pixel=\dimen283
-\ULC@box=\box71
+\UL@pixel=\dimen285
+\ULC@box=\box73
 Package: ulem 2019/11/18
-\ULdepth=\dimen284
+\ULdepth=\dimen286
 ) (/usr/local/texlive/2023/texmf-dist/tex/latex/todonotes/todonotes.sty
 Package: todonotes 2023/01/31 v1.1.6 Todonotes source and documentation.
 Package: todonotes 2023/01/31
@@ -760,10 +769,10 @@ Package: todonotes 2023/01/31
 \c@authorcommentcount=\count360
  (/usr/local/texlive/2023/texmf-dist/tex/latex/truncate/truncate.sty
 Package: truncate 2001/08/20  ver 3.6
-\@Trunc@RestHyph=\toks48
+\@Trunc@RestHyph=\toks49
 )
-\Changestruncatewidth=\skip72
-\Changes@summary@width=\skip73
+\Changestruncatewidth=\skip74
+\Changes@summary@width=\skip75
 )
 \c@Changes@addedCountMS=\count361
 \c@Changes@deletedCountMS=\count362
@@ -785,12 +794,12 @@ Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating environ
  (/usr/local/texlive/2023/texmf-dist/tex/latex/float/float.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \c@float@type=\count376
-\float@exts=\toks49
-\float@box=\box72
-\@float@everytoks=\toks50
-\@floatcapt=\box73
+\float@exts=\toks50
+\float@box=\box74
+\@float@everytoks=\toks51
+\@floatcapt=\box75
 )
-\@float@every@algorithm=\toks51
+\@float@every@algorithm=\toks52
 \c@algorithm=\count377
 ) (/usr/local/texlive/2023/texmf-dist/tex/latex/algorithmicx/algorithmicx.sty
 Package: algorithmicx 2005/04/27 v1.2 Algorithmicx
@@ -799,13 +808,13 @@ Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
 \c@ALG@line=\count378
 \c@ALG@rem=\count379
 \c@ALG@nested=\count380
-\ALG@tlm=\skip74
-\ALG@thistlm=\skip75
+\ALG@tlm=\skip76
+\ALG@thistlm=\skip77
 \c@ALG@Lnr=\count381
 \c@ALG@blocknr=\count382
 \c@ALG@storecount=\count383
 \c@ALG@tmpcounter=\count384
-\ALG@tmplength=\skip76
+\ALG@tmplength=\skip78
 ) (/usr/local/texlive/2023/texmf-dist/tex/latex/algorithmicx/algpseudocode.sty
 Package: algpseudocode 
 
@@ -814,14 +823,14 @@ Document Style - pseudocode environments for use with the `algorithmicx' style
 Package: caption 2023/03/12 v3.6j Customizing captions (AR)
  (/usr/local/texlive/2023/texmf-dist/tex/latex/caption/caption3.sty
 Package: caption3 2023/03/12 v2.4 caption3 kernel (AR)
-\caption@tempdima=\dimen285
-\captionmargin=\dimen286
-\caption@leftmargin=\dimen287
-\caption@rightmargin=\dimen288
-\caption@width=\dimen289
-\caption@indent=\dimen290
-\caption@parindent=\dimen291
-\caption@hangindent=\dimen292
+\caption@tempdima=\dimen287
+\captionmargin=\dimen288
+\caption@leftmargin=\dimen289
+\caption@rightmargin=\dimen290
+\caption@width=\dimen291
+\caption@indent=\dimen292
+\caption@parindent=\dimen293
+\caption@hangindent=\dimen294
 Package caption Info: Standard document class detected.
 )
 \c@caption@flags=\count385
@@ -838,26 +847,26 @@ Package: stackengine 2021/07/22 v4.11\ Stacking text and objects in convenient w
 Package: listofitems 2019/08/21 v1.63 Grab items in lists using user-specified sep char (CT)
 )
 \c@@stackindex=\count389
-\@boxshift=\skip77
-\stack@tmplength=\skip78
-\temp@stkl=\skip79
-\@stackedboxwidth=\skip80
-\@addedbox=\box74
-\@anchorbox=\box75
-\@insetbox=\box76
-\se@backgroundbox=\box77
-\stackedbox=\box78
-\@centerbox=\box79
+\@boxshift=\skip79
+\stack@tmplength=\skip80
+\temp@stkl=\skip81
+\@stackedboxwidth=\skip82
+\@addedbox=\box76
+\@anchorbox=\box77
+\@insetbox=\box78
+\se@backgroundbox=\box79
+\stackedbox=\box80
+\@centerbox=\box81
 \c@ROWcellindex@=\count390
 ) (/usr/local/texlive/2023/texmf-dist/tex/latex/epigraph/epigraph.sty
 Package: epigraph 2020/01/02 v1.5e typesetting epigraphs
  (/usr/local/texlive/2023/texmf-dist/tex/latex/nextpage/nextpage.sty
 Package: nextpage 2009/09/03 v1.1a additional page commands
 )
-\beforeepigraphskip=\skip81
-\afterepigraphskip=\skip82
-\epigraphwidth=\skip83
-\epigraphrule=\skip84
+\beforeepigraphskip=\skip83
+\afterepigraphskip=\skip84
+\epigraphwidth=\skip85
+\epigraphrule=\skip86
 ) (/usr/local/texlive/2023/texmf-dist/tex/latex/caption/subcaption.sty
 Package: subcaption 2023/02/19 v1.6 Sub-captions (AR)
 Package caption Info: New subtype `subfigure' on input line 239.
@@ -866,34 +875,34 @@ Package caption Info: New subtype `subtable' on input line 239.
 \c@subtable=\count392
 ) (/usr/local/texlive/2023/texmf-dist/tex/latex/booktabs/booktabs.sty
 Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
-\heavyrulewidth=\dimen293
-\lightrulewidth=\dimen294
-\cmidrulewidth=\dimen295
-\belowrulesep=\dimen296
-\belowbottomsep=\dimen297
-\aboverulesep=\dimen298
-\abovetopsep=\dimen299
-\cmidrulesep=\dimen300
-\cmidrulekern=\dimen301
-\defaultaddspace=\dimen302
+\heavyrulewidth=\dimen295
+\lightrulewidth=\dimen296
+\cmidrulewidth=\dimen297
+\belowrulesep=\dimen298
+\belowbottomsep=\dimen299
+\aboverulesep=\dimen300
+\abovetopsep=\dimen301
+\cmidrulesep=\dimen302
+\cmidrulekern=\dimen303
+\defaultaddspace=\dimen304
 \@cmidla=\count393
 \@cmidlb=\count394
-\@aboverulesep=\dimen303
-\@belowrulesep=\dimen304
+\@aboverulesep=\dimen305
+\@belowrulesep=\dimen306
 \@thisruleclass=\count395
 \@lastruleclass=\count396
-\@thisrulewidth=\dimen305
+\@thisrulewidth=\dimen307
 ) (/usr/local/texlive/2023/texmf-dist/tex/latex/multirow/multirow.sty
 Package: multirow 2021/03/15 v2.8 Span multiple rows of a table
-\multirow@colwidth=\skip85
+\multirow@colwidth=\skip87
 \multirow@cntb=\count397
-\multirow@dima=\skip86
-\bigstrutjot=\dimen306
+\multirow@dima=\skip88
+\bigstrutjot=\dimen308
 ) (/usr/local/texlive/2023/texmf-dist/tex/latex/siunitx/siunitx.sty
 Package: siunitx 2023-04-13 v3.2.5 A comprehensive (SI) units package
-\l__siunitx_angle_tmp_dim=\dimen307
-\l__siunitx_angle_marker_box=\box80
-\l__siunitx_angle_unit_box=\box81
+\l__siunitx_angle_tmp_dim=\dimen309
+\l__siunitx_angle_marker_box=\box82
+\l__siunitx_angle_unit_box=\box83
 \l__siunitx_compound_count_int=\count398
  (/usr/local/texlive/2023/texmf-dist/tex/latex/translations/translations.sty
 Package: translations 2022/02/05 v1.12 internationalization of LaTeX2e packages (CN)
@@ -907,29 +916,20 @@ Package: translations 2022/02/05 v1.12 internationalization of LaTeX2e packages 
 \l__siunitx_number_group_first_int=\count405
 \l__siunitx_number_group_size_int=\count406
 \l__siunitx_number_group_minimum_int=\count407
-\l__siunitx_table_tmp_box=\box82
-\l__siunitx_table_tmp_dim=\dimen308
-\l__siunitx_table_column_width_dim=\dimen309
-\l__siunitx_table_integer_box=\box83
-\l__siunitx_table_decimal_box=\box84
-\l__siunitx_table_uncert_box=\box85
-\l__siunitx_table_before_box=\box86
-\l__siunitx_table_after_box=\box87
-\l__siunitx_table_before_dim=\dimen310
-\l__siunitx_table_carry_dim=\dimen311
+\l__siunitx_table_tmp_box=\box84
+\l__siunitx_table_tmp_dim=\dimen310
+\l__siunitx_table_column_width_dim=\dimen311
+\l__siunitx_table_integer_box=\box85
+\l__siunitx_table_decimal_box=\box86
+\l__siunitx_table_uncert_box=\box87
+\l__siunitx_table_before_box=\box88
+\l__siunitx_table_after_box=\box89
+\l__siunitx_table_before_dim=\dimen312
+\l__siunitx_table_carry_dim=\dimen313
 \l__siunitx_unit_tmp_int=\count408
 \l__siunitx_unit_position_int=\count409
 \l__siunitx_unit_total_int=\count410
- (/usr/local/texlive/2023/texmf-dist/tex/latex/tools/array.sty
-Package: array 2022/09/04 v2.5g Tabular extension package (FMi)
-\col@sep=\dimen312
-\ar@mcellbox=\box88
-\extrarowheight=\dimen313
-\NC@list=\toks52
-\extratabsurround=\skip87
-\backup@length=\skip88
-\ar@cellbox=\box89
-))
+)
 \c@proposition=\count411
 \c@definition=\count412
 \c@theorem=\count413
@@ -947,7 +947,7 @@ LaTeX Warning: Label `fig:nn_with_bp' multiply defined.
 
 LaTeX Warning: Label `fig:nn_without_bp' multiply defined.
 
-) (./Chapter6/future.aux) (./Chapter7/bound_propagation_pseudocode.aux))
+) (./Chapter6/future.aux) (./Chapter7/bound_propagation_pseudocode.aux) (./Chapter7/bound_propagation_test_results.aux))
 \openout1 = `thesis.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 112.
@@ -1059,7 +1059,7 @@ File: translations-basic-dictionary-english.trsl (english translation file `tran
 )
 Package translations Info: loading dictionary `translations-basic-dictionary' for `english'. on input line 112.
  (./coverpage.tex
-<Figs/Logo_Unige.png, id=123, 194.7275pt x 260.975pt>
+<Figs/Logo_Unige.png, id=143, 194.7275pt x 260.975pt>
 File: Figs/Logo_Unige.png Graphic file (type png)
 <use Figs/Logo_Unige.png>
 Package pdftex.def Info: Figs/Logo_Unige.png  used on input line 9.
@@ -1099,7 +1099,7 @@ File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 ) (/usr/local/texlive/2023/texmf-dist/tex/latex/microtype/mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
-<Figs/Logo_Dibris.png, id=124, 52.8885pt x 16.7535pt>
+<Figs/Logo_Dibris.png, id=144, 52.8885pt x 16.7535pt>
 File: Figs/Logo_Dibris.png Graphic file (type png)
 <use Figs/Logo_Dibris.png>
 Package pdftex.def Info: Figs/Logo_Dibris.png  used on input line 62.
@@ -1176,17 +1176,17 @@ Chapter 3.
 \openout2 = `Chapter4/abstraction.aux'.
 
  (./Chapter4/abstraction.tex
-<Figs/NN/input1_convex.pdf, id=284, 361.35pt x 578.16pt>
+<Figs/NN/input1_convex.pdf, id=304, 361.35pt x 578.16pt>
 File: Figs/NN/input1_convex.pdf Graphic file (type pdf)
 <use Figs/NN/input1_convex.pdf>
 Package pdftex.def Info: Figs/NN/input1_convex.pdf  used on input line 75.
 (pdftex.def)             Requested size: 131.23967pt x 209.98123pt.
-<Figs/NN/input2_approx.pdf, id=285, 361.35pt x 578.16pt>
+<Figs/NN/input2_approx.pdf, id=305, 361.35pt x 578.16pt>
 File: Figs/NN/input2_approx.pdf Graphic file (type pdf)
 <use Figs/NN/input2_approx.pdf>
 Package pdftex.def Info: Figs/NN/input2_approx.pdf  used on input line 76.
 (pdftex.def)             Requested size: 131.23967pt x 209.98123pt.
-<Figs/NN/input3_split.pdf, id=286, 361.35pt x 578.16pt>
+<Figs/NN/input3_split.pdf, id=306, 361.35pt x 578.16pt>
 File: Figs/NN/input3_split.pdf Graphic file (type pdf)
 <use Figs/NN/input3_split.pdf>
 Package pdftex.def Info: Figs/NN/input3_split.pdf  used on input line 77.
@@ -1211,12 +1211,12 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 240.
  [13] [14] [15]
-<Figs/NN/ReLU_figure.pdf, id=395, 433.62pt x 289.08pt>
+<Figs/NN/ReLU_figure.pdf, id=415, 433.62pt x 289.08pt>
 File: Figs/NN/ReLU_figure.pdf Graphic file (type pdf)
 <use Figs/NN/ReLU_figure.pdf>
 Package pdftex.def Info: Figs/NN/ReLU_figure.pdf  used on input line 428.
 (pdftex.def)             Requested size: 209.97946pt x 139.98749pt.
-<Figs/NN/relu_overapprox.pdf, id=396, 433.62pt x 289.08pt>
+<Figs/NN/relu_overapprox.pdf, id=416, 433.62pt x 289.08pt>
 File: Figs/NN/relu_overapprox.pdf Graphic file (type pdf)
 <use Figs/NN/relu_overapprox.pdf>
 Package pdftex.def Info: Figs/NN/relu_overapprox.pdf  used on input line 430.
@@ -1238,7 +1238,7 @@ Chapter 4.
 \openout2 = `Chapter5/bound_propagation_types.aux'.
 
  (./Chapter5/bound_propagation_types.tex
-<Chapter5/img/bound-propagation/naive_prop.png, id=499, 941.5175pt x 487.8225pt>
+<Chapter5/img/bound-propagation/naive_prop.png, id=519, 941.5175pt x 487.8225pt>
 File: Chapter5/img/bound-propagation/naive_prop.png Graphic file (type png)
 <use Chapter5/img/bound-propagation/naive_prop.png>
 Package pdftex.def Info: Chapter5/img/bound-propagation/naive_prop.png  used on input line 12.
@@ -1246,7 +1246,7 @@ Package pdftex.def Info: Chapter5/img/bound-propagation/naive_prop.png  used on 
  [21
 
  <./Chapter5/img/bound-propagation/naive_prop.png>]
-<Chapter5/img/bound-propagation/bound_prop_2.png, id=509, 976.64874pt x 509.905pt>
+<Chapter5/img/bound-propagation/bound_prop_2.png, id=529, 976.64874pt x 509.905pt>
 File: Chapter5/img/bound-propagation/bound_prop_2.png Graphic file (type png)
 <use Chapter5/img/bound-propagation/bound_prop_2.png>
 Package pdftex.def Info: Chapter5/img/bound-propagation/bound_prop_2.png  used on input line 39.
@@ -1261,7 +1261,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 114--117
 
  []
 
-<Chapter5/img/bound-propagation/bisection.png, id=525, 789.95125pt x 305.14pt>
+<Chapter5/img/bound-propagation/bisection.png, id=545, 789.95125pt x 305.14pt>
 File: Chapter5/img/bound-propagation/bisection.png Graphic file (type png)
 <use Chapter5/img/bound-propagation/bisection.png>
 Package pdftex.def Info: Chapter5/img/bound-propagation/bisection.png  used on input line 128.
@@ -1275,7 +1275,7 @@ Overfull \hbox (36.51328pt too wide) in paragraph at lines 128--129
 \openout2 = `Chapter5/relu_overapproximation.aux'.
 
  (./Chapter5/relu_overapproximation.tex
-<Chapter5/img/ReLU's/relus.png, id=538, 452.69125pt x 126.4725pt>
+<Chapter5/img/ReLU's/relus.png, id=558, 452.69125pt x 126.4725pt>
 File: Chapter5/img/ReLU's/relus.png Graphic file (type png)
 <use Chapter5/img/ReLU's/relus.png>
 Package pdftex.def Info: Chapter5/img/ReLU's/relus.png  used on input line 16.
@@ -1285,7 +1285,7 @@ Package pdftex.def Info: Chapter5/img/ReLU's/relus.png  used on input line 16.
 
 
  <./Chapter5/img/ReLU's/relus.png>]
-<Chapter5/img/network_with_bound_prop/network_with_bound_prop.png, id=547, 850.17625pt x 300.12125pt>
+<Chapter5/img/network_with_bound_prop/network_with_bound_prop.png, id=567, 850.17625pt x 300.12125pt>
 File: Chapter5/img/network_with_bound_prop/network_with_bound_prop.png Graphic file (type png)
 <use Chapter5/img/network_with_bound_prop/network_with_bound_prop.png>
 Package pdftex.def Info: Chapter5/img/network_with_bound_prop/network_with_bound_prop.png  used on input line 60.
@@ -1304,7 +1304,7 @@ Overfull \hbox (3.49406pt too wide) detected at line 135
 \openout2 = `Chapter6/bound_propagation_pynever_application.aux'.
 
  (./Chapter6/bound_propagation_pynever_application.tex
-<Chapter6/img/pos_stable pos_stable.png, id=584, 943.525pt x 233.87375pt>
+<Chapter6/img/pos_stable pos_stable.png, id=604, 943.525pt x 233.87375pt>
 File: Chapter6/img/pos_stable pos_stable.png Graphic file (type png)
 <use Chapter6/img/pos_stable pos_stable.png>
 Package pdftex.def Info: Chapter6/img/pos_stable pos_stable.png  used on input line 29.
@@ -1314,22 +1314,22 @@ Package pdftex.def Info: Chapter6/img/pos_stable pos_stable.png  used on input l
 
 
 ]
-<Chapter6/img/neg_stable neg_stable.png, id=590, 943.525pt x 233.87375pt>
+<Chapter6/img/neg_stable neg_stable.png, id=610, 943.525pt x 233.87375pt>
 File: Chapter6/img/neg_stable neg_stable.png Graphic file (type png)
 <use Chapter6/img/neg_stable neg_stable.png>
 Package pdftex.def Info: Chapter6/img/neg_stable neg_stable.png  used on input line 34.
 (pdftex.def)             Requested size: 408.08643pt x 101.15256pt.
-<Chapter6/img/unstable pos_stable.png, id=591, 943.525pt x 233.87375pt>
+<Chapter6/img/unstable pos_stable.png, id=611, 943.525pt x 233.87375pt>
 File: Chapter6/img/unstable pos_stable.png Graphic file (type png)
 <use Chapter6/img/unstable pos_stable.png>
 Package pdftex.def Info: Chapter6/img/unstable pos_stable.png  used on input line 41.
 (pdftex.def)             Requested size: 382.23674pt x 94.74689pt.
-<Chapter6/img/unstable neg_stable.png, id=592, 943.525pt x 233.87375pt>
+<Chapter6/img/unstable neg_stable.png, id=612, 943.525pt x 233.87375pt>
 File: Chapter6/img/unstable neg_stable.png Graphic file (type png)
 <use Chapter6/img/unstable neg_stable.png>
 Package pdftex.def Info: Chapter6/img/unstable neg_stable.png  used on input line 46.
 (pdftex.def)             Requested size: 382.23674pt x 94.74689pt.
-<Chapter6/img/unstable unstable.png, id=593, 943.525pt x 233.87375pt>
+<Chapter6/img/unstable unstable.png, id=613, 943.525pt x 233.87375pt>
 File: Chapter6/img/unstable unstable.png Graphic file (type png)
 <use Chapter6/img/unstable unstable.png>
 Package pdftex.def Info: Chapter6/img/unstable unstable.png  used on input line 51.
@@ -1338,7 +1338,7 @@ Package pdftex.def Info: Chapter6/img/unstable unstable.png  used on input line 
 
 LaTeX Warning: Float too large for page by 6.26074pt on input line 131.
 
-<Chapter6/img/nn_with_bp.png, id=609, 1147.28625pt x 557.08125pt>
+<Chapter6/img/nn_with_bp.png, id=629, 1147.28625pt x 557.08125pt>
 File: Chapter6/img/nn_with_bp.png Graphic file (type png)
 <use Chapter6/img/nn_with_bp.png>
 Package pdftex.def Info: Chapter6/img/nn_with_bp.png  used on input line 141.
@@ -1348,7 +1348,7 @@ Overfull \hbox (169.20676pt too wide) in paragraph at lines 141--143
  [][] 
  []
 
-<Chapter6/img/nn_without_bp.png, id=610, 1147.28625pt x 557.08125pt>
+<Chapter6/img/nn_without_bp.png, id=630, 1147.28625pt x 557.08125pt>
 File: Chapter6/img/nn_without_bp.png Graphic file (type png)
 <use Chapter6/img/nn_without_bp.png>
 Package pdftex.def Info: Chapter6/img/nn_without_bp.png  used on input line 150.
@@ -1390,6 +1390,9 @@ Overfull \hbox (3.6513pt too wide) in paragraph at lines 20--21
  []
 
 
+LaTeX Warning: Reference `subsec:fc-symbolic-interval-propagation' on page 39 undefined on input line 21.
+
+
 Overfull \hbox (63.5531pt too wide) in paragraph at lines 21--22
 []\T1/ptm/m/n/12 (-20) if the i-th layer is a \T1/ptm/b/n/12 (-20) Ab-s-Ful-ly-Con-nect-edNode \T1/ptm/m/n/12 (-20) then is called the \T1/ptm/m/it/12 (-20) sym-bolic_dense_output_bounds
  []
@@ -1397,72 +1400,156 @@ Overfull \hbox (63.5531pt too wide) in paragraph at lines 21--22
 [39
 
 ]
-Overfull \hbox (169.34193pt too wide) in paragraph at lines 59--60
+Overfull \hbox (169.34193pt too wide) in paragraph at lines 60--61
 [] $\OML/ztmcm/m/it/10.95 symbolic[]activation[]output[]bounds \OT1/ztmcm/m/n/10.95 = [](\OML/ztmcm/m/it/10.95 symbolic[]dense[]output[]bounds; input[]hyper[]rect\OT1/ztmcm/m/n/10.95 )$ 
  []
 
 
-Overfull \hbox (319.43352pt too wide) in paragraph at lines 61--62
+Overfull \hbox (319.43352pt too wide) in paragraph at lines 62--63
 [] $\OML/ztmcm/m/it/10.95 postactivation[]bounds \OT1/ztmcm/m/n/10.95 = []([](\OML/ztmcm/m/it/10.95 preactivation[]bounds:[]\OT1/ztmcm/m/n/10.95 ()\OML/ztmcm/m/it/10.95 ; \OT1/ztmcm/m/n/10.95 0)\OML/ztmcm/m/it/10.95 ; []\OT1/ztmcm/m/n/10.95 (\OML/ztmcm/m/it/10.95 preactivation[]bounds:[]\OT1/ztmcm/m/n/10.95 ()\OML/ztmcm/m/it/10.95 ; \OT1/ztmcm/m/n/10.95 0))$ 
  []
 
 
-Overfull \hbox (72.87349pt too wide) in paragraph at lines 64--65
+Overfull \hbox (72.87349pt too wide) in paragraph at lines 65--66
 [] $\OML/ztmcm/m/it/10.95 symbolic[]dense[]output[]bounds \OT1/ztmcm/m/n/10.95 = [](\OML/ztmcm/m/it/10.95 layers\OT1/ztmcm/m/n/10.95 [\OML/ztmcm/m/it/10.95 i\OT1/ztmcm/m/n/10.95 ]\OML/ztmcm/m/it/10.95 ; current[]input[]bounds\OT1/ztmcm/m/n/10.95 )$ 
  []
 
 
-Overfull \hbox (94.00574pt too wide) in paragraph at lines 66--67
+Overfull \hbox (94.00574pt too wide) in paragraph at lines 67--68
 [] $\OML/ztmcm/m/it/10.95 preactivation[]bounds \OT1/ztmcm/m/n/10.95 = \OML/ztmcm/m/it/10.95 symbolic[]dense[]output[]bounds:[]\OT1/ztmcm/m/n/10.95 (\OML/ztmcm/m/it/10.95 input[]hyper[]rect\OT1/ztmcm/m/n/10.95 )$ 
  []
 
 
-Overfull \hbox (166.79012pt too wide) in paragraph at lines 70--71
+Overfull \hbox (166.79012pt too wide) in paragraph at lines 71--72
 [] $\OML/ztmcm/m/it/10.95 postactivation[]bounds \OT1/ztmcm/m/n/10.95 = [](\OML/ztmcm/m/it/10.95 preactivation[]bounds:[]\OT1/ztmcm/m/n/10.95 ()\OML/ztmcm/m/it/10.95 ; preactivation[]bounds:[]\OT1/ztmcm/m/n/10.95 ())$ 
  []
 
 
-Overfull \hbox (106.4007pt too wide) in paragraph at lines 76--77
+Overfull \hbox (106.4007pt too wide) in paragraph at lines 77--78
 [] $\OML/ztmcm/m/it/10.95 symbolic[]bounds\OT1/ztmcm/m/n/10.95 [\OML/ztmcm/m/it/10.95 layers\OT1/ztmcm/m/n/10.95 [\OML/ztmcm/m/it/10.95 i\OT1/ztmcm/m/n/10.95 ]\OML/ztmcm/m/it/10.95 :[]\OT1/ztmcm/m/n/10.95 ] = (\OML/ztmcm/m/it/10.95 symbolic[]dense[]output[]bounds; symbolic[]activation[]output[]bounds\OT1/ztmcm/m/n/10.95 )$ 
  []
 
-) [40] [41] (./thesis.bbl
+) [40]
+\openout2 = `Chapter7/bound_propagation_test_results.aux'.
+
+ (./Chapter7/bound_propagation_test_results.tex [41
+
+
+
+]
+<Chapter7/img/AC1.png, id=682, 166.6225pt x 1041.8925pt>
+File: Chapter7/img/AC1.png Graphic file (type png)
+<use Chapter7/img/AC1.png>
+Package pdftex.def Info: Chapter7/img/AC1.png  used on input line 30.
+(pdftex.def)             Requested size: 49.98712pt x 312.57016pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 26--31
+
+ []
+
+
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 34.
+
+<Chapter7/img/cartpole.png, id=683, 166.6225pt x 949.5475pt>
+File: Chapter7/img/cartpole.png Graphic file (type png)
+<use Chapter7/img/cartpole.png>
+Package pdftex.def Info: Chapter7/img/cartpole.png  used on input line 37.
+(pdftex.def)             Requested size: 66.64781pt x 379.81227pt.
+[42 <./Chapter7/img/AC1.png>] [43 <./Chapter7/img/cartpole.png>]
+<Chapter7/img/dubinsrejoin.png, id=697, 208.78pt x 1154.3125pt>
+File: Chapter7/img/dubinsrejoin.png Graphic file (type png)
+<use Chapter7/img/dubinsrejoin.png>
+Package pdftex.def Info: Chapter7/img/dubinsrejoin.png  used on input line 50.
+(pdftex.def)             Requested size: 83.5105pt x 461.71683pt.
+ [44 <./Chapter7/img/dubinsrejoin.png>]
+<Chapter7/img/lunarlander.png, id=704, 166.6225pt x 1041.8925pt>
+File: Chapter7/img/lunarlander.png Graphic file (type png)
+<use Chapter7/img/lunarlander.png>
+Package pdftex.def Info: Chapter7/img/lunarlander.png  used on input line 59.
+(pdftex.def)             Requested size: 66.64781pt x 416.74962pt.
+ [45 <./Chapter7/img/lunarlander.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 69--77
+
+ []
+
+[46]
+
+Package caption Warning: \label without proper reference on input line 123.
+See the caption package documentation for explanation.
+
+
+LaTeX Warning: Reference `table:ACAS-ANALISY' on page 47 undefined on input line 95.
+
+[47]
+
+Package caption Warning: \label without proper reference on input line 181.
+See the caption package documentation for explanation.
+
+
+LaTeX Warning: Reference `table:CARTPOLE-ANALISY' on page 48 undefined on input line 156.
+
+[48]
+
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 228.
+
+
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 256.
+
+
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 285.
+
+
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 302.
+
+
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 320.
+
+) [49] [50] [51] (./thesis.bbl
 Underfull \hbox (badness 1681) in paragraph at lines 49--51
 []\T1/ptm/m/n/12 (+20) Guidotti, D., Tac-chella, A., Pulina, L., and De-marchi, S. (2022).  NeVer 2.0,
  []
 
-[42
+[52
 
 
 
 
-] [43]) [44] (./thesis.ind)
+] [53]) [54] (./thesis.ind)
 \Changes@OutFile=\write7
 \openout7 = `thesis.soc'.
 
 \tf@loc=\write8
 \openout8 = `thesis.loc'.
 
- (./thesis.aux (./Acknowledgement/acknowledgement.aux) (./Abstract/abstract.aux) (./Chapter1/context.aux) (./Chapter2/nns.aux) (./Chapter4/abstraction.aux) (./Chapter5/bound_propagation_types.aux) (./Chapter5/relu_overapproximation.aux) (./Chapter6/bound_propagation_pynever_application.aux) (./Chapter6/future.aux) (./Chapter7/bound_propagation_pseudocode.aux))
+ (./thesis.aux (./Acknowledgement/acknowledgement.aux) (./Abstract/abstract.aux) (./Chapter1/context.aux) (./Chapter2/nns.aux) (./Chapter4/abstraction.aux) (./Chapter5/bound_propagation_types.aux) (./Chapter5/relu_overapproximation.aux) (./Chapter6/bound_propagation_pynever_application.aux) (./Chapter6/future.aux) (./Chapter7/bound_propagation_pseudocode.aux) (./Chapter7/bound_propagation_test_results.aux))
+
+LaTeX Warning: There were undefined references.
+
 
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: 976512CD19135574B1AF497965B95B53;6731.
+(rerunfilecheck)             Checksum: ECDF845722150657BF8C4910D85B2BE5;8051.
  ) 
 Here is how much of TeX's memory you used:
- 36039 strings out of 476038
- 718259 string characters out of 5790171
- 1875785 words of memory out of 5000000
- 54979 multiletter control sequences out of 15000+600000
+ 36154 strings out of 476038
+ 721778 string characters out of 5790171
+ 1886785 words of memory out of 5000000
+ 55054 multiletter control sequences out of 15000+600000
  663314 words of font info for 526 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  125i,19n,120p,1042b,1138s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/rsfs/rsfs10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on thesis.pdf (47 pages, 746135 bytes).
+Output written on thesis.pdf (57 pages, 863925 bytes).
 PDF statistics:
- 766 PDF objects out of 1000 (max. 8388607)
- 586 compressed objects within 6 object streams
- 167 named destinations out of 1000 (max. 500000)
- 143700 words of extra memory for PDF output out of 154059 (max. 10000000)
+ 860 PDF objects out of 1000 (max. 8388607)
+ 661 compressed objects within 7 object streams
+ 195 named destinations out of 1000 (max. 500000)
+ 143760 words of extra memory for PDF output out of 154059 (max. 10000000)
 
