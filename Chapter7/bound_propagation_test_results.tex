@@ -1,0 +1,430 @@
+\section{Test}
+
+In this section, the results of tests on the runtime and memory usage of the new PyNeVer algorithm are presented compared to the previous version. Additionally, the results are also compared to the winners of the 2022 VNNComp (Verification of Neural Networks Competition).
+A separate section is dedicated to validation tests to verify the correct functioning of the bound propagation. These tests will be performed on various networks and different properties to ensure the robustness and accuracy of the algorithm.
+All these tests are conducted on different networks and various properties to cover a wide range of scenarios and validate the effectiveness of the bound propagation algorithm.
+By including a section on validation tests, it ensures that the bound propagation algorithm implemented in PyNeVer produces accurate and reliable results. The tests may include specific test cases with known expected results as well as general test cases to verify and validate desired properties.
+Overall, the inclusion of tests on diverse networks and properties, along with comparisons to the results of the VNNComp and validation tests, provides a comprehensive evaluation of the performance, accuracy, and reliability of the bound propagation algorithm implemented in PyNeVer.
+\subsection{Test platform}
+The tests were run on a machine with 2 Intel Xeon Gold 6432 CPUs and 128 GB of DDR4 RAM.. The networks used for the tests include 8 AC networks, 10 ACAS networks, Cartpole, dubinsrejoin, and lunarlander. Each network is associated with various specific properties to be tested.
+To ensure the integrity of the tests, they were launched from a bash script as independent processes. This approach was adopted to prevent any contamination or interference between the tests.
+By conducting the tests on a robust hardware configuration and running them as separate processes, the results obtained are reliable and provide an accurate assessment of the performance and accuracy of the PyNeVer algorithm for different networks and associated properties.
+\subsection{Validation test}
+In this subsection, we present the tests conducted to verify the correct functioning of bound propagation.
+In order to ensure the accuracy of the results, a second implementation of bound propagation was developed, which utilizes the linearization of the Rectified Linear Unit (ReLU) as depicted in subsection~\ref{subsec:symbolic-linear-relaxation}. 
+This step was taken to validate the consistency of the results with the actual more complex and less intuitive linearization used in practice.
+Subsequently, both implementations of bound propagation were applied to different neural networks, and a set of representative properties was selected for testing purposes. 
+By subjecting these networks to the two bound propagation methods, we aimed to compare their results and evaluate their effectiveness in determining the lower and upper bounds of the network's output.
+Moreover, to ensure the proper integration of the implemented algorithms with PyNeVer, an additional algorithm was developed. 
+This algorithm was responsible for collecting the stars generated during the "complete" verification process and extracting the corresponding lower and upper bounds for each node in every layer of the neural network.
+By conducting these tests and implementing the necessary procedures for interfacing with PyNeVer, we were able to validate the correct functioning of the bound propagation methods and obtain the desired bounds for further analysis and verification.\\
+
+Thanks to the precise nature of PyNeVer's "complete" verification, we can accurately identify and quantify both stable and unstable nodes. In contrast, the bound propagation method only provides information about the stable nodes, leaving the true nature of classified unstable nodes uncertain. 
+As bound propagation is an over-approximation technique, some nodes classified as unstable by bound propagation may actually be stable in reality.
+In the graphs presented, we not only showcase the stable nodes but also highlight the number of nodes that are not captured due to the inherent over-approximation of bound propagation. These are nodes 
+that are stable but wrongly classified as unstable by the bound propagation method. By quantifying this discrepancy, we gain insights into the potential room for improvement in bound propagation.
+This analysis allows us to understand the limitations and possible inaccuracies associated with bound propagation, guiding us in exploring ways to enhance its performance. 
+By comparing the results from bound propagation with the ground truth provided by PyNeVer's "complete" verification, we can measure the extent to which bound propagation aligns with the actual stability of nodes. 
+This quantitative assessment provides valuable information about the reliability and potential areas for refinement in the bound propagation method.
+
+\subsection{Brief introduction to the neural networks used for testing}
+Before showing test results, below a brief introduction to the neural networks used in the tests.
+\begin{itemize}
+    \item \textbf{ACAS network}\\
+    The ACAS neural network is a component of the Airborne Collision Avoidance System (ACAS) that incorporates machine learning techniques, specifically neural networks, to enhance collision avoidance capabilities in aviation.
+    The neural network in ACAS is trained on large datasets of flight data, encompassing information such as aircraft positions, velocities, and other relevant parameters. By analyzing this data, 
+    the neural network can learn complex patterns and relationships to better predict and assess potential collision risks.
+    The ACAS neural network works by processing real-time sensor data from aircraft and generating advisories or resolution maneuvers to pilots when a potential collision threat is detected. 
+    It considers various factors such as relative aircraft positions, velocities, and intentions to determine the appropriate response.
+    The network architecture consists of six fully connected layers of 50 hidden neurons, each followed by a ReLU acti- vation, and a last fully connected layer of 5 neurons without a following activation function. The graphical
+    representation is avaliable on the literature.
+
+    \item \textbf{AC networks}\\
+    \begin{figure}[H]
+        \caption{\label{fig:AC-network} Example of the structure one of the AC network}
+        \centering
+        \includegraphics[scale=0.3]{"Chapter7/img/AC1.png"}
+    \end{figure}
+
+    \item \textbf{CARTPOLE network:}\\  
+    \begin{figure}[]
+        \caption{\label{fig:cartpole-network} Example of the structure of the cartpole network}
+        \centering
+        \includegraphics[scale=0.4]{"Chapter7/img/cartpole.png"}
+    \end{figure}
+    CARTPOLE is a classic control problem in the field of reinforcement learning, often used as a benchmark task. In CARTPOLE, the goal is to balance a pole on top of a cart that can move horizontally along a track. 
+    The agent must apply appropriate actions to keep the pole upright for as long as possible.
+    A neural network can be used as a function approximator to learn a policy for the CARTPOLE task. The neural network takes the current state of the cart and pole as input and outputs the action to be taken. 
+    The state representation typically includes variables such as the cart's position, velocity, pole angle, and angular velocity.
+    The network architecture consists of two fully connected layers of 64 hidden neurons, each followed by a ReLU acti- vation, and a last fully connected layer of 2 neurons without a following activation function. 
+    The graphical representation of a neural network architecture of this kind is displayed in FIG~\ref{fig:cartpole-network}.
+
+    \item \textbf{DUBINSREJOIN network:}
+    \begin{figure}[H]
+        \caption{\label{fig:dubins-network} Example of the structure of the dubinsrejoin network}
+        \centering
+        \includegraphics[scale=0.4]{"Chapter7/img/dubinsrejoin.png"}
+    \end{figure}
+    This case study focuses on training an unmanned aerial vehicle, called the wingman, to fly in formation with a manned vehicle known as the lead. The specific task addressed is the 2D version of this problem, where the reinforcement learning (RL) agent must learn how to control the wingman's position relative to the lead. The inputs to the RL agent are the position, heading, and velocity of both the lead and the wingman, while the outputs are a combination of eight real values representing various commands.
+    The network architecture used in this case study consists of three fully connected layers, each containing 256 hidden neurons. ReLU activation functions are applied after the first two layers, except for the last layer.
+
+    \item \textbf{LUNARLANDER network:}
+    \begin{figure}[H]
+        \caption{\label{fig:lunarlander-network} Example of the structure of the lunarlander network}
+        \centering
+        \includegraphics[scale=0.4]{"Chapter7/img/lunarlander.png"}
+    \end{figure}
+    This case study focuses on a rocket trajectory optimization problem, specifically landing a lander on a designated landing pad in a two-dimensional space. 
+    The network has 8 real-value inputs, representing the coordinates, velocity, linear velocity, angle, angular velocity, and leg contact information of the lander. 
+    The outputs consist of four real values, determining the lander's action: do nothing, fire left orientation engine, fire main engine, or fire right orientation engine. 
+    The network architecture consists of three fully connected layers with 64 hidden neurons each, using ReLU activation except for the last layer.
+    
+\end{itemize}
+
+\subsection{Validation results}
+\begin{itemize}
+    \item \textbf{ACAS Results:}\\
+    In Table~\ref{table:ACAS-ANALISY}, nine different properties have been verified using PyNeVer and two different bound propagation BP1 and BP2 have been performed. The "NO BP" column displays the number of unstable nodes obtained. 
+    The BP 1 columns displays the number of unstable nodes classified by BP 1, the same for BP 2.
+    The "UNCATCHED NODES" refers to nodes that are classified as "unstable" due to the overapproximation introduced by ReLU linearization, but are actually stable. On average, we found 41.3 real unstable nodes. 
+    However, "BP type 1" and "BP type 2" classify, on average, 84.6 and 101 nodes as "unstable," respectively. 5The results also show how the ReLU linearization used has on average better performance than the naive one used only for testing purposes.
+    It is normal for Bound Propagation to introduce some errors. However, in the case of the ACAS network, we observed a higher number of "UNCATCHED NODES" compared to other networks analyzed. This is primarily due to the depth of the ACAS network. Deeper networks have more ReLU layers, which contribute to overapproximation and cause Bound Propagation to diverge faster.
+    \item \textbf{ACC Results:} \\
+    In Table~\ref{table:ACC-ANALISY}, four different ACC networks have been verified with a randomly generated property. As mentioned earlier, two backpropagation (BP) algorithms, BP 1 and BP 2, were applied to these networks.
+    Since we are comparing networks with different depths, calculating the average number of unstable nodes becomes meaningless. Therefore, it has not been included in the table.
+    It's important to note that these networks have a lesser depth compared to ACAS networks. Consequently, the number of uncaptured nodes is relatively smaller. Interestingly, in this scenario, BP 2 performs better than BP 1.
+    Overall, the table presents the results of the verification process for the ACC networks and their performance under the given property. The comparison between the two BP algorithms provides insights into their effectiveness in dealing with the specific networks and property involved.
+    \item \textbf{CARTPOLE Results:}\\
+    In Table~\ref{table:CARTPOLE-ANALISY}, ten different CARTPOLE properties have been verified. DUe to the fact that CARTPOLE network is very small and shallow, the number of UNCATCHED NODES is 0.  
+\end{itemize}
+
+
+
+\subsection{Time performance test}
+% \begin{table}[h]
+%     \centering
+    % \begin{tabular}{|c|c|c|}
+    % \hline
+    % DRONE & prop1 & prop2 \\
+    % AC1 & 0.968618783 & 8.515288626 \\
+    % AC2 & 0.897863785 & 28.28980892 \\
+    % AC3 & 1.327263328 & \textit{time_limit_exception} \\
+    % AC4 & 22.11842157 & \textit{time_limit_exception} \\
+    % AC5 & 1.270581688 & 37.53577376 \\
+    % AC6 & 1.255077947 & 103.3945658 \\
+    % AC7 & 1.714810474 & \textit{time_limit_exception} \\
+    % AC8 & 2.644242063 & \textit{time_limit_exception} \\
+    % \hline
+    % \end{tabular}
+% \end{table}
+% \subsection{Memory performance test}
+% \begin{table}[h!]
+%     \centering
+%     \begin{tabular}{||c c c c||} 
+%      \hline
+%      Col1 & Col2 & Col2 & Col3 \\ [0.5ex] 
+%      \hline\hline
+%      1 & 6 & 87837 & 787 \\ 
+%      2 & 7 & 78 & 5415 \\
+%      3 & 545 & 778 & 7507 \\
+%      4 & 545 & 18744 & 7560 \\
+%      5 & 88 & 788 & 6344 \\ [1ex] 
+%      \hline
+%     \end{tabular}
+%     \caption{This is the caption for the first table.}
+%     \label{table:1}
+%     \end{table}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage{graphicx}
+% \usepackage[table,xcdraw]{xcolor}
+% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+\begin{table}[]
+    \resizebox{\columnwidth}{!}{%
+    \begin{tabular}{@{}lllllll@{}}
+    \toprule
+    \multirow{2}{*}{Network id} & \multicolumn{2}{c}{PyNeVer with BP} & \multicolumn{2}{c}{PyNeVer without BP} \\ 
+    \cmidrule(r){2-3}
+    \cmidrule(r){4-5}
+            & prop1                             & prop2                                         & prop1                             & prop2                                         & prop1 GAIN                        & prop2 GAIN                        \\ \cmidrule(r){1-7}
+    AC1     & {\color[HTML]{ACB9CA} 0.96861878} & {\color[HTML]{ACB9CA} 8.51528863}             & {\color[HTML]{ACB9CA} 1.34609463} & {\color[HTML]{ACB9CA} 15.0083293}             & {\color[HTML]{ACB9CA} 0.28042296} & {\color[HTML]{ACB9CA} 0.43262914} \\
+    AC2     & {\color[HTML]{ACB9CA} 0.89786378} & {\color[HTML]{ACB9CA} 28.2898089}             & {\color[HTML]{ACB9CA} 1.07707785} & {\color[HTML]{ACB9CA} 75.0877929}             & {\color[HTML]{ACB9CA} 0.16638915} & {\color[HTML]{ACB9CA} 0.62324357} \\
+    AC3     & {\color[HTML]{ACB9CA} 1.32726333} & {\color[HTML]{ACB9CA} time\_limit\_exception} & {\color[HTML]{ACB9CA} 2.82069459} & {\color[HTML]{ACB9CA} time\_limit\_exception} & {\color[HTML]{ACB9CA} 0.52945514} & {\color[HTML]{ACB9CA} NAN}        \\ 
+    AC4     & {\color[HTML]{ACB9CA} 22.1184216} & {\color[HTML]{ACB9CA} time\_limit\_exception} & {\color[HTML]{ACB9CA} 169.126968} & {\color[HTML]{ACB9CA} time\_limit\_exception} & {\color[HTML]{ACB9CA} 0.86922002} & {\color[HTML]{ACB9CA} NAN}        \\
+    AC5     & {\color[HTML]{ACB9CA} 1.27058169} & {\color[HTML]{ACB9CA} 37.5357738}             & {\color[HTML]{ACB9CA} 1.34696131} & {\color[HTML]{ACB9CA} 43.3556351}             & {\color[HTML]{ACB9CA} 0.05670514} & {\color[HTML]{ACB9CA} 0.13423541} \\
+    AC6     & {\color[HTML]{ACB9CA} 1.25507795} & {\color[HTML]{ACB9CA} 103.394566}             & {\color[HTML]{ACB9CA} 1.52465712} & {\color[HTML]{ACB9CA} 270.691961}             & {\color[HTML]{ACB9CA} 0.17681298} & {\color[HTML]{ACB9CA} 0.61803607} \\
+    AC7     & {\color[HTML]{ACB9CA} 1.71481047} & {\color[HTML]{ACB9CA} time\_limit\_exception} & {\color[HTML]{ACB9CA} 3.01721494} & {\color[HTML]{ACB9CA} time\_limit\_exception} & {\color[HTML]{ACB9CA} 0.43165783} & {\color[HTML]{ACB9CA} NAN}        \\
+    AC8     & {\color[HTML]{ACB9CA} 2.64424206} & {\color[HTML]{ACB9CA} time\_limit\_exception} & {\color[HTML]{ACB9CA} 8.24535111} & {\color[HTML]{ACB9CA} time\_limit\_exception} & {\color[HTML]{ACB9CA} 0.6793051}  & {\color[HTML]{ACB9CA} NAN}        \\ \cmidrule(r){1-7}
+    PyNeVer relative improvement:        &                                   &                                               &                                   &                                               & {\color[HTML]{FF0000} 40\%}       & {\color[HTML]{FF0000} 45\%}       \\ \cmidrule(r){1-7}
+    \end{tabular}%
+    }
+    \caption{This is the caption for the first table.}
+    \label{table:AC}
+\end{table}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage{graphicx}
+% \usepackage[table,xcdraw]{xcolor}
+% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+\begin{table}[]
+    \resizebox{\columnwidth}{!}{%
+    \begin{tabular}{@{}lllllll@{}}
+        \toprule
+    \multirow{2}{*}{Network id} & \multicolumn{2}{c}{PyNeVer with BP} & \multicolumn{2}{c}{PyNeVer without BP} \\ 
+    \cmidrule(r){2-3}
+    \cmidrule(r){4-5}
+    net\_id & prop1                             & prop2                                         & prop1                             & prop2                                         & prop1 GAIN                        & prop2 GAIN                        \\ \cmidrule(r){1-7}
+    AC1     & {\color[HTML]{ACB9CA} 0.96861878} & {\color[HTML]{ACB9CA} 8.51528863}             & {\color[HTML]{ACB9CA} 1.34609463} & {\color[HTML]{ACB9CA} 15.0083293}             & {\color[HTML]{ACB9CA} 0.28042296} & {\color[HTML]{ACB9CA} 0.43262914} \\
+    AC2     & {\color[HTML]{ACB9CA} 0.89786378} & {\color[HTML]{ACB9CA} 28.2898089}             & {\color[HTML]{ACB9CA} 1.07707785} & {\color[HTML]{ACB9CA} 75.0877929}             & {\color[HTML]{ACB9CA} 0.16638915} & {\color[HTML]{ACB9CA} 0.62324357} \\
+    AC3     & {\color[HTML]{ACB9CA} 1.32726333} & {\color[HTML]{ACB9CA} time\_limit\_exception} & {\color[HTML]{ACB9CA} 2.82069459} & {\color[HTML]{ACB9CA} time\_limit\_exception} & {\color[HTML]{ACB9CA} 0.52945514} & {\color[HTML]{ACB9CA} NAN}        \\ 
+    AC4     & {\color[HTML]{ACB9CA} 22.1184216} & {\color[HTML]{ACB9CA} time\_limit\_exception} & {\color[HTML]{ACB9CA} 169.126968} & {\color[HTML]{ACB9CA} time\_limit\_exception} & {\color[HTML]{ACB9CA} 0.86922002} & {\color[HTML]{ACB9CA} NAN}        \\
+    AC5     & {\color[HTML]{ACB9CA} 1.27058169} & {\color[HTML]{ACB9CA} 37.5357738}             & {\color[HTML]{ACB9CA} 1.34696131} & {\color[HTML]{ACB9CA} 43.3556351}             & {\color[HTML]{ACB9CA} 0.05670514} & {\color[HTML]{ACB9CA} 0.13423541} \\
+    AC6     & {\color[HTML]{ACB9CA} 1.25507795} & {\color[HTML]{ACB9CA} 103.394566}             & {\color[HTML]{ACB9CA} 1.52465712} & {\color[HTML]{ACB9CA} 270.691961}             & {\color[HTML]{ACB9CA} 0.17681298} & {\color[HTML]{ACB9CA} 0.61803607} \\
+    AC7     & {\color[HTML]{ACB9CA} 1.71481047} & {\color[HTML]{ACB9CA} time\_limit\_exception} & {\color[HTML]{ACB9CA} 3.01721494} & {\color[HTML]{ACB9CA} time\_limit\_exception} & {\color[HTML]{ACB9CA} 0.43165783} & {\color[HTML]{ACB9CA} NAN}        \\
+    AC8     & {\color[HTML]{ACB9CA} 2.64424206} & {\color[HTML]{ACB9CA} time\_limit\_exception} & {\color[HTML]{ACB9CA} 8.24535111} & {\color[HTML]{ACB9CA} time\_limit\_exception} & {\color[HTML]{ACB9CA} 0.6793051}  & {\color[HTML]{ACB9CA} NAN}        \\\cmidrule(r){1-7}
+    PyNeVer relative improvement:        &                                   &                                               &                                   &                                               & {\color[HTML]{FF0000} 40\%}       & {\color[HTML]{FF0000} 45\%}       \\\cmidrule(r){1-7}
+    \end{tabular}%
+    }
+    \caption{This is the caption for the first table.}
+    \label{table:ACAS}
+    \end{table}
+
+
+  % Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage{graphicx}
+% \usepackage[table,xcdraw]{xcolor}
+% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+\begin{table}[]
+    \centering
+    \begin{tabular}{@{}llll@{}}
+    \toprule
+    property\_id & PyNeVer with BP                               & PyNeVer without BP                            &  \\ \cmidrule(r){1-3}
+    3            & {\color[HTML]{ACB9CA} time\_limit\_exception} & {\color[HTML]{ACB9CA} time\_limit\_exception} &  \\
+    6            & {\color[HTML]{ACB9CA} time\_limit\_exception} & {\color[HTML]{ACB9CA} time\_limit\_exception} &  \\
+    12           & {\color[HTML]{ACB9CA} time\_limit\_exception} & {\color[HTML]{ACB9CA} time\_limit\_exception} &  \\ \cmidrule(r){1-3}
+    \end{tabular}%
+    \caption{This is the caption for the first table.}
+    \label{table:DUBINS}
+\end{table}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage[table,xcdraw]{xcolor}
+% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+\begin{table}[]
+    \centering
+    \begin{tabular}{@{}llll@{}}
+        \toprule
+        \multicolumn{4}{c}{Cartpole}  \\
+        \cmidrule(r){1-4}
+                                            & PyNeVer with BP                        & PyNeVer without BP               & ABCROWN                           \\ \cmidrule(r){1-4}
+    time(s):                                & {\color[HTML]{ACB9CA} 0.93486845}      & {\color[HTML]{ACB9CA} 0.0815644} & {\color[HTML]{ACB9CA} 0.20461254} \\ \cmidrule(r){1-4}
+    PyNeVer relative improvement:           &                                        & {\color[HTML]{FF0000} 8\%}       &                                   \\ \cmidrule(r){1-4}
+    \end{tabular}
+    \caption{This is the caption for the first table.}
+    \label{table:CARTPOLE}
+\end{table}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage[table,xcdraw]{xcolor}
+% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+\begin{table}[]
+    \centering
+    \begin{tabular}{@{}llll@{}}
+        \toprule
+        \multicolumn{4}{c}{Lunar}  \\
+        \cmidrule(r){1-4}
+                                             & PyNeVer with BP & PyNeVer without BP                & ABCROWN                           \\ \cmidrule(r){1-4}
+    time(s):                                 & {\color[HTML]{ACB9CA} 0.93486845}                   & {\color[HTML]{ACB9CA} 0.0815644}  & {\color[HTML]{ACB9CA} 0.20461254} \\ \cmidrule(r){1-4}
+    PyNeVer relative improvement:            &                                                     & {\color[HTML]{FF0000} 45\%}       &                                   \\ \cmidrule(r){1-4}
+    \end{tabular}
+    \caption{This is the caption for the first table.}
+    \label{table:LUNAR}
+\end{table}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage{graphicx}
+% \usepackage[table,xcdraw]{xcolor}
+% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+\begin{table}[]
+    \centering
+    \resizebox{\columnwidth}{!}{%
+    \begin{tabular}{@{}lllllll@{}}
+        \toprule
+        \multicolumn{6}{c}{ACC}  \\
+        \cmidrule(r){1-6} 
+        \multirow{2}{*}{NETWORK ID} &  \multicolumn{3}{c}{PYNEVER} &  \multicolumn{2}{c}{}\\ 
+        \cmidrule(r){2-4}
+             & NO BP               & BP type 1                 & BP type 2 & UNCATCHED NODES BP type 1            & UNCATCHED NODES BP type 2            \\\cmidrule(r){1-6}
+    1        & {\color[HTML]{ACB9CA} 23/48} & {\color[HTML]{ACB9CA} 25/48} & {\color[HTML]{ACB9CA} 23/48}        & {\color[HTML]{ACB9CA} 3}                              & {\color[HTML]{ACB9CA} 1}                              \\
+    2        & {\color[HTML]{ACB9CA} 11/96} & {\color[HTML]{ACB9CA} 11/96} & {\color[HTML]{ACB9CA} 11/96}        & {\color[HTML]{ACB9CA} 0}                              & {\color[HTML]{ACB9CA} 0}                              \\
+    5        & {\color[HTML]{ACB9CA} 16/56} & {\color[HTML]{ACB9CA} 18/56} & {\color[HTML]{ACB9CA} 18/56}        & {\color[HTML]{ACB9CA} 2}                              & {\color[HTML]{ACB9CA} 2}                              \\
+    6        & {\color[HTML]{ACB9CA} 18/112}& {\color[HTML]{ACB9CA} 19/112}& {\color[HTML]{ACB9CA} 19/112}       & {\color[HTML]{ACB9CA} 1}                              & {\color[HTML]{ACB9CA} 1}                              \\\cmidrule(r){1-6}
+             &                              &                              &              & {\color[HTML]{FF0000} leak: 6} & {\color[HTML]{FF0000} leak: 4} \\\cmidrule(r){1-6}
+
+    \end{tabular}%
+    }
+    \caption{This is the caption for the first table.}
+    \label{table:ACC-ANALISY}
+\end{table}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage{graphicx}
+% \usepackage[table,xcdraw]{xcolor}
+% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+\begin{table}[]
+    \centering
+    \resizebox{\columnwidth}{!}{%
+    \begin{tabular}{@{}llllll@{}}
+        \toprule
+        \multicolumn{6}{c}{ACAS property: SMT3}  \\
+        \cmidrule(r){1-6} 
+        \multirow{2}{*}{NETWORK ID} &  \multicolumn{3}{c}{PYNEVER} &  \multicolumn{2}{c}{}\\ 
+        \cmidrule(r){2-4}
+               & NO BP                                        & BP type 1                                     & BP type 2                                     & UNCATCHED NODES BP type 1               & UNCATCHED NODES BP type 2               \\\cmidrule(r){1-6}
+    1\_1       & {\color[HTML]{D9E1F2} 58\textbackslash{}300} & {\color[HTML]{D9E1F2} 132\textbackslash{}300} & {\color[HTML]{D9E1F2} 148\textbackslash{}300} & {\color[HTML]{D9E1F2} 74}         & {\color[HTML]{D9E1F2} 90}         \\
+    1\_3       & {\color[HTML]{D9E1F2} 43\textbackslash{}300} & {\color[HTML]{D9E1F2} 134\textbackslash{}300} & {\color[HTML]{D9E1F2} 152\textbackslash{}300} & {\color[HTML]{D9E1F2} 91}         & {\color[HTML]{D9E1F2} 109}        \\
+    1\_4       & {\color[HTML]{D9E1F2} 28\textbackslash{}300} & {\color[HTML]{D9E1F2} 120\textbackslash{}300} & {\color[HTML]{D9E1F2} 137\textbackslash{}300} & {\color[HTML]{D9E1F2} 92}         & {\color[HTML]{D9E1F2} 109}        \\
+    1\_5       & {\color[HTML]{D9E1F2} 27\textbackslash{}300} & {\color[HTML]{D9E1F2} 118\textbackslash{}300} & {\color[HTML]{D9E1F2} 145\textbackslash{}300} & {\color[HTML]{D9E1F2} 91}         & {\color[HTML]{D9E1F2} 118}        \\
+    2\_3       & {\color[HTML]{D9E1F2} 42\textbackslash{}300} & {\color[HTML]{D9E1F2} 107\textbackslash{}300} & {\color[HTML]{D9E1F2} 108\textbackslash{}300} & {\color[HTML]{D9E1F2} 65}         & {\color[HTML]{D9E1F2} 66}         \\
+    3\_2       & {\color[HTML]{D9E1F2} 39\textbackslash{}300} & {\color[HTML]{D9E1F2} 154\textbackslash{}300} & {\color[HTML]{D9E1F2} 177\textbackslash{}300} & {\color[HTML]{D9E1F2} 115}        & {\color[HTML]{D9E1F2} 138}        \\
+    4\_2       & {\color[HTML]{D9E1F2} 49\textbackslash{}300} & {\color[HTML]{D9E1F2} 124\textbackslash{}300} & {\color[HTML]{D9E1F2} 138\textbackslash{}300} & {\color[HTML]{D9E1F2} 75}         & {\color[HTML]{D9E1F2} 89}         \\
+    4\_3       & {\color[HTML]{D9E1F2} 42\textbackslash{}300} & {\color[HTML]{D9E1F2} 128\textbackslash{}300} & {\color[HTML]{D9E1F2} 138\textbackslash{}300} & {\color[HTML]{D9E1F2} 86}         & {\color[HTML]{D9E1F2} 96}         \\
+    5\_1       & {\color[HTML]{D9E1F2} 44\textbackslash{}300} & {\color[HTML]{D9E1F2} 117\textbackslash{}300} & {\color[HTML]{D9E1F2} 138\textbackslash{}300} & {\color[HTML]{D9E1F2} 73}         & {\color[HTML]{D9E1F2} 94}         \\\cmidrule(r){1-6}
+    average:   &  {\color[HTML]{FF0000}41.3\textbackslash{}300} &  {\color[HTML]{FF0000}126\textbackslash{}300} & {\color[HTML]{FF0000}142.3\textbackslash{}300}  & {\color[HTML]{FF0000} leaks: 762 average: 84.6} & {\color[HTML]{FF0000} leaks: 909 average: 101} \\\cmidrule(r){1-6}
+    \end{tabular}%
+    }
+    \label{table:ACAS-ANALISY}
+    \end{table}
+
+    % Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage{graphicx}
+% \usepackage[table,xcdraw]{xcolor}
+% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+\begin{table}[]
+    \centering
+    \resizebox{\columnwidth}{!}{%
+    \begin{tabular}{@{}llllll@{}}
+        \toprule
+        \multicolumn{6}{c}{CARTPOLE}  \\
+        \cmidrule(r){1-6} 
+        \multirow{2}{*}{PROPERTY ID} &  \multicolumn{3}{c}{PYNEVER} &  \multicolumn{2}{c}{}\\ 
+        \cmidrule(r){2-4}
+                & NO BP & BP type 1 & BP type 2 & UNCATCHED NODES BP type 1            & UNCATCHED NODES BP type 2              \\\cmidrule(r){1-6}
+    1           & 5             & 5            & 5            & 0                              & 0                              \\
+    2           & 16            & 16           & 16           & 0                              & 0                              \\
+    3           & 5             & 5            & 5            & 0                              & 0                              \\
+    4           & 15            & 15           & 15           & 0                              & 0                              \\
+    5           & 19            & 19           & 19           & 0                              & 0                              \\
+    9           & 0             & 0            & 0            & 0                              & 0                              \\
+    14          & 3             & 3            & 3            & 0                              & 0                              \\
+    27          & 2             & 2            & 2            & 0                              & 0                              \\
+    39          & 2             & 2            & 2            & 0                              & 0                              \\
+    45          & 1             & 1            & 1            & 0                              & 0                              \\\cmidrule(r){1-6}
+                &               &              &              & {\color[HTML]{FF0000} leak: 0} & {\color[HTML]{FF0000} leak: 0} \\\cmidrule(r){1-6}
+    \end{tabular}%
+    }
+    \label{table:CARTPOLE-ANALISY}
+    \end{table}
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage[table,xcdraw]{xcolor}
+% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+
+
+% % Please add the following required packages to your document preamble:
+% % \usepackage{booktabs}
+% % \usepackage[table,xcdraw]{xcolor}
+% % If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+% \begin{table}[]
+%     \centering
+%     \begin{tabular}{@{}ll@{}}
+%     \toprule
+%     \multicolumn{2}{c}{ACAS}  \\\cmidrule{1-2}
+%     NO BP                              & BP type 1                           \\\cmidrule{1-2}
+%     {\color[HTML]{D9E1F2} 48.8035 MB} & {\color[HTML]{D9E1F2} 50.6578 MB} \\\cmidrule{1-2}
+%     \end{tabular}
+%     \end{table}
+
+
+%     % Please add the following required packages to your document preamble:
+% % \usepackage{booktabs}
+% % \usepackage[table,xcdraw]{xcolor}
+% % If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+% \begin{table}[]
+%     \centering
+%     \begin{tabular}{@{}ll@{}}
+%     \toprule
+%     \multicolumn{2}{c}{CARTPOLE}  \\\cmidrule{1-2}
+%     NO OP                            & BP type 1                    \\\cmidrule{1-2}
+%     {\color[HTML]{D9E1F2} 0.3483 MB} & {\color[HTML]{D9E1F2} 0.3957 MB} \\\cmidrule{1-2}
+%     \end{tabular}
+%     \end{table}
+
+% % Please add the following required packages to your document preamble:
+% % \usepackage{booktabs}
+% % \usepackage[table,xcdraw]{xcolor}
+% % If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+% \begin{table}[]
+%     \centering
+%     \begin{tabular}{@{}ll@{}}
+%     \toprule
+%     \multicolumn{2}{c}{LUNAR}  \\\cmidrule{1-2}
+%     NO BP                             & BP type 1                        \\\cmidrule{1-2}
+%     {\color[HTML]{D9E1F2} 35.0736 MB} & {\color[HTML]{D9E1F2} 34.9736 MB} \\\cmidrule{1-2}
+%     \end{tabular}
+%     \end{table}
+
+    \begin{table}[htbp]
+        \begin{minipage}{0.45\linewidth}
+        \centering
+        \begin{tabular}{@{}ll@{}}
+        \toprule
+        \multicolumn{2}{c}{AC}  \\\cmidrule{1-2}
+        NO BP                                & BP type 1                         \\\cmidrule{1-2}
+        {\color[HTML]{D9E1F2} 55.9687 MB} & {\color[HTML]{D9E1F2} 56.02 MB} \\\cmidrule{1-2}
+        \end{tabular}      
+        %\caption{Tabella 1}
+        \end{minipage}\hfill
+        \begin{minipage}{0.45\linewidth}
+        \centering
+        \begin{tabular}{@{}ll@{}}
+        \toprule
+        \multicolumn{2}{c}{ACAS}  \\\cmidrule{1-2}
+        NO BP                              & BP type 1                           \\\cmidrule{1-2}
+        {\color[HTML]{D9E1F2} 48.8035 MB} & {\color[HTML]{D9E1F2} 50.6578 MB} \\\cmidrule{1-2}
+        \end{tabular}
+        %\caption{Tabella 2}
+        \end{minipage}  
+        \vspace{0.5cm} % Spazio verticale tra le tabelle 
+        \begin{minipage}{0.45\linewidth}
+        \centering
+        \begin{tabular}{@{}ll@{}}
+        \toprule
+        \multicolumn{2}{c}{CARTPOLE}  \\\cmidrule{1-2}
+        NO OP                            & BP type 1                    \\\cmidrule{1-2}
+        {\color[HTML]{D9E1F2} 0.3483 MB} & {\color[HTML]{D9E1F2} 0.3957 MB} \\\cmidrule{1-2}
+        \end{tabular}
+        %\caption{Tabella 3}
+        \end{minipage}\hfill
+        \begin{minipage}{0.45\linewidth}
+        \centering
+        \begin{tabular}{@{}ll@{}}
+        \toprule
+        \multicolumn{2}{c}{LUNAR}  \\\cmidrule{1-2}
+        NO BP                             & BP type 1                        \\\cmidrule{1-2}
+        {\color[HTML]{D9E1F2} 35.0736 MB} & {\color[HTML]{D9E1F2} 34.9736 MB} \\\cmidrule{1-2}
+        \end{tabular}
+        %\caption{Tabella 4}
+        \end{minipage}
+        \caption{Memory peak esperiment results}
+        \end{table}
