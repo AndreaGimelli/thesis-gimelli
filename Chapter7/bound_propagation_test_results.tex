@@ -117,14 +117,15 @@ The tests were conducted on a subset of networks or properties, specifically for
         4\_2       & {\color[HTML]{D9E1F2} 49\textbackslash{}300} & {\color[HTML]{D9E1F2} 124\textbackslash{}300} & {\color[HTML]{D9E1F2} 138\textbackslash{}300} & {\color[HTML]{D9E1F2} 75}         & {\color[HTML]{D9E1F2} 89}         \\
         4\_3       & {\color[HTML]{D9E1F2} 42\textbackslash{}300} & {\color[HTML]{D9E1F2} 128\textbackslash{}300} & {\color[HTML]{D9E1F2} 138\textbackslash{}300} & {\color[HTML]{D9E1F2} 86}         & {\color[HTML]{D9E1F2} 96}         \\
         5\_1       & {\color[HTML]{D9E1F2} 44\textbackslash{}300} & {\color[HTML]{D9E1F2} 117\textbackslash{}300} & {\color[HTML]{D9E1F2} 138\textbackslash{}300} & {\color[HTML]{D9E1F2} 73}         & {\color[HTML]{D9E1F2} 94}         \\\cmidrule(r){1-6}
-        average:   &  {\color[HTML]{FF0000}41.3\textbackslash{}300} &  {\color[HTML]{FF0000}126\textbackslash{}300} & {\color[HTML]{FF0000}142.3\textbackslash{}300}  & {\color[HTML]{FF0000} leaks: 762 average: 84.6} & {\color[HTML]{FF0000} leaks: 909 average: 101} \\\cmidrule(r){1-6}
+        average:   &  {\color[HTML]{FF0000}41.3\textbackslash{}300} &  {\color[HTML]{FF0000}126\textbackslash{}300} & {\color[HTML]{FF0000}142.3\textbackslash{}300}  & {\color[HTML]{FF0000} leaks: 762  average: 84.6} & {\color[HTML]{FF0000} leaks: 909  average: 101} \\\cmidrule(r){1-6}
         \end{tabular}%
         }
+        \caption{This table shows the results got by tests performed on SMT3 property and some randomly chosen networks. The networs have all the same structure but different weight and bias fully connected matrices. In total the ACAS has 350 but we take account on only the first 300 because the last fc layer is excluded.}
         \label{table:ACAS-ANALISY}
     \end{table}
 
     
-    \item \textbf{ACC Results:} \\
+    \item \textbf{AC Results:} \\
     In Table~\ref{table:AC-ANALISY}, four different ACC networks have been verified with a randomly generated property. As mentioned earlier, two backpropagation (BP) algorithms, BP 1 and BP 2, were applied to these networks.
     Since we are comparing networks with different depths, calculating the average number of unstable nodes becomes meaningless. Therefore, it has not been included in the table.
     It's important to note that these networks have a lesser depth compared to ACAS networks. Consequently, the number of uncaptured nodes is relatively smaller. Interestingly, in this scenario, BP 2 performs better than BP 1.
@@ -150,6 +151,7 @@ The tests were conducted on a subset of networks or properties, specifically for
         }
         \caption{This is the caption for the first table.}
         \label{table:AC-ANALISY}
+        \caption{This table shows the results of AC networks on random generated properties. The structure of the different netowork is different. The netowork id is ascending sorted respect to the number of neurons. }
     \end{table}
 
     \item \textbf{CARTPOLE Results:}\\
@@ -179,11 +181,29 @@ The tests were conducted on a subset of networks or properties, specifically for
         \end{tabular}%
         }
         \label{table:CARTPOLE-ANALISY}
+        \caption{This table shows the results of CARTPOLE netowrk tested with different properties.}
         \end{table}
 
-    \end{itemize}
+    \item \textbf{DUBINSREJOIN Results:} \\
+    Due to the size of the layers in the DuBINSREJOIN network, the first layer has 256 nodes, and verifying a property with such a large network exceeds the time limit set at 15 minutes. 
+    Therefore, the results shown in the table only display the number of unstable nodes for each layer obtained using Bound Propagation BP 1, and not those obtained by performing a post-analysis on the stars. 
+    The test was conducted on only one property to provide an overestimated estimate of the number of stars and consequently explain why the verification process was so slow.
 
+    \begin{table}[H]        
+        \centering
+        \begin{tabular}{lll}
+        \toprule
+        \multicolumn{3}{c}{DUBINS}  \\
+        \cmidrule(r){1-3}
+                        & FC1                                & FC2                                \\
+        UNSTABLE NODES  & {\color[HTML]{B4C6E7} 106/256}     & {\color[HTML]{B4C6E7} 104/256}     \\
+        NUMBER OF STARS & {\color[HTML]{C00000} 8.11296E+31} & {\color[HTML]{C00000} 2.02824E+31}
+        \end{tabular}
+    \end{table}
 
+    As shown in the table, the number of stars blows up (exponential complexity). In total we have $2^106$ stars in input in the ReLU layer after the first fc layer and  at most $(2^106)*(2^104)$ stars in input to the second ReLU layer.
+
+\end{itemize}
 
 \subsection{Time/Memory usage test}
 In this subsection, the data obtained from time and memory usage testing is presented. The tests were conducted on ACAS, AC, CARTPOLE, DUBINSREJOIN, and LUNARLANDER networks. In the first phase, time tests were performed to measure the time required by the networks to verify properties using both the original PyNeVer algorithm and the one with implemented Bound Propagation. The results were promising, as the performance of the algorithm with Bound Propagation showed improvements ranging from 10\% to 45\% compared to the original algorithm. 
