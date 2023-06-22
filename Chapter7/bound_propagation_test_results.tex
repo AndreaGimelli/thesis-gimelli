@@ -185,7 +185,13 @@ The tests were conducted on a subset of networks or properties, specifically for
 
 
 
-\subsection{Time performance test}
+\subsection{Time/Memory usage test}
+In this subsection, the data obtained from time and memory usage testing is presented. The tests were conducted on ACAS, AC, CARTPOLE, DUBINSREJOIN, and LUNARLANDER networks. In the first phase, time tests were performed to measure the time required by the networks to verify properties using both the original PyNeVer algorithm and the one with implemented Bound Propagation. The results were promising, as the performance of the algorithm with Bound Propagation showed improvements ranging from 10\% to 45\% compared to the original algorithm. 
+The graphs indicate that networks like ACAS in Table~\ref{table:ACAS} and CARTPOLE in Table~\ref{table:CARTPOLE} had an average performance gain of 10\%, while networks like AC~\ref{table:AC} and LUNARLANDER~\ref{table:LUNAR} had an average performance gain of 45\%. These performance differences are influenced by factors such as network depth and layer size.
+For example, networks with a few fully connected layers but many nodes showed performance gains because the large number of nodes increased the likelihood of having unstable nodes, resulting in more stars being generated. And the more stars we have the more GET\_BOUND operations are saved in case of a classified STABLE node. Additionally, the shallow depth of the network reduced the over-approximation introduced by bound propagation, resulting in fewer misclassified nodes (UNCATCHED NODES). This led to a reduction in the number of calls to the GET\_BOUND function and improved performance.
+In the second part of the tests, the performance of the verification algorithm of the 2021 VNNCOMP winners, specifically ABCrown, was compared to the PyNeVer algorithm with Bound Propagation. Although the implemented Bound Propagation improved the performance and reduced the performance gap between PyNeVer and ABCrown, there is still an order of magnitude difference between the two algorithms in some networks like LUNARLANDER.
+In the third phase, the peak RAM usage of both versions of PyNeVer was compared. The results in Table~\ref{table:memory-results} showed that the version with Bound Propagation had an increase of only 0-1\% in memory usage compared to the original version. Therefore, considering the significant improvement in terms of time and the negligible increase in RAM usage, it can be concluded that Bound Propagation has made the PyNeVer algorithm more efficient without any negative drawbacks.
+These findings demonstrate the effectiveness of Bound Propagation in enhancing the performance of the PyNeVer algorithm, making it a valuable addition to the verification process for neural networks.
 % \begin{table}[h]
 %     \centering
     % \begin{tabular}{|c|c|c|}
@@ -248,28 +254,27 @@ The tests were conducted on a subset of networks or properties, specifically for
     \label{table:AC}
 \end{table}
 
-% Please add the following required packages to your document preamble:
-% \usepackage{booktabs}
-% \usepackage{graphicx}
-% \usepackage[table,xcdraw]{xcolor}
-% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+
 \begin{table}[]
+    \centering
     \resizebox{\columnwidth}{!}{%
-    \begin{tabular}{@{}lllllll@{}}
-        \toprule
-    \multirow{2}{*}{Network id} & \multicolumn{2}{c}{PyNeVer with BP} & \multicolumn{2}{c}{PyNeVer without BP} \\ 
+    \begin{tabular}{lllllll}
+    \toprule
+    \multirow{2}{*}{ACAS id} & \multicolumn{2}{c}{PyNeVer with BP} & \multicolumn{2}{c}{PyNeVer without BP} \\ 
     \cmidrule(r){2-3}
     \cmidrule(r){4-5}
-    net\_id & prop1                             & prop2                                         & prop1                             & prop2                                         & prop1 GAIN                        & prop2 GAIN                        \\ \cmidrule(r){1-7}
-    AC1     & {\color[HTML]{ACB9CA} 0.96861878} & {\color[HTML]{ACB9CA} 8.51528863}             & {\color[HTML]{ACB9CA} 1.34609463} & {\color[HTML]{ACB9CA} 15.0083293}             & {\color[HTML]{ACB9CA} 0.28042296} & {\color[HTML]{ACB9CA} 0.43262914} \\
-    AC2     & {\color[HTML]{ACB9CA} 0.89786378} & {\color[HTML]{ACB9CA} 28.2898089}             & {\color[HTML]{ACB9CA} 1.07707785} & {\color[HTML]{ACB9CA} 75.0877929}             & {\color[HTML]{ACB9CA} 0.16638915} & {\color[HTML]{ACB9CA} 0.62324357} \\
-    AC3     & {\color[HTML]{ACB9CA} 1.32726333} & {\color[HTML]{ACB9CA} time\_limit\_exception} & {\color[HTML]{ACB9CA} 2.82069459} & {\color[HTML]{ACB9CA} time\_limit\_exception} & {\color[HTML]{ACB9CA} 0.52945514} & {\color[HTML]{ACB9CA} NAN}        \\ 
-    AC4     & {\color[HTML]{ACB9CA} 22.1184216} & {\color[HTML]{ACB9CA} time\_limit\_exception} & {\color[HTML]{ACB9CA} 169.126968} & {\color[HTML]{ACB9CA} time\_limit\_exception} & {\color[HTML]{ACB9CA} 0.86922002} & {\color[HTML]{ACB9CA} NAN}        \\
-    AC5     & {\color[HTML]{ACB9CA} 1.27058169} & {\color[HTML]{ACB9CA} 37.5357738}             & {\color[HTML]{ACB9CA} 1.34696131} & {\color[HTML]{ACB9CA} 43.3556351}             & {\color[HTML]{ACB9CA} 0.05670514} & {\color[HTML]{ACB9CA} 0.13423541} \\
-    AC6     & {\color[HTML]{ACB9CA} 1.25507795} & {\color[HTML]{ACB9CA} 103.394566}             & {\color[HTML]{ACB9CA} 1.52465712} & {\color[HTML]{ACB9CA} 270.691961}             & {\color[HTML]{ACB9CA} 0.17681298} & {\color[HTML]{ACB9CA} 0.61803607} \\
-    AC7     & {\color[HTML]{ACB9CA} 1.71481047} & {\color[HTML]{ACB9CA} time\_limit\_exception} & {\color[HTML]{ACB9CA} 3.01721494} & {\color[HTML]{ACB9CA} time\_limit\_exception} & {\color[HTML]{ACB9CA} 0.43165783} & {\color[HTML]{ACB9CA} NAN}        \\
-    AC8     & {\color[HTML]{ACB9CA} 2.64424206} & {\color[HTML]{ACB9CA} time\_limit\_exception} & {\color[HTML]{ACB9CA} 8.24535111} & {\color[HTML]{ACB9CA} time\_limit\_exception} & {\color[HTML]{ACB9CA} 0.6793051}  & {\color[HTML]{ACB9CA} NAN}        \\\cmidrule(r){1-7}
-    PyNeVer relative improvement:        &                                   &                                               &                                   &                                               & {\color[HTML]{FF0000} 40\%}       & {\color[HTML]{FF0000} 45\%}       \\\cmidrule(r){1-7}
+                                & SMT3                              & SMT4                              & SMT3                              & SMT4                              & GAIN SMT3                   & GAIN SMT4                   \\\cmidrule(r){1-7}
+    1\_1                        & {\color[HTML]{ACB9CA} 81.6150596} & {\color[HTML]{ACB9CA} 33.6213214} & {\color[HTML]{ACB9CA} 84.8323429} & {\color[HTML]{ACB9CA} 35.5213297} & {\color[HTML]{ACB9CA} 3.22} & {\color[HTML]{ACB9CA} 1.90} \\
+    1\_2                        & {\color[HTML]{ACB9CA} 50.0253018} & {\color[HTML]{ACB9CA} 21.7184501} & {\color[HTML]{ACB9CA} 57.3484051} & {\color[HTML]{ACB9CA} 24.2984346} & {\color[HTML]{ACB9CA} 7.32} & {\color[HTML]{ACB9CA} 2.58} \\
+    2\_1                        & {\color[HTML]{ACB9CA} 19.6118035} & {\color[HTML]{ACB9CA} 12.0285352} & {\color[HTML]{ACB9CA} 21.1221661} & {\color[HTML]{ACB9CA} 14.7471417} & {\color[HTML]{ACB9CA} 1.51} & {\color[HTML]{ACB9CA} 2.72} \\
+    2\_2                        & {\color[HTML]{ACB9CA} 13.0979525} & {\color[HTML]{ACB9CA} 9.96734113} & {\color[HTML]{ACB9CA} 14.3491091} & {\color[HTML]{ACB9CA} 11.0515448} & {\color[HTML]{ACB9CA} 1.25} & {\color[HTML]{ACB9CA} 1.08} \\
+    3\_1                        & {\color[HTML]{ACB9CA} 12.3011813} & {\color[HTML]{ACB9CA} 19.6764414} & {\color[HTML]{ACB9CA} 13.9424404} & {\color[HTML]{ACB9CA} 20.9019084} & {\color[HTML]{ACB9CA} 1.64} & {\color[HTML]{ACB9CA} 1.23} \\
+    3\_2                        & {\color[HTML]{ACB9CA} 77.6160142} & {\color[HTML]{ACB9CA} 14.2753579} & {\color[HTML]{ACB9CA} 85.8698075} & {\color[HTML]{ACB9CA} 16.3781728} & {\color[HTML]{ACB9CA} 8.25} & {\color[HTML]{ACB9CA} 2.10} \\
+    4\_1                        & {\color[HTML]{ACB9CA} 5.62614266} & {\color[HTML]{ACB9CA} 5.36426193} & {\color[HTML]{ACB9CA} 6.14406902} & {\color[HTML]{ACB9CA} 5.91605551} & {\color[HTML]{ACB9CA} 0.52} & {\color[HTML]{ACB9CA} 0.55} \\
+    4\_2                        & {\color[HTML]{ACB9CA} 11.8124654} & {\color[HTML]{ACB9CA} 33.7138488} & {\color[HTML]{ACB9CA} 13.1458899} & {\color[HTML]{ACB9CA} 36.6005748} & {\color[HTML]{ACB9CA} 1.33} & {\color[HTML]{ACB9CA} 2.89} \\
+    5\_1                        & {\color[HTML]{ACB9CA} 10.3131805} & {\color[HTML]{ACB9CA} 5.42253668} & {\color[HTML]{ACB9CA} 11.8937659} & {\color[HTML]{ACB9CA} 5.9943051}  & {\color[HTML]{ACB9CA} 1.58} & {\color[HTML]{ACB9CA} 0.57} \\
+    5\_2                        & {\color[HTML]{ACB9CA} 4.26043663} & {\color[HTML]{ACB9CA} 12.6508114} & {\color[HTML]{ACB9CA} 5.00902677} & {\color[HTML]{ACB9CA} 13.8963645} & {\color[HTML]{ACB9CA} 0.75} & {\color[HTML]{ACB9CA} 1.25} \\\cmidrule(r){1-7}
+                                &                                   &                                   &                                   &                                   & {\color[HTML]{FF0000} 10\%} & {\color[HTML]{FF0000} 10\%} \\\cmidrule(r){1-7}      
     \end{tabular}%
     }
     \caption{This is the caption for the first table.}
@@ -277,11 +282,6 @@ The tests were conducted on a subset of networks or properties, specifically for
     \end{table}
 
 
-  % Please add the following required packages to your document preamble:
-% \usepackage{booktabs}
-% \usepackage{graphicx}
-% \usepackage[table,xcdraw]{xcolor}
-% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
 \begin{table}[]
     \centering
     \begin{tabular}{@{}llll@{}}
@@ -295,10 +295,7 @@ The tests were conducted on a subset of networks or properties, specifically for
     \label{table:DUBINS}
 \end{table}
 
-% Please add the following required packages to your document preamble:
-% \usepackage{booktabs}
-% \usepackage[table,xcdraw]{xcolor}
-% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+
 \begin{table}[]
     \centering
     \begin{tabular}{@{}llll@{}}
@@ -306,17 +303,14 @@ The tests were conducted on a subset of networks or properties, specifically for
         \multicolumn{4}{c}{Cartpole}  \\
         \cmidrule(r){1-4}
                                             & PyNeVer with BP                        & PyNeVer without BP               & ABCROWN                           \\ \cmidrule(r){1-4}
-    time(s):                                & {\color[HTML]{ACB9CA} 0.93486845}      & {\color[HTML]{ACB9CA} 0.0815644} & {\color[HTML]{ACB9CA} 0.20461254} \\ \cmidrule(r){1-4}
+    time(s):                                & {\color[HTML]{ACB9CA} 0.93486845}      & {\color[HTML]{ACB9CA} 0.815644} & {\color[HTML]{ACB9CA} 0.20461254}  \\ \cmidrule(r){1-4}
     PyNeVer relative improvement:           &                                        & {\color[HTML]{FF0000} 8\%}       &                                   \\ \cmidrule(r){1-4}
     \end{tabular}
     \caption{This is the caption for the first table.}
     \label{table:CARTPOLE}
 \end{table}
 
-% Please add the following required packages to your document preamble:
-% \usepackage{booktabs}
-% \usepackage[table,xcdraw]{xcolor}
-% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+
 \begin{table}[]
     \centering
     \begin{tabular}{@{}llll@{}}
@@ -324,83 +318,13 @@ The tests were conducted on a subset of networks or properties, specifically for
         \multicolumn{4}{c}{Lunar}  \\
         \cmidrule(r){1-4}
                                              & PyNeVer with BP & PyNeVer without BP                & ABCROWN                           \\ \cmidrule(r){1-4}
-    time(s):                                 & {\color[HTML]{ACB9CA} 0.93486845}                   & {\color[HTML]{ACB9CA} 0.0815644}  & {\color[HTML]{ACB9CA} 0.20461254} \\ \cmidrule(r){1-4}
+    time(s):                                 & {\color[HTML]{ACB9CA} 7.34236826922983}                   & {\color[HTML]{ACB9CA} 13.7997844442866}  & {\color[HTML]{ACB9CA} 0.10526261230699} \\ \cmidrule(r){1-4}
     PyNeVer relative improvement:            &                                                     & {\color[HTML]{FF0000} 45\%}       &                                   \\ \cmidrule(r){1-4}
     \end{tabular}
     \caption{This is the caption for the first table.}
     \label{table:LUNAR}
 \end{table}
 
-% Please add the following required packages to your document preamble:
-% \usepackage{booktabs}
-% \usepackage{graphicx}
-% \usepackage[table,xcdraw]{xcolor}
-% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
-
-
-% Please add the following required packages to your document preamble:
-% \usepackage{booktabs}
-% \usepackage{graphicx}
-% \usepackage[table,xcdraw]{xcolor}
-% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
-
-
-    % Please add the following required packages to your document preamble:
-% \usepackage{booktabs}
-% \usepackage{graphicx}
-% \usepackage[table,xcdraw]{xcolor}
-% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
-
-
-
-% Please add the following required packages to your document preamble:
-% \usepackage{booktabs}
-% \usepackage[table,xcdraw]{xcolor}
-% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
-
-
-% % Please add the following required packages to your document preamble:
-% % \usepackage{booktabs}
-% % \usepackage[table,xcdraw]{xcolor}
-% % If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
-% \begin{table}[]
-%     \centering
-%     \begin{tabular}{@{}ll@{}}
-%     \toprule
-%     \multicolumn{2}{c}{ACAS}  \\\cmidrule{1-2}
-%     NO BP                              & BP type 1                           \\\cmidrule{1-2}
-%     {\color[HTML]{D9E1F2} 48.8035 MB} & {\color[HTML]{D9E1F2} 50.6578 MB} \\\cmidrule{1-2}
-%     \end{tabular}
-%     \end{table}
-
-
-%     % Please add the following required packages to your document preamble:
-% % \usepackage{booktabs}
-% % \usepackage[table,xcdraw]{xcolor}
-% % If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
-% \begin{table}[]
-%     \centering
-%     \begin{tabular}{@{}ll@{}}
-%     \toprule
-%     \multicolumn{2}{c}{CARTPOLE}  \\\cmidrule{1-2}
-%     NO OP                            & BP type 1                    \\\cmidrule{1-2}
-%     {\color[HTML]{D9E1F2} 0.3483 MB} & {\color[HTML]{D9E1F2} 0.3957 MB} \\\cmidrule{1-2}
-%     \end{tabular}
-%     \end{table}
-
-% % Please add the following required packages to your document preamble:
-% % \usepackage{booktabs}
-% % \usepackage[table,xcdraw]{xcolor}
-% % If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
-% \begin{table}[]
-%     \centering
-%     \begin{tabular}{@{}ll@{}}
-%     \toprule
-%     \multicolumn{2}{c}{LUNAR}  \\\cmidrule{1-2}
-%     NO BP                             & BP type 1                        \\\cmidrule{1-2}
-%     {\color[HTML]{D9E1F2} 35.0736 MB} & {\color[HTML]{D9E1F2} 34.9736 MB} \\\cmidrule{1-2}
-%     \end{tabular}
-%     \end{table}
 
     \begin{table}[htbp]
         \begin{minipage}{0.45\linewidth}
@@ -445,4 +369,5 @@ The tests were conducted on a subset of networks or properties, specifically for
         %\caption{Tabella 4}
         \end{minipage}
         \caption{Memory peak esperiment results}
+        \label{table:memory-results}
         \end{table}
