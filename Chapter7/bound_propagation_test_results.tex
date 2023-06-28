@@ -185,7 +185,7 @@ The tests were conducted on a subset of networks or properties, specifically for
         \end{table}
 
     \item \textbf{DUBINSREJOIN Results:} \\
-    Due to the size of the layers in the DuBINSREJOIN network, the first layer has 256 nodes, and verifying a property with such a large network exceeds the time limit set at 15 minutes. 
+    Due to the size of the layers in the DuBINSREJOIN network, the first layer has 256 nodes, and verifying a property with such a large network exceeds the time limit set at 15 minutes as shown in Table~\ref{table:DUBINS}. 
     Therefore, the results shown in the table only display the number of unstable nodes for each layer obtained using Bound Propagation BP 1, and not those obtained by performing a post-analysis on the stars. 
     The test was conducted on only one property to provide an overestimated estimate of the number of stars and consequently explain why the verification process was so slow.
 
@@ -199,58 +199,33 @@ The tests were conducted on a subset of networks or properties, specifically for
         UNSTABLE NODES  & {\color[HTML]{B4C6E7} 106/256}     & {\color[HTML]{B4C6E7} 104/256}     \\
         NUMBER OF STARS & {\color[HTML]{C00000} 8.11296E+31} & {\color[HTML]{C00000} 2.02824E+31}
         \end{tabular}
+        \label{table:DUBINS-ANALISY}
     \end{table}
 
-    As shown in the table, the number of stars blows up (exponential complexity). In total we have $2^106$ stars in input in the ReLU layer after the first fc layer and  at most $(2^106)*(2^104)$ stars in input to the second ReLU layer.
+    As shown in Table~\ref{table:DUBINS-ANALISY}, the number of stars blows up (exponential complexity). In total we have $2^{106}$ stars in input in the ReLU layer after the first fc layer and  at most $(2^{106})*(2^{104})$ stars in input to the second ReLU layer.
 
 \end{itemize}
 
 \subsection{Time/Memory usage test}
 In this subsection, the data obtained from time and memory usage testing is presented. The tests were conducted on ACAS, AC, CARTPOLE, DUBINSREJOIN, and LUNARLANDER networks. In the first phase, time tests were performed to measure the time required by the networks to verify properties using both the original PyNeVer algorithm and the one with implemented Bound Propagation. The results were promising, as the performance of the algorithm with Bound Propagation showed improvements ranging from 10\% to 45\% compared to the original algorithm. 
-The graphs indicate that networks like ACAS in Table~\ref{table:ACAS} and CARTPOLE in Table~\ref{table:CARTPOLE} had an average performance gain of 10\%, while networks like AC~\ref{table:AC} and LUNARLANDER~\ref{table:LUNAR} had an average performance gain of 45\%. These performance differences are influenced by factors such as network depth and layer size.
-For example, networks with a few fully connected layers but many nodes showed performance gains because the large number of nodes increased the likelihood of having unstable nodes, resulting in more stars being generated. And the more stars we have the more GET\_BOUND operations are saved in case of a classified STABLE node. Additionally, the shallow depth of the network reduced the over-approximation introduced by bound propagation, resulting in fewer misclassified nodes (UNCATCHED NODES). This led to a reduction in the number of calls to the GET\_BOUND function and improved performance.
+The graphs indicate that networks like ACAS in Table~\ref{table:ACAS} and CARTPOLE in Table~\ref{table:CARTPOLE} had an average performance gain of 10\%, while networks like AC in Table~\ref{table:AC} and LUNARLANDER in Table~\ref{table:LUNAR} had an average performance gain of 45\%. These performance differences are influenced by factors such as network depth and layer size.
+For example, networks with a few fully connected layers but many nodes showed performance gains because the large number of nodes increased the likelihood of having unstable nodes, resulting in more stars being generated. And the more stars we have the more GET\_BOUND operations are saved in case of a classified STABLE node. Additionally, the shallow depth of the network reduced the over-approximation introduced by bound propagation, resulting in fewer misclassified nodes (UNCATCHED NODES). This led to a reduction in the number of calls to the GET\_BOUNDS function and improved performance.
 In the second part of the tests, the performance of the verification algorithm of the 2021 VNNCOMP winners, specifically ABCrown, was compared to the PyNeVer algorithm with Bound Propagation. Although the implemented Bound Propagation improved the performance and reduced the performance gap between PyNeVer and ABCrown, there is still an order of magnitude difference between the two algorithms in some networks like LUNARLANDER.
-In the third phase, the peak RAM usage of both versions of PyNeVer was compared. The results in Table~\ref{table:memory-results} showed that the version with Bound Propagation had an increase of only 0-1\% in memory usage compared to the original version. Therefore, considering the significant improvement in terms of time and the negligible increase in RAM usage, it can be concluded that Bound Propagation has made the PyNeVer algorithm more efficient without any negative drawbacks.
-These findings demonstrate the effectiveness of Bound Propagation in enhancing the performance of the PyNeVer algorithm, making it a valuable addition to the verification process for neural networks.
-% \begin{table}[h]
-%     \centering
-    % \begin{tabular}{|c|c|c|}
-    % \hline
-    % DRONE & prop1 & prop2 \\
-    % AC1 & 0.968618783 & 8.515288626 \\
-    % AC2 & 0.897863785 & 28.28980892 \\
-    % AC3 & 1.327263328 & \textit{time_limit_exception} \\
-    % AC4 & 22.11842157 & \textit{time_limit_exception} \\
-    % AC5 & 1.270581688 & 37.53577376 \\
-    % AC6 & 1.255077947 & 103.3945658 \\
-    % AC7 & 1.714810474 & \textit{time_limit_exception} \\
-    % AC8 & 2.644242063 & \textit{time_limit_exception} \\
-    % \hline
-    % \end{tabular}
-% \end{table}
-% \subsection{Memory performance test}
-% \begin{table}[h!]
-%     \centering
-%     \begin{tabular}{||c c c c||} 
-%      \hline
-%      Col1 & Col2 & Col2 & Col3 \\ [0.5ex] 
-%      \hline\hline
-%      1 & 6 & 87837 & 787 \\ 
-%      2 & 7 & 78 & 5415 \\
-%      3 & 545 & 778 & 7507 \\
-%      4 & 545 & 18744 & 7560 \\
-%      5 & 88 & 788 & 6344 \\ [1ex] 
-%      \hline
-%     \end{tabular}
-%     \caption{This is the caption for the first table.}
-%     \label{table:1}
-%     \end{table}
+In the third phase, the peak RAM usage of both versions of PyNeVer was compared. The results in Table~\ref{table:memory-results} showed that the version with Bound Propagation had an increase of only 0-1\% in memory usage compared to the original version.\\
+In order to measure the memory used during the verification process it has been imported the python library \textbf{tracemalloc}. 
+The tracemalloc module is a debug tool to trace memory blocks allocated by Python. It provides the following information:
 
-% Please add the following required packages to your document preamble:
-% \usepackage{booktabs}
-% \usepackage{graphicx}
-% \usepackage[table,xcdraw]{xcolor}
-% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+\begin{itemize}
+\item Tracing the allocation: The module allows you to trace the traceback (call stack) where an object was allocated, helping to identify the source of memory allocations.
+\item Statistics on allocated memory blocks: tracemalloc provides statistics on allocated memory blocks, categorized by filename and line number. These statistics include the total size of allocated memory blocks, the number of allocations per line, and the average size of allocated memory blocks.
+\item Memory leak detection: By capturing two snapshots at different points in the program's execution, you can use tracemalloc to compute the differences between the snapshots and detect memory leaks, which occur when memory is allocated but not properly released.
+\end{itemize}
+In order to measure the memory peak during the verification process, get\_traced\_memory has bees used. This tracemalloc method gets the current size and peak size of memory blocks traced by the tracemalloc module as a tuple.\\
+
+By leveraging the capabilities of the tracemalloc module, you can track and analyze the memory allocation patterns of your Python program, identify memory-intensive sections, and detect potential memory leaks.
+Therefore, considering the significant improvement in terms of time and the negligible increase in RAM usage, it can be concluded that Bound Propagation has made the PyNeVer algorithm more efficient without any negative drawbacks.
+These findings demonstrate the effectiveness of Bound Propagation in enhancing the performance of the PyNeVer algorithm, making it a valuable addition to the verification process for neural networks.
+
 \begin{table}[]
     \resizebox{\columnwidth}{!}{%
     \begin{tabular}{@{}lllllll@{}}
@@ -270,7 +245,7 @@ These findings demonstrate the effectiveness of Bound Propagation in enhancing t
     PyNeVer relative improvement:        &                                   &                                               &                                   &                                               & {\color[HTML]{FF0000} 40\%}       & {\color[HTML]{FF0000} 45\%}       \\ \cmidrule(r){1-7}
     \end{tabular}%
     }
-    \caption{This is the caption for the first table.}
+    \caption{This table shows the test results on AC network on two different properties.}
     \label{table:AC}
 \end{table}
 
@@ -297,7 +272,7 @@ These findings demonstrate the effectiveness of Bound Propagation in enhancing t
                                 &                                   &                                   &                                   &                                   & {\color[HTML]{FF0000} 10\%} & {\color[HTML]{FF0000} 10\%} \\\cmidrule(r){1-7}      
     \end{tabular}%
     }
-    \caption{This is the caption for the first table.}
+    \caption{This table shows the test results on ACAS network on two different properties.}
     \label{table:ACAS}
     \end{table}
 
@@ -311,7 +286,7 @@ These findings demonstrate the effectiveness of Bound Propagation in enhancing t
     6            & {\color[HTML]{ACB9CA} time\_limit\_exception} & {\color[HTML]{ACB9CA} time\_limit\_exception} &  \\
     12           & {\color[HTML]{ACB9CA} time\_limit\_exception} & {\color[HTML]{ACB9CA} time\_limit\_exception} &  \\ \cmidrule(r){1-3}
     \end{tabular}%
-    \caption{This is the caption for the first table.}
+    \caption{This table shows the test results on DUBINSREJOIN network on three different properties.}
     \label{table:DUBINS}
 \end{table}
 
@@ -326,7 +301,7 @@ These findings demonstrate the effectiveness of Bound Propagation in enhancing t
     time(s):                                & {\color[HTML]{ACB9CA} 0.93486845}      & {\color[HTML]{ACB9CA} 0.815644} & {\color[HTML]{ACB9CA} 0.20461254}  \\ \cmidrule(r){1-4}
     PyNeVer relative improvement:           &                                        & {\color[HTML]{FF0000} 8\%}       &                                   \\ \cmidrule(r){1-4}
     \end{tabular}
-    \caption{This is the caption for the first table.}
+    \caption{This table shows the test results on CARTPOLE network on two different properties.}
     \label{table:CARTPOLE}
 \end{table}
 
@@ -391,3 +366,86 @@ These findings demonstrate the effectiveness of Bound Propagation in enhancing t
         \caption{Memory peak esperiment results}
         \label{table:memory-results}
         \end{table}
+
+\subsection{Problems found}
+During the tests performed to verify the correctness of the results, a part of the code checked whether the lower and upper bounds of BP1 and BP2 were an overestimation or equal of the actual bounds calculated with PyNeVer. If this was not the case, violations were written to a file. The presence of violations was intended to reveal any logical errors in the implemented BPs.
+It was found that there was a high number of violations in the bounds calculated by concretizing the ReLU layers, particularly for values near zero. Further investigation revealed a problem of \textbf{numerical instability}, where PyNeVer expressed values that should be zero as extremely small negative numbers ($<10^{17}$).
+It occurs when the numerical methods or algorithms used to perform calculations are sensitive to these small perturbations, amplifying their effects and producing incorrect or unreliable results.
+There are various factors that can contribute to numerical instability, such as the presence of round-off errors due to limited precision in numerical representations or the accumulation of errors through iterative calculations.
+In the context of the described issue with PyNeVer, the numerical instability led to small negative values being computed instead of zeros as in red in Table~\ref{table:violations}, potentially affecting the accuracy of the bounds calculated for ReLU layers. Identifying and addressing numerical instability is important to ensure the reliability and accuracy of numerical computations in scientific and computational applications.
+Fortunately, these issues of numerical instability do not affect the functionality of PyNeVer in normal usage conditions, as they were observed only in the calculation of bounds for ReLU layer nodes, which was specifically forced for testing purposes. However, it was valuable to identify this type of problem in order to improve this aspect of the software in the future.
+
+% Please add the following required packages to your document preamble:
+% \usepackage[table,xcdraw]{xcolor}
+% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+% \usepackage{longtable}
+% Note: It may be necessary to compile the document several times to get a multi-page table to line up properly
+% Please add the following required packages to your document preamble:
+% \usepackage[table,xcdraw]{xcolor}
+% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+% \usepackage{longtable}
+% Note: It may be necessary to compile the document several times to get a multi-page table to line up properly
+\
+% Note: It may be necessary to compile the document several times to get a multi-page table to line up properly
+
+\begin{longtable}{llll}
+    \caption{This table shows the lower and upper bound of the first 2 layers, respectively a FC layer and a ReLU layer, of the ACAS\_1\_1 netowrk. In red are marked }
+    \label{table:violations}\\
+    \rowcolor[HTML]{92D050} 
+    ABST\_FC\_0\_lower                 & ABST\_FC\_0\_upper                 & ABST\_ReLU\_0\_lower                                        & ABST\_ReLU\_0\_upper \\
+    \endfirsthead
+    %
+    \endhead
+    %
+    {\color[HTML]{D9E1F2} 2.11417E-01} & {\color[HTML]{D9E1F2} 3.15850E-01} & 2.11417E-01                                                 & 3.15850E-01          \\
+    4.93699E-02                        & 7.75720E-02                        & 4.93699E-02                                                 & 7.75720E-02          \\
+    1.10239E-01                        & 2.20310E-01                        & 1.10239E-01                                                 & 2.20310E-01          \\
+    1.05332E-01                        & 1.16736E-01                        & 1.05332E-01                                                 & 1.16736E-01          \\
+    1.15834E-01                        & 1.72269E-01                        & 1.15834E-01                                                 & 1.72269E-01          \\
+    -1.29774E+00                       & -1.24566E+00                       & 0.00000E+00                                                 & 0.00000E+00          \\
+    -7.73407E-02                       & -3.26246E-02                       & 0.00000E+00                                                 & 0.00000E+00          \\
+    5.47044E-02                        & 7.50849E-02                        & 5.47044E-02                                                 & 7.50849E-02          \\
+    -2.64583E-02                       & 3.38720E-02                        & \cellcolor[HTML]{FFC7CE}{\color[HTML]{9C0006} -5.55112E-17} & 3.38720E-02          \\
+    1.65018E-01                        & 1.73088E-01                        & 1.65018E-01                                                 & 1.73088E-01          \\
+    -1.42997E-01                       & -9.35480E-02                       & 0.00000E+00                                                 & 0.00000E+00          \\
+    -9.00223E-02                       & -7.31408E-02                       & 0.00000E+00                                                 & 0.00000E+00          \\
+    2.38618E-01                        & 2.81425E-01                        & 2.38618E-01                                                 & 2.81425E-01          \\
+    -4.20009E-01                       & -3.17158E-01                       & 0.00000E+00                                                 & 0.00000E+00          \\
+    -1.83762E-01                       & -1.27231E-01                       & 0.00000E+00                                                 & 0.00000E+00          \\
+    2.67941E-01                        & 3.27541E-01                        & 2.67941E-01                                                 & 3.27541E-01          \\
+    -4.62791E-01                       & -3.69167E-01                       & 0.00000E+00                                                 & 0.00000E+00          \\
+    -1.23659E+00                       & -1.20789E+00                       & 0.00000E+00                                                 & 0.00000E+00          \\
+    -6.72436E-01                       & -6.35428E-01                       & 0.00000E+00                                                 & 0.00000E+00          \\
+    -1.26407E-01                       & -1.05600E-01                       & 0.00000E+00                                                 & 0.00000E+00          \\
+    1.23793E+00                        & 1.26081E+00                        & 1.23793E+00                                                 & 1.26081E+00          \\
+    -8.50009E-01                       & -6.91952E-01                       & 0.00000E+00                                                 & 0.00000E+00          \\
+    1.41420E-01                        & 2.34711E-01                        & 1.41420E-01                                                 & 2.34711E-01          \\
+    1.83898E-01                        & 2.54354E-01                        & 1.83898E-01                                                 & 2.54354E-01          \\
+    -2.12615E-02                       & -2.02086E-02                       & 0.00000E+00                                                 & 0.00000E+00          \\
+    1.14649E-01                        & 1.34833E-01                        & 1.14649E-01                                                 & 1.34833E-01          \\
+    1.78584E-02                        & 6.93870E-02                        & 1.78584E-02                                                 & 6.93870E-02          \\
+    5.24102E-02                        & 1.29719E-01                        & 5.24102E-02                                                 & 1.29719E-01          \\
+    -3.35602E-02                       & 1.80817E-02                        & \cellcolor[HTML]{FFC7CE}{\color[HTML]{9C0006} -5.55112E-17} & 1.80817E-02          \\
+    -1.10612E+00                       & -9.19610E-01                       & 0.00000E+00                                                 & 0.00000E+00          \\
+    5.97536E-02                        & 8.67993E-02                        & 5.97536E-02                                                 & 8.67993E-02          \\
+    -1.61922E-01                       & -3.09046E-02                       & 0.00000E+00                                                 & 0.00000E+00          \\
+    9.53638E-02                        & 1.13829E-01                        & 9.53638E-02                                                 & 1.13829E-01          \\
+    3.38057E-02                        & 4.48437E-02                        & 3.38057E-02                                                 & 4.48437E-02          \\
+    5.81427E-01                        & 6.27438E-01                        & 5.81427E-01                                                 & 6.27438E-01          \\
+    -3.65423E-02                       & -5.21452E-03                       & 0.00000E+00                                                 & 0.00000E+00          \\
+    1.62059E-01                        & 2.38890E-01                        & 1.62059E-01                                                 & 2.38890E-01          \\
+    -2.78937E-02                       & 1.57217E-02                        & \cellcolor[HTML]{FFC7CE}{\color[HTML]{9C0006} -1.11022E-16} & 1.57217E-02          \\
+    3.09683E-02                        & 4.27893E-02                        & 3.09683E-02                                                 & 4.27893E-02          \\
+    -3.60360E-01                       & -1.88336E-01                       & 0.00000E+00                                                 & 0.00000E+00          \\
+    3.03709E-01                        & 3.93415E-01                        & 3.03709E-01                                                 & 3.93415E-01          \\
+    -4.37322E-01                       & -3.38209E-01                       & 0.00000E+00                                                 & 0.00000E+00          \\
+    -1.27144E+00                       & -1.20366E+00                       & 0.00000E+00                                                 & 0.00000E+00          \\
+    -2.66882E-02                       & -1.84704E-02                       & 0.00000E+00                                                 & 0.00000E+00          \\
+    -5.29617E-02                       & 3.21762E-02                        & \cellcolor[HTML]{FFC7CE}{\color[HTML]{9C0006} -2.77556E-17} & 3.21762E-02          \\
+    1.34893E-01                        & 1.55827E-01                        & 1.34893E-01                                                 & 1.55827E-01          \\
+    2.31401E-02                        & 5.05105E-02                        & 2.31401E-02                                                 & 5.05105E-02          \\
+    -2.89316E-01                       & -2.71779E-01                       & 0.00000E+00                                                 & 0.00000E+00          \\
+    -2.90772E-02                       & -2.47172E-03                       & 0.00000E+00                                                 & 0.00000E+00          \\
+    -2.76138E-02                       & 3.81140E-02                        & \cellcolor[HTML]{FFC7CE}{\color[HTML]{9C0006} -5.55112E-17} & 3.81140E-02         \\
+    
+    \end{longtable}
